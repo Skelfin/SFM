@@ -2,3 +2,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .input {
+        @apply bg-gray-600 bg-opacity-20 focus:bg-transparent 
+        focus:ring-1 focus:ring-sky-400 rounded border border-gray-600
+      focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
+    }
+    .btn {
+        @apply text-white bg-[#6B9D9E] font-semibold  rounded-full  
+        hover:bg-[#5a888a] active:bg-[#44686a] active:text-gray-300
+    }
+}
