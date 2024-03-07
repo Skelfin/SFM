@@ -13,8 +13,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angul
 
 export class SignupComponent {
     userData: FormGroup;
-    formSubmitted: boolean = false;
-notOnlyWhitespaceValidator: any;
 
     constructor() {
         this.userData = new FormGroup({
@@ -24,7 +22,6 @@ notOnlyWhitespaceValidator: any;
     }
 
     onSubmit() {
-        this.formSubmitted = true;
         if (this.userData.valid) {
             console.log(this.userData.value);
         } else {
