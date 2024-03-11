@@ -11,13 +11,13 @@ export class User {
     password: string
     @Column()
     access_rights: number
-    @Column()
+    @Column({ nullable: true })
     avatar: string
-    @Column()
+    @Column({ nullable: true })
     FIO: string
-    @Column()
+    @Column({ nullable: true })
     email: string
-    @Column()
+    @Column({ nullable: true })
     country: string
 
     @ManyToMany(() => Playlist, playlist => playlist.users)

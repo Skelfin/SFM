@@ -10,13 +10,13 @@ export class Album {
     @Column()
     Name: string
 
-    @Column()
+    @Column({ nullable: true })
     description: string
 
-    @Column()
+    @Column({ nullable: true })
     avatar: string
 
-    @Column()
+    @Column({ nullable: true })
     year: Date
 
     @OneToMany(() => Track, track => track.album)

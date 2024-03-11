@@ -9,19 +9,19 @@ export class Author {
     @Column()
     nickname: string
 
-    @Column()
+    @Column({ nullable: true })
     FIO: string
 
-    @Column()
+    @Column({ nullable: true })
     email: string
     
-    @Column()
+    @Column({ nullable: true })
     description: string
 
-    @Column()
+    @Column({ nullable: true })
     country: string
 
-    @Column()
+    @Column({ nullable: true })
     avatar: string
 
     @ManyToMany(() => Album, album => album.authors)

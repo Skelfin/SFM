@@ -10,10 +10,10 @@ export class Playlist {
     @Column()
     Name: string
 
-    @Column()
+    @Column({ nullable: true })
     avatar: string
 
-    @Column()
+    @Column({ nullable: true })
     description: string
 
     @ManyToMany(() => User, user => user.playlists)

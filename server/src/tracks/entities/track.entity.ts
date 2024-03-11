@@ -10,7 +10,7 @@ export class Track {
     @Column()
     path: string
 
-    @Column()
+    @Column({ nullable: true })
     avatar: string
 
     @Column()
