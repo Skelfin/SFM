@@ -25,7 +25,6 @@ export class Author {
     avatar: string
 
     @ManyToMany(() => Album, album => album.authors)
-    @JoinTable()
     albums: Album[];
 
     @CreateDateColumn()

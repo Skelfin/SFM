@@ -20,11 +20,11 @@ export class Playlist {
     @JoinTable({
       name: "user_playlists", // Имя таблицы связи
       joinColumn: {
-        name: "playlistId", // Имя столбца, который ссылается на ID плейлиста
+        name: "id_playlist", // Имя столбца, который ссылается на ID плейлиста
         referencedColumnName: "id"
       },
       inverseJoinColumn: {
-        name: "userId", // Имя столбца, который ссылается на ID пользователя
+        name: "id_user", // Имя столбца, который ссылается на ID пользователя
         referencedColumnName: "id"
       }
     })
@@ -34,11 +34,11 @@ export class Playlist {
     @JoinTable({ // JoinTable следует указывать только с одной стороны отношения, обычно с владеющей стороны.
         name: 'playlist_tracks', // Название таблицы связи
         joinColumn: {
-            name: 'playlistId', // Название столбца, который будет ссылаться на первичный ключ Playlist
+            name: 'id_playlist', // Название столбца, который будет ссылаться на первичный ключ Playlist
             referencedColumnName: 'id' // Название первичного ключа в сущности Playlist
         },
         inverseJoinColumn: {
-            name: 'trackId', // Название столбца, который будет ссылаться на первичный ключ Track
+            name: 'id_track', // Название столбца, который будет ссылаться на первичный ключ Track
             referencedColumnName: 'id' // Название первичного ключа в сущности Track
         }
     })

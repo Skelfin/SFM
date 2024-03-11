@@ -1,6 +1,6 @@
 import { Album } from 'src/albums/entities/album.entity';
 import { Playlist } from 'src/playlists/entities/playlist.entity';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity()
 export class Track {
@@ -17,6 +17,7 @@ export class Track {
     name: string
 
     @ManyToOne(() => Album, album => album.tracks)
+    @JoinColumn({ name: 'id_album'})
     album: Album;
 
     @ManyToMany(() => Playlist, playlist => playlist.tracks)
