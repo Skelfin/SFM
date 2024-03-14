@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
 import { RouterLink } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
     standalone: true,
     templateUrl: './signup.component.html',
     styleUrl: './signup.component.scss',
-    imports: [HeaderComponent, RouterLink, ReactiveFormsModule ]
+    imports: [HeaderComponent, RouterLink, ReactiveFormsModule]
 })
 
 export class SignupComponent {
@@ -17,7 +17,7 @@ export class SignupComponent {
 
     constructor(private readonly authService: AuthService) {
         this.userData = new FormGroup({
-            email: new FormControl('', [Validators.required, Validators.email]),
+            nickname: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
         });
     }

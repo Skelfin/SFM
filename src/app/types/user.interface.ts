@@ -1,4 +1,10 @@
 export interface IAuthUser {
-    email: string;
-    password: string;
+    nickname: string
+    password: string
+}
+
+export interface IUser {
+    id: number
+    nickname: string
+    token: string
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
 import { RouterLink } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -13,16 +14,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators  } from '@angul
 export class LoginComponent {
     userData: FormGroup;
 
-    constructor() {
+    constructor(private readonly authService: AuthService) {
         this.userData = new FormGroup({
-            email: new FormControl('', [Validators.required, Validators.email]),
+            nickname: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
         });
     }
 
     onSubmit() {
         if (this.userData.valid) {
-            console.log(this.userData.value);
+            this.authService.login(this.userData.value)
         } else {
             console.log("Form is not valid.");
         }

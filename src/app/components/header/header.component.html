@@ -6,7 +6,7 @@
     <nav class="flex justify-end">
       @if (!isAuthPage) {
       <ul class="flex gap-5 items-center text-lg border-2 border-orange-500">
-        @if (!isAuth) {
+        @if (!this.authService.isAuthSig()) {
         <li class="text-white font-bold py-1 px-3 select-none
           hover:text-gray-300 active:text-gray-400 cursor-pointer">
           <a routerLink="signup"> Зарегистрироваться</a>
@@ -37,7 +37,7 @@
               class="bg-gray-200 select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap border-b border-gray-400 text-base">
               <a href="###№">Безопасность</a>
             </li>
-            <li (click)="closeDropdown()"
+            <li (click)="logout()"
               class="rounded-b bg-gray-200 select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap text-base">
               <a href="####№">Выход</a>
             </li>

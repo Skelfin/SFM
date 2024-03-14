@@ -1,20 +1,16 @@
 <app-header></app-header>
-<form class="flex flex-col max-w-sm mx-auto mt-20 p-4 rounded border border-slate-600">
+<form 
+  [formGroup]="userData" 
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col max-w-sm mx-auto mt-20 p-4 rounded border border-slate-600">
   <h1 class="text-center text-lg font-bold mb-5">Войти в учетную запись</h1>
   <div class="flex flex-col">
-    <input type="email" placeholder="Email" id="email" class="input">
-    @if (userData.controls['email'].invalid && (userData.controls['email'].dirty || userData.controls['email'].touched)) {
-      @if (userData.controls['email'].hasError('required')) {
-        <div class="text-red-500 text-xs mt-2">Введите почту</div>
-      } @else if (userData.controls['email'].hasError('email')) {
-        <div class="text-red-500 text-xs mt-2">Введите корректную почту</div>
-      }
+    <input formControlName="nickname" required="" type="text" placeholder="Nickname" id="nickname" class="input">
+    @if (userData.controls['nickname'].invalid && (userData.controls['nickname'].dirty || userData.controls['nickname'].touched)) {
+      <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
     }
-    <input type="password" placeholder="Пароль" id="password" class="input mt-6">
+    <input formControlName="password" required="" type="password" placeholder="Пароль" id="password" class="input mt-6">
     @if (userData.controls['password'].invalid && (userData.controls['password'].dirty || userData.controls['password'].touched)) {
-      @if (userData.controls['password'].hasError('required')) {
-        <div class="text-red-500 text-xs mt-2">Введите пароль</div>
-      }
       @if (userData.controls['password'].hasError('minlength')) {
         <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
       }
@@ -24,7 +20,7 @@
     }
   </div>
   <div class="flex justify-center mt-6 mb-5">
-    <button [disabled]="!userData.valid" class="btn py-2 px-16">Войти</button>
+    <button [disabled]="!userData.valid" class="btn py-2 px-6">Войти</button>
   </div>
   <div class="flex justify-center">
     <p>
