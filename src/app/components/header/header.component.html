@@ -1,17 +1,17 @@
-<header class="py-1 px-8 border-2 border-white">
+<header class="py-1 px-8 bg-[#04111D]">
   <div class="container mx-auto flex justify-between py-2">
     <a routerLink=" ">
       <img src="assets/Prg_ico.png" alt="Logo" class="h-12">
     </a>
     <nav class="flex justify-end">
       @if (!isAuthPage) {
-      <ul class="flex gap-5 items-center text-lg border-2 border-orange-500">
+      <ul class="flex gap-5 items-center text-lg">
         @if (!this.authService.isAuthSig()) {
         <li class="text-white font-bold py-1 px-3 select-none
-          hover:text-gray-300 active:text-gray-400 cursor-pointer">
+          hover:text-gray-300 active:text-gray-400 cursor-pointer transition duration-500 fontstyle">
           <a routerLink="signup"> Зарегистрироваться</a>
         </li>
-        <li class="btn py-1 px-3">
+        <li class="btn py-1 px-3 fontstyle">
           <button routerLink="login" type="button"> Войти </button>
         </li>
         } @else {
