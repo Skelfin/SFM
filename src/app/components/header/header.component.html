@@ -8,10 +8,10 @@
       <ul class="flex gap-5 items-center text-lg">
         @if (!this.authService.isAuthSig()) {
         <li class="text-white font-bold py-1 px-3 select-none
-          hover:text-gray-300 active:text-gray-400 cursor-pointer transition duration-500 fontstyle">
+          hover:text-gray-300 active:text-gray-400 cursor-pointer transition duration-500">
           <a routerLink="signup"> Зарегистрироваться</a>
         </li>
-        <li class="btn py-1 px-3 fontstyle">
+        <li class="btn py-1 px-3">
           <button routerLink="login" type="button"> Войти </button>
         </li>
         } @else {

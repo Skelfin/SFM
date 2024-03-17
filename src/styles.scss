@@ -18,8 +18,11 @@
         disabled:opacity-50 disabled:cursor-not-allowed 
         transition duration-500 ease-in-out transform;
     }
+    .tabs {
+        @apply text-white block py-2.5 px-4 transition duration-300 hover:bg-[#466b6e] active:bg-[#385658]
+        select-none cursor-pointer 
+    }
     .fontstyle {
         font-family: "Kanit", sans-serif;
-        font-style: normal; 
     }
 }
