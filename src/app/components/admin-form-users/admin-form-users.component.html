@@ -1,0 +1,34 @@
+<form>
+    <h1 class="font-bold mb-4">Создание пользователя</h1>
+    <!-- Обновлен для вертикального расположения -->
+    <div class="flex flex-col mb-5">
+        <input formControlName="nickname" required="" type="text" placeholder="Nickname" id="nickname" class="input mb-5 w-72">
+        <input formControlName="password" required="" type="password" placeholder="Пароль" id="password" class="input w-72">
+    </div>
+    <!-- Added mt-8 class for spacing -->
+    <div class="mb-5 flex flex-col">
+        <label class="inline-flex items-center text-sm mb-2">
+            <input class="form-radio h-5 w-5" type="radio" name="transactionType" value="User" required>
+            <span class="ml-2 mr-3">Пользователь</span>
+        </label>
+        <label class="inline-flex items-center text-sm">
+            <input class="form-radio h-5 w-5" type="radio" name="transactionType" value="Admin" required>
+            <span class="ml-2">Админ</span>
+        </label>
+    </div>
+    <label class="block text-sm font-semibold mb-3">
+        Выберите аватар
+    </label>
+    <input class="block filewidth text-sm text-white
+            file:mr-2 file:py-2 file:px-2
+            file:rounded-full file:border-0
+            file:font-semibold file:cursor-pointer 
+            file:bg-[#6B9D9E] file:text-white
+            file:active:bg-[#44686a]
+            hover:file:bg-[#5a888a]
+            file:active:text-gray-300  
+            file:duration-500 mb-5" type="file">
+    <div class="flex items-center justify-between">
+        <button class="btn py-2 px-6"> Создать </button>
+    </div>
+</form>

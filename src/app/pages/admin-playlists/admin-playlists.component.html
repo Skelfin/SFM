@@ -1,14 +1,15 @@
 <div class="flex flex-col h-screen overflow-hidden bg-cover bg-center bg-no-repeat"
-    style="background-image: url('assets/Home.jpg');">
-    <app-header></app-header>
+  style="background-image: url('assets/Home.jpg');">
+  <app-header></app-header>
 
-    <div class="flex-1 flex overflow-hidden border-t-2 border-[#162A3E]">
-        <app-admin-sidebar></app-admin-sidebar>
-        <div class="flex-1 p-6 overflow-auto">
-            <div class="h-full p-8 bg-gray-700 rounded shadow-md">
-                Your main content goes here
-            </div>
-        </div>
+  <div class="flex-1 flex overflow-hidden border-t-2 border-[#162A3E]">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="flex-1 p-6 overflow-auto ">
+      <div class="h-full p-8 bg-[#0a1928] border-2 border-[#162A3E] rounded shadow-md">
+        <app-admin-tables></app-admin-tables>
+        Your main content goes here
+      </div>
     </div>
-    <app-footer></app-footer>
+  </div>
+  <app-footer></app-footer>
 </div>
