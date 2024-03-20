@@ -23,10 +23,10 @@ export class Track {
     @ManyToMany(() => Playlist, playlist => playlist.tracks)
     playlists: Playlist[];
 
-    @CreateDateColumn()
+    @CreateDateColumn({ type: 'date' })
     createdAt: Date
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({ type: 'date' })
     updatedAt: Date
 
 }

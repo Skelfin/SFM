@@ -1,24 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
+import { User } from '../../types/user-table';
+import { UserService } from '../../services/user-table.service';
+import { TruncatePipe } from "../../truncate.pipe";
 
 
 @Component({
-  selector: 'app-admin-tables',
-  standalone: true,
-  templateUrl: './admin-tables.component.html',
-  styleUrl: './admin-tables.component.scss',
-  imports: [FontAwesomeModule, AdminPopupComponent]
+    selector: 'app-admin-tables',
+    standalone: true,
+    templateUrl: './admin-tables.component.html',
+    styleUrl: './admin-tables.component.scss',
+    imports: [FontAwesomeModule, AdminPopupComponent, TruncatePipe]
 })
-export class AdminTablesComponent {
+export class AdminTablesComponent implements OnInit {
   faTrash = faTrash
   faPenToSquare = faPenToSquare
-  constructor(private router: Router) { }
   path: string = this.router.url
   showModal: boolean = false;
-
   openModal() {
     this.showModal = true;
   }
@@ -26,4 +27,14 @@ export class AdminTablesComponent {
   closeModal() {
     this.showModal = false;
   }
+  constructor(private router: Router, private userService: UserService) { }
+
+  users: User[] = [];
+
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+  }
+
 }

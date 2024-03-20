@@ -18,9 +18,9 @@ export class Author {
     @ManyToMany(() => Album, album => album.authors)
     albums: Album[];
 
-    @CreateDateColumn()
+    @CreateDateColumn({ type: 'date' })
     createdAt: Date
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({ type: 'date' })
     updatedAt: Date
 }

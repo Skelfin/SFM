@@ -30,9 +30,9 @@ export class Album {
     })
     authors: Author[];
 
-    @CreateDateColumn()
+    @CreateDateColumn({ type: 'date' })
     createdAt: Date
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({ type: 'date' })
     updatedAt: Date
 }
