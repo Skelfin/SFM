@@ -1,11 +1,22 @@
 @if (showModal) {
 <app-admin-popup (close)="closeModal()"></app-admin-popup>
 }
-<table class="w-full mt-4 shadow rounded overflow-hidden border-separate border-spacing-2 border border-slate-400">
+<style>
+    /* Пример стилей для pagination-controls */
+    .pagination-controls a:hover {
+      background-color: #44686a;
+      color: white;
+    }
+  </style>
+<pagination-controls previousLabel="Предыдущий" nextLabel="Следующий" class="flex text-xs justify-end pagination-controls"
+    (pageChange)="currentPage = $event">
+</pagination-controls>
+<table class="w-full shadow rounded overflow-hidden border-separate border-spacing-2 border border-slate-400">
     @switch (path) {
     @case ('/admin/users') {
     <thead class=" text-white bg-[#6b9d9ec6]">
         <tr>
+            <th class="border border-slate-500">№</th>
             <th class="border border-slate-500">ID</th>
             <th class="border border-slate-500">Никнейм</th>
             <th class="border border-slate-500">Пароль</th>
@@ -16,10 +27,11 @@
             <th class="w-28 border border-slate-500">Действия</th>
         </tr>
     </thead>
-    @for (user of users; track user.id) {
+    @for (user of users |paginate: { itemsPerPage: 3, currentPage }; track user.id; let i = $index) {
     <tbody class="text-center">
         <tr>
-            <td class="border border-slate-500">{{ user.id  }}</td>
+            <td class="border border-slate-500">{{ i + 1 }}</td>
+            <td class="border border-slate-500">{{ user.id }}</td>
             <td class="border border-slate-500">{{ user.nickname }}</td>
             <td class="border border-slate-500">{{ user.password | truncate }}</td>
             <td class="border border-slate-500">{{ user.access_rights }}</td>

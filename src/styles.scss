@@ -6,26 +6,33 @@
 
 @layer components {
     .input {
-        @apply bg-gray-600 bg-opacity-20 focus:bg-transparent 
-        focus:ring-1 focus:ring-sky-400 rounded border border-gray-600
-      focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
+        @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded border border-gray-600 focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
     }
+
     .btn {
-        @apply text-white bg-[#6B9D9E] font-semibold rounded-full 
-        hover:bg-[#5a888a] hover:shadow-lg hover:scale-105 
-        active:bg-[#44686a] active:text-gray-300 active:shadow-none 
-        disabled:opacity-50 disabled:cursor-not-allowed 
-        transition duration-500 ease-in-out transform;
+        @apply text-white bg-[#6B9D9E] font-semibold rounded-full hover:bg-[#5a888a] hover:shadow-lg hover:scale-105 active:bg-[#44686a] active:text-gray-300 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed transition duration-500 ease-in-out transform;
     }
+
     .tabs {
-        @apply text-white block py-2.5 px-4 transition duration-300 hover:bg-[#466b6e] active:bg-[#385658]
-        select-none cursor-pointer 
+        @apply text-white block py-2.5 px-4 transition duration-300 hover:bg-[#466b6e] active:bg-[#385658] select-none cursor-pointer
     }
+
     .fontstyle {
         font-family: "Kanit", sans-serif;
     }
+
     .btn-table {
-        @apply cursor-pointer rounded-md p-1 px-2
-        bg-slate-600 hover:bg-slate-500 active:bg-slate-700
+        @apply cursor-pointer rounded-md p-1 px-2 bg-slate-600 hover:bg-slate-500 active:bg-slate-700
     }
+
+    .ngx-pagination .current {
+        background: #6B9D9E !important;
+    }
+    .ngx-pagination li a { /* Новый цвет фона при наведении */
+        color: white; /* Новый цвет текста при наведении */
+    }
+    .ngx-pagination li a:hover { /* Новый цвет фона при наведении */
+        background: #44686a /* Новый цвет текста при наведении */
+    }
+
 }

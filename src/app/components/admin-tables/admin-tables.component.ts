@@ -6,6 +6,7 @@ import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
 import { User } from '../../types/user-table';
 import { UserService } from '../../services/user-table.service';
 import { TruncatePipe } from "../../truncate.pipe";
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @Component({
@@ -13,9 +14,10 @@ import { TruncatePipe } from "../../truncate.pipe";
     standalone: true,
     templateUrl: './admin-tables.component.html',
     styleUrl: './admin-tables.component.scss',
-    imports: [FontAwesomeModule, AdminPopupComponent, TruncatePipe]
+    imports: [FontAwesomeModule, AdminPopupComponent, TruncatePipe, NgxPaginationModule],
 })
 export class AdminTablesComponent implements OnInit {
+  currentPage = 1
   faTrash = faTrash
   faPenToSquare = faPenToSquare
   path: string = this.router.url
