@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AdminFormComponent } from "../admin-form/admin-form.component";
+import { AdminFormUserComponent } from "../../admin-form/admin-form-user/admin-form-user.component";
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
-    selector: 'app-admin-popup',
+    selector: 'app-admin-popup-user',
     standalone: true,
-    templateUrl: './admin-popup.component.html',
-    styleUrl: './admin-popup.component.scss',
-    imports: [AdminFormComponent],
+    templateUrl: './admin-popup-user.component.html',
+    styleUrl: './admin-popup-user.component.scss',
+    imports: [AdminFormUserComponent],
     animations: [
       trigger('slideInOut', [
         state('in', style({ transform: 'translateY(0)' })),
@@ -21,7 +21,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       ])
     ]
 })
-export class AdminPopupComponent {
+export class AdminPopupUserComponent {
   @Output() close = new EventEmitter<void>();
 
   closeModal() {

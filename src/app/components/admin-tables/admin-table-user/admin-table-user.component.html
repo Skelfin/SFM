@@ -1,0 +1,43 @@
+@if (showModal) {
+<app-admin-popup-user (close)="closeModal()"></app-admin-popup-user>
+}
+<pagination-controls previousLabel="Предыдущий" nextLabel="Следующий" class="flex text-xs justify-end pagination-controls"
+    (pageChange)="currentPage = $event">
+</pagination-controls>
+<table class="w-full shadow rounded overflow-hidden border-separate border-spacing-2 border border-slate-400">
+    <thead class=" text-white bg-[#6b9d9ec6]">
+        <tr>
+            <th class="border border-slate-500">№</th>
+            <th class="border border-slate-500">ID</th>
+            <th class="border border-slate-500">Никнейм</th>
+            <th class="border border-slate-500">Пароль</th>
+            <th class="border border-slate-500">Доступ</th>
+            <th class="border border-slate-500">Аватар</th>
+            <th class="w-40 border border-slate-500">Дата создания</th>
+            <th class="w-40 border border-slate-500">Дата обновления</th>
+            <th class="w-28 border border-slate-500">Действия</th>
+        </tr>
+    </thead>
+    @for (user of users |paginate: { itemsPerPage: 3, currentPage }; track user.id; let i = $index) {
+    <tbody class="text-center">
+        <tr>
+            <td class="border border-slate-500">{{ i + 1 }}</td>
+            <td class="border border-slate-500">{{ user.id }}</td>
+            <td class="border border-slate-500">{{ user.nickname }}</td>
+            <td class="border border-slate-500">{{ user.password | truncate }}</td>
+            <td class="border border-slate-500">{{ user.access_rights }}</td>
+            <td class="border border-slate-500">{{ user.avatar | truncate }}</td>
+            <td class="border border-slate-500">{{ user.createdAt }}</td>
+            <td class="border border-slate-500">{{ user.updatedAt }}</td>
+            <td class="flex justify-evenly">
+                <button class="btn-table text-green-500 hover:text-green-400" (click)="openModal()">
+                    <fa-icon [icon]="faPenToSquare" class=""></fa-icon>
+                </button>
+                <button class="btn-table text-red-600 hover:text-red-500">
+                    <fa-icon [icon]="faTrash" class=""></fa-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+}
+</table>
