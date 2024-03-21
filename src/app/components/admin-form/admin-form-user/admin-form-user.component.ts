@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../../services/user.form.service';
+import { UserFormService } from '../../../services/user.form.service';
 
 @Component({
   selector: 'app-admin-form-user',
@@ -12,7 +12,7 @@ import { UserService } from '../../../services/user.form.service';
 export class AdminFormUserComponent {
   userForm: FormGroup;
 
-  constructor(private userService: UserService) {
+  constructor(private userFormService: UserFormService) {
     this.userForm = new FormGroup({
       nickname: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -26,7 +26,7 @@ export class AdminFormUserComponent {
         ...this.userForm.value,
         access_rights: Number(this.userForm.value.access_rights),
       };
-      this.userService.createUser(this.userForm.value)
+      this.userFormService.createUser(this.userForm.value)
     } else {
       console.error('Form is invalid');
     }

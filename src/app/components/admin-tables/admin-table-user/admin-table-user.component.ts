@@ -3,7 +3,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { AdminPopupUserComponent } from '../../admin-popup/admin-popup-user/admin-popup-user.component';
 import { User } from '../../../types/user';
-import { UserService } from '../../../services/user-table.service';
+import { UserTableService } from '../../../services/user-table.service';
+import { UserFormService } from '../../../services/user.form.service';
 import { TruncatePipe } from "../../../truncate.pipe";
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -27,14 +28,22 @@ export class AdminTablesUserComponent implements OnInit {
   closeModal() {
     this.showModal = false;
   }
-  constructor(private userService: UserService) { }
+  constructor(private userTableService: UserTableService, private userFormService: UserFormService) { }
 
   users: User[] = [];
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(users => {
-      this.users = users;
+    this.loadUsers();
+
+    // Подписка на событие создания пользователя
+    this.userFormService.userCreated$.subscribe(() => {
+      this.loadUsers(); // Перезагрузка пользователей
     });
   }
 
+  loadUsers(): void {
+    this.userTableService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+  }
 }

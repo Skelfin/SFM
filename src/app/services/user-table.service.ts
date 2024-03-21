@@ -7,7 +7,7 @@ import { API_URL } from "../constants/constants";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserTableService {
     private apiUrl = `${API_URL}/user`
 
   constructor(private http: HttpClient) { }
