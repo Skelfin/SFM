@@ -9,6 +9,7 @@ import { PlaylistsModule } from './playlists/playlists.module';
 import { TracksModule } from './tracks/tracks.module';
 import { AuthorModule } from './author/author.module';
 import { AlbumsModule } from './albums/albums.module';
+import { UserFormModule } from './user-form/user-form.module';
 
 @Module({
   imports: [UserModule, TracksModule, AlbumsModule, AuthorModule, PlaylistsModule, AuthModule, ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRootAsync({ 
@@ -23,7 +24,7 @@ import { AlbumsModule } from './albums/albums.module';
       entities: [__dirname + '/**/*.entity{.js, .ts}'],
      }),
      inject: [ConfigService],
-   }),
+   }), UserFormModule,
   ],
   controllers: [AppController],
   providers: [AppService],

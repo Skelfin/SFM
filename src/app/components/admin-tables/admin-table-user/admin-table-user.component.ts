@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { AdminPopupUserComponent } from '../../admin-popup/admin-popup-user/admin-popup-user.component';
-import { User } from '../../../types/user-table';
+import { User } from '../../../types/user';
 import { UserService } from '../../../services/user-table.service';
 import { TruncatePipe } from "../../../truncate.pipe";
 import { NgxPaginationModule } from 'ngx-pagination';
