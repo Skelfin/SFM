@@ -18,7 +18,7 @@
             <th class="w-28 border border-slate-500">Действия</th>
         </tr>
     </thead>
-    @for (user of users |paginate: { itemsPerPage: 3, currentPage }; track user.id; let i = $index) {
+    @for (user of users |paginate: { itemsPerPage: 5, currentPage }; track user.id; let i = $index) {
     <tbody class="text-center">
         <tr>
             <td class="border border-slate-500">{{ i + 1 }}</td>
