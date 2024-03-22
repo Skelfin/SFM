@@ -21,8 +21,11 @@ export class AdminTablesUserComponent implements OnInit {
   faTrash = faTrash
   faPenToSquare = faPenToSquare
   showModal: boolean = false;
-  openModal() {
+  selectedUser: User | null = null;
+  
+  openModal(user: User) {
     this.showModal = true;
+    this.selectedUser = user; // Добавьте новое свойство selectedUser в классе компонента
   }
 
   closeModal() {
