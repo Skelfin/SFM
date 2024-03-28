@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from "../../components/header/header.component";
 import { AdminSidebarComponent } from "../../components/admin-sidebar/admin-sidebar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
+import { AdminTablePlaylistsComponent } from "../../components/admin-tables/admin-table-playlists/admin-table-playlists.component";
 
 
 @Component({
@@ -9,7 +10,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
     standalone: true,
     templateUrl: './admin-playlists.component.html',
     styleUrl: './admin-playlists.component.scss',
-    imports: [HeaderComponent, AdminSidebarComponent, FooterComponent]
+    imports: [HeaderComponent, AdminSidebarComponent, FooterComponent, AdminTablePlaylistsComponent]
 })
 export class AdminPlaylistsComponent {
 

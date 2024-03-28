@@ -8,7 +8,7 @@ export class Playlist {
     id: number
 
     @Column()
-    Name: string
+    name: string
 
     @Column({ nullable: true })
     avatar: string
