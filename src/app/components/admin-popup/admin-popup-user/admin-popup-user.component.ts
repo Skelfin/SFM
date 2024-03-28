@@ -4,7 +4,7 @@ import { AdminFormUserComponent } from "../../admin-form/admin-form-user/admin-f
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from '../../../types/user';
 import { FormsModule } from '@angular/forms'; // Импорт FormsModule
-import { UserFormService } from '../../../services/user.form.service';
+import { UserFormService } from '../../../services/user-table/user.form.service';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

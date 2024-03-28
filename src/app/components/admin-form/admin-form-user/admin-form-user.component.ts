@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserFormService } from '../../../services/user.form.service';
+import { UserFormService } from '../../../services/user-table/user.form.service';
 
 @Component({
   selector: 'app-admin-form-user',

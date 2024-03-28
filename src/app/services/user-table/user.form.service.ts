@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
-import { UserForm } from '../types/user-form';
-import { API_URL } from '../constants/constants';
+import { UserForm } from '../../types/user-form';
+import { API_URL } from '../../constants/constants';
 
 @Injectable({
   providedIn: 'root'

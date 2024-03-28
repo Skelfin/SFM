@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../types/user';
-import { API_URL } from "../constants/constants";
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '../../types/user';
+import { API_URL } from "../../constants/constants";
 
 @Injectable({
   providedIn: 'root'
