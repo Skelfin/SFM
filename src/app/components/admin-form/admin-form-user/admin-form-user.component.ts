@@ -15,7 +15,7 @@ export class AdminFormUserComponent {
   constructor(private userFormService: UserFormService) {
     this.userForm = new FormGroup({
       nickname: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
       access_rights: new FormControl(null ,Validators.required),
       avatar: new FormControl(''),
   });

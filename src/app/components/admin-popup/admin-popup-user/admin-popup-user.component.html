@@ -6,17 +6,33 @@
             <form (ngSubmit)="saveUser()">
                 <h1 class="bold mb-4 text-center">Изменить пользователя</h1>
                 <div class="flex flex-col mb-5">
-                    <input [(ngModel)]="nicknameModel" [ngModelOptions]="{standalone: true}" required="" type="text"
-                        placeholder="Nickname" id="nickname" class="input mb-5">
-                    <div class="flex">
-                        <input [(ngModel)]="passwordModel" [ngModelOptions]="{standalone: true}" required="" type="text"
-                            placeholder="Пароль" id="password" class="input-with-btn-form flex-grow">
+                    <input [(ngModel)]="nicknameModel" name="nickname" #nickname="ngModel"
+                        [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Nickname"
+                        id="nickname" class="input">
+                    @if (nickname.invalid && nickname.touched) {
+                    <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
+                    }
+                    <div class="flex mt-6">
+                        <input [(ngModel)]="passwordModel" name="password" #password="ngModel"
+                            (blur)="passwordTouched=true" [ngModelOptions]="{standalone: true}" required=""
+                            minlength="6" maxlength="20" type="text" placeholder="Пароль" id="password"
+                            class="input-with-btn-form flex-grow" (input)="onPasswordChange()">
                         <button class="btn-delete-form text-red-600 hover:text-red-500" (click)="clearPassword($event)">
                             <fa-icon [icon]="faDeleteLeft" class="fa-lg"></fa-icon>
                         </button>
                     </div>
+                    @if (password.invalid && password.touched && isPasswordTouched) {
+                    @if(password.errors?.['minlength']) {
+                    <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
+                    }
+                    @else if(password.errors?.['maxlength']) {
+                    <div class="text-red-500 text-xs mt-2">Пароль должен быть до 20 символов</div>
+                    }@else {
+                        <div class="text-red-500 text-xs mt-1">Введите пароль</div>
+                    }
+                    }
                 </div>
-                
+
                 <div class="mb-5 flex flex-col">
                     <label class="inline-flex items-center text-sm mb-2">
                         <input [checked]="user.access_rights === 0" class="form-radio h-5 w-5" type="radio"
@@ -42,8 +58,7 @@
                             file:active:text-gray-300  
                             file:duration-500 mb-5" type="file">
                 <div class="flex items-end justify-between">
-                    <button class="btn py-2 px-6"> Сохранить </button>
-                    <!--Cделать так чтобы кнопка была не активной, если пусто -->
+                    <button class="btn py-2 px-6" [disabled]="(nickname.invalid || password.invalid) && isPasswordTouched"> Сохранить </button>
                     <button (click)="closeModal()" class="btn px-6 py-2">
                         Закрыть
                     </button>

@@ -30,13 +30,18 @@ export class AdminPopupUserComponent {
   faDeleteLeft = faDeleteLeft
   @Output() close = new EventEmitter<void>();
   @Input() user: User | null = null;
+  passwordTouched = false;
   passwordModel: string = '';
   nicknameModel: string = '';
-
+  isPasswordTouched = false;
   clearPassword(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.passwordModel = ''; 
+    this.passwordModel = '';
+    this.isPasswordTouched = true; 
+  }
+  onPasswordChange() {
+    this.isPasswordTouched = true;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user']) {
@@ -68,4 +73,5 @@ export class AdminPopupUserComponent {
     this.userFormService.updateUser(this.user.id,updatedUserData)
     this.closeModal()
   }
+  
 }

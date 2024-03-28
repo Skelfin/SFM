@@ -1,14 +1,28 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <h1 class="font-bold mb-4">Создание пользователя</h1>
     <!-- Обновлен для вертикального расположения -->
-    <div class="flex flex-col mb-5">
+    <div class="flex flex-col">
         <input formControlName="nickname" required type="text" placeholder="Nickname" id="nickname"
-            class="input mb-5 w-72">
-        <input formControlName="password" required type="password" placeholder="Пароль" id="password"
             class="input w-72">
+        @if (userForm.controls['nickname'].invalid && (userForm.controls['nickname'].dirty ||
+        userForm.controls['nickname'].touched)) {
+        <div class="text-red-500 text-xs mt-1">Введите никнейм</div>
+        }
+        <input formControlName="password" required type="password" placeholder="Пароль" id="password"
+            class="input mt-5 w-72">
+        @if (userForm.controls['password'].invalid && (userForm.controls['password'].dirty ||
+        userForm.controls['password'].touched)) {
+        @if (userForm.controls['password'].hasError('minlength')) {
+        <div class="text-red-500 text-xs mt-1">Пароль должен быть от 6 символов</div>
+        }
+        @else if (userForm.controls['password'].hasError('maxlength')) {
+        <div class="text-red-500 text-xs mt-1">Пароль должен быть до 20 символов</div>
+        }@else {
+            <div class="text-red-500 text-xs mt-1">Введите пароль</div>
+        }
+        }
     </div>
-    <!-- Added mt-8 class for spacing -->
-    <div class="mb-5 flex flex-col">
+    <div class="mb-5 flex flex-col mt-5">
         <label class="inline-flex items-center text-sm mb-2">
             <input formControlName="access_rights" [value]="0" class="form-radio h-5 w-5 inline-block p-2 rounded"
                 type="radio" name="transactionType" required>
@@ -33,6 +47,6 @@
             file:active:text-gray-300  
             file:duration-500 mb-5" type="file">
     <div class="flex items-center justify-between">
-        <button class="btn py-2 px-6"> Создать </button>
+        <button class="btn py-2 px-6" [disabled]="!userForm.valid"> Создать </button>
     </div>
 </form>

@@ -1,7 +1,8 @@
 <div class="flex flex-col min-h-screen">
   <app-header></app-header>
   <!-- This container will grow to take up available space, pushing footer to the bottom -->
-  <div class="bg-cover bg-center bg-no-repeat border-y-2 border-[#162A3E] flex flex-1 justify-center items-center" style="background-image: url('assets/Home.jpg');">
+  <div class="bg-cover bg-center bg-no-repeat border-y-2 border-[#162A3E] flex flex-1 justify-center items-center"
+    style="background-image: url('assets/Home.jpg');">
     <form [formGroup]="userData" (ngSubmit)="onSubmit()"
       class="flex flex-col max-w-sm w-full px-4 py-5 rounded border border-slate-600 bg-[#04111D]">
       <h1 class="text-center text-lg font-bold mb-5">Войти в учетную запись</h1>
@@ -18,8 +19,10 @@
         @if (userData.controls['password'].hasError('minlength')) {
         <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
         }
-        @if (userData.controls['password'].hasError('maxlength')) {
+        @else if (userData.controls['password'].hasError('maxlength')) {
         <div class="text-red-500 text-xs mt-2">Пароль должен быть до 20 символов</div>
+        }@else {
+        <div class="text-red-500 text-xs mt-2">Введите пароль</div>
         }
         }
       </div>
