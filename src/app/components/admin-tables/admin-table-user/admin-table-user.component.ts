@@ -7,6 +7,7 @@ import { UserTableService } from '../../../services/user-table.service';
 import { UserFormService } from '../../../services/user.form.service';
 import { TruncatePipe } from "../../../truncate.pipe";
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -30,8 +31,9 @@ export class AdminTablesUserComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
+    this.loadUsers();
   }
-  constructor(private userTableService: UserTableService, private userFormService: UserFormService) { }
+  constructor(private userTableService: UserTableService, private userFormService: UserFormService, private readonly snackBar: MatSnackBar) { }
 
   users: User[] = [];
 
@@ -49,4 +51,13 @@ export class AdminTablesUserComponent implements OnInit {
       this.users = users;
     });
   }
+
+  deleteUser(userId: number) {
+    this.userTableService.deleteUser(userId).subscribe(() => {
+        this.snackBar.open('Пользователь удален', 'ОК', {
+            duration: 3000,
+        });
+        this.loadUsers();
+    });
+}
 }

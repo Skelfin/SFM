@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../types/user';
 import { API_URL } from "../constants/constants";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,10 @@ export class UserTableService {
 
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    const url = `${this.apiUrl}/${userId}`;
+    return this.http.delete(url)
   }
 }

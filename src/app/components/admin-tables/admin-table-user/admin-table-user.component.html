@@ -1,3 +1,6 @@
+@if (showModal) {
+    <app-admin-popup-user [user]="selectedUser" (close)="closeModal()"></app-admin-popup-user>
+    }
 <pagination-controls previousLabel="Предыдущий" nextLabel="Следующий"
     class="flex text-xs justify-end pagination-controls" (pageChange)="currentPage = $event">
 </pagination-controls>
@@ -30,14 +33,11 @@
                 <button class="btn-table text-green-500 hover:text-green-400" (click)="openModal(user)">
                     <fa-icon [icon]="faPenToSquare" class=""></fa-icon>
                 </button>
-                <button class="btn-table text-red-600 hover:text-red-500">
+                <button class="btn-table text-red-600 hover:text-red-500" (click)="deleteUser(user.id)">
                     <fa-icon [icon]="faTrash" class=""></fa-icon>
                 </button>
             </td>
         </tr>
     </tbody>
-    @if (showModal) {
-    <app-admin-popup-user [user]="selectedUser" (close)="closeModal()"></app-admin-popup-user>
-    }
     }
 </table>

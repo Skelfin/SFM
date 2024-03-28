@@ -35,4 +35,12 @@
         background: #44686a /* Новый цвет текста при наведении */
     }
 
+
+    .btn-delete-form {
+        @apply cursor-pointer rounded-r-lg p-1 px-2 bg-slate-600 hover:bg-slate-500 active:bg-slate-700
+    }
+
+    .input-with-btn-form {
+        @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded-l-lg border border-gray-600 focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
+    }
 }

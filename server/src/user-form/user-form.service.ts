@@ -18,5 +18,18 @@ export class UserFormService {
     await this.userRepository.save(newUser);
     return newUser;
   }
+  async updateUser(id: number, userData: Partial<User>): Promise<User> {
+    const userToUpdate = await this.userRepository.findOne({ where: { id } });
+    if (!userToUpdate) {
+      throw new Error('Пользователь не найден');
+    }
+    delete userData.id;
+    if (userData.password) {
+      userData.password = await argon2.hash(userData.password);
+    }
+    await this.userRepository.update(id, userData);
+    return this.userRepository.findOne({ where: { id } });
+  }
+
 }
 

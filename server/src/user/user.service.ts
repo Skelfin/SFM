@@ -28,7 +28,7 @@ export class UserService {
 
     const token = this.jwtService.sign({ nickname: createUserDto.nickname })
 
-      return { user, token }
+    return { user, token }
   }
 
   async findOne(nickname: string) {
@@ -42,4 +42,11 @@ export class UserService {
     return await this.userRepository.find();
   }
   
+  async deleteUser(userId: number): Promise<void> {
+    const result = await this.userRepository.delete(userId);
+    if (result.affected === 0) {
+      throw new BadRequestException('Пользователь не найден');
+    }
+  }
+
 }

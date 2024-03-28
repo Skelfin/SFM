@@ -1,30 +1,38 @@
 @if(user) {
-    <div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (click)="closeModal()">
-        <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
-            (click)="$event.stopPropagation()">
-            <div class="px-4 py-3">
-                <form>
-                    <h1 class="bold mb-4 text-center">Изменить пользователя</h1>
-                    <div class="flex flex-col mb-5">
-                        <input [(ngModel)]="user.nickname" [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Nickname" id="nickname"
-                            class="input mb-5">
-                        <input [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Пароль" id="password"
-                            class="input">
+<div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (click)="closeModal()">
+    <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
+        (click)="$event.stopPropagation()">
+        <div class="px-4 py-3">
+            <form (ngSubmit)="saveUser()">
+                <h1 class="bold mb-4 text-center">Изменить пользователя</h1>
+                <div class="flex flex-col mb-5">
+                    <input [(ngModel)]="nicknameModel" [ngModelOptions]="{standalone: true}" required="" type="text"
+                        placeholder="Nickname" id="nickname" class="input mb-5">
+                    <div class="flex">
+                        <input [(ngModel)]="passwordModel" [ngModelOptions]="{standalone: true}" required="" type="text"
+                            placeholder="Пароль" id="password" class="input-with-btn-form flex-grow">
+                        <button class="btn-delete-form text-red-600 hover:text-red-500" (click)="clearPassword($event)">
+                            <fa-icon [icon]="faDeleteLeft" class="fa-lg"></fa-icon>
+                        </button>
                     </div>
-                    <div class="mb-5 flex flex-col">
-                        <label class="inline-flex items-center text-sm mb-2">
-                            <input class="form-radio h-5 w-5" type="radio" name="transactionType" value="User" required>
-                            <span class="ml-2 mr-3">Пользователь</span>
-                        </label>
-                        <label class="inline-flex items-center text-sm">
-                            <input class="form-radio h-5 w-5" type="radio" name="transactionType" value="Admin" required>
-                            <span class="ml-2">Админ</span>
-                        </label>
-                    </div>
-                    <label class="block text-sm font-semibold mb-3">
-                        Выберите аватар
+                </div>
+                
+                <div class="mb-5 flex flex-col">
+                    <label class="inline-flex items-center text-sm mb-2">
+                        <input [checked]="user.access_rights === 0" class="form-radio h-5 w-5" type="radio"
+                            name="transactionType" value="User" required>
+                        <span class="ml-2 mr-3">Пользователь</span>
                     </label>
-                    <input class="block filewidth text-sm text-white
+                    <label class="inline-flex items-center text-sm">
+                        <input [checked]="user.access_rights === 1" class="form-radio h-5 w-5" type="radio"
+                            name="transactionType" value="Admin" required>
+                        <span class="ml-2">Админ</span>
+                    </label>
+                </div>
+                <label class="block text-sm font-semibold mb-3">
+                    Выберите аватар
+                </label>
+                <input class="block filewidth text-sm text-white
                             file:mr-2 file:py-2 file:px-2
                             file:rounded-full file:border-0
                             file:font-semibold file:cursor-pointer 
@@ -33,14 +41,15 @@
                             hover:file:bg-[#5a888a]
                             file:active:text-gray-300  
                             file:duration-500 mb-5" type="file">
-                    <div class="flex items-end justify-between">
-                        <button class="btn py-2 px-6"> Сохранить </button> <!--Cделать так чтобы кнопка была не активной, если пусто -->
-                        <button (click)="closeModal()" class="btn px-6 py-2"> 
-                            Закрыть
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div class="flex items-end justify-between">
+                    <button class="btn py-2 px-6"> Сохранить </button>
+                    <!--Cделать так чтобы кнопка была не активной, если пусто -->
+                    <button (click)="closeModal()" class="btn px-6 py-2">
+                        Закрыть
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 }
