@@ -1,10 +1,10 @@
-<form>
+<form [formGroup]="playlistForm" (ngSubmit)="onSubmit()">
     <h1 class="font-bold mb-4">Создание плейлиста</h1>
     <div class="flex flex-col">
         <input formControlName="name" required type="text" placeholder="Название" id="name" class="input w-72">
-        <textarea
+        <textarea formControlName="description"
             class="resize overflow-auto textarea mt-5 min-h-11 max-h-72 min-w-72 sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl"
-            placeholder="Описание"></textarea>
+            placeholder="Описание" id="description"></textarea>
     </div>
     <label class="block text-sm font-semibold mt-5 mb-3">
         Выберите аватар
@@ -19,6 +19,6 @@
             file:active:text-gray-300  
             file:duration-500 mb-5" type="file">
     <div class="flex items-center justify-between">
-        <button class="btn py-2 px-6"> Создать </button>
+        <button class="btn py-2 px-6" [disabled]="!playlistForm.valid"> Создать </button>
     </div>
 </form>

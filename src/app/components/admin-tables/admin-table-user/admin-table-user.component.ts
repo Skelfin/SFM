@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { AdminPopupUserComponent } from '../../admin-popup/admin-popup-user/admin-popup-user.component';
@@ -11,11 +11,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
-    selector: 'app-admin-table-user',
-    standalone: true,
-    templateUrl: './admin-table-user.component.html',
-    styleUrl: './admin-table-user.component.scss',
-    imports: [FontAwesomeModule, AdminPopupUserComponent, TruncatePipe, NgxPaginationModule],
+  selector: 'app-admin-table-user',
+  standalone: true,
+  templateUrl: './admin-table-user.component.html',
+  styleUrl: './admin-table-user.component.scss',
+  imports: [FontAwesomeModule, AdminPopupUserComponent, TruncatePipe, NgxPaginationModule],
 })
 export class AdminTablesUserComponent implements OnInit {
   currentPage = 1
@@ -23,7 +23,7 @@ export class AdminTablesUserComponent implements OnInit {
   faPenToSquare = faPenToSquare
   showModal: boolean = false;
   selectedUser: User | null = null;
-  
+
   openModal(user: User) {
     this.showModal = true;
     this.selectedUser = user;
@@ -53,10 +53,10 @@ export class AdminTablesUserComponent implements OnInit {
 
   deleteUser(userId: number) {
     this.userTableService.deleteUser(userId).subscribe(() => {
-        this.snackBar.open('Пользователь удален', 'ОК', {
-            duration: 3000,
-        });
-        this.loadUsers();
+      this.snackBar.open('Пользователь удален', 'ОК', {
+        duration: 3000,
+      });
+      this.loadUsers();
     });
-}
+  }
 }

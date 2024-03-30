@@ -6,6 +6,7 @@ import { Playlist } from '../../../types/playlist';
 import { PlaylistTableService } from '../../../services/playlist-table.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminPopupPlaylistsComponent } from "../../admin-popup/admin-popup-playlists/admin-popup-playlists.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-admin-table-playlists',
@@ -31,15 +32,26 @@ export class AdminTablePlaylistsComponent {
     this.loadPlaylists();
   }
 
-  constructor(private playlistTableService: PlaylistTableService) {}
+  constructor(private playlistTableService: PlaylistTableService, private readonly snackBar: MatSnackBar) {}
   playlists: Playlist[] = [];
   ngOnInit(): void {
     this.loadPlaylists();
+    this.playlistTableService.playlistCreated$.subscribe(() => {
+      this.loadPlaylists();
+    });
   }
 
   loadPlaylists(): void {
     this.playlistTableService.getPlaylists().subscribe(playlists => {
       this.playlists = playlists;
+    });
+  }
+  deletePlaylist(playlistId: number) {
+    this.playlistTableService.deletePlaylist(playlistId).subscribe(() => {
+      this.snackBar.open('Пользователь удален', 'ОК', {
+        duration: 3000,
+      });
+      this.loadPlaylists();
     });
   }
 }
