@@ -6,10 +6,14 @@
             <form (ngSubmit)="savePlaylist()">
                 <h1 class="bold mb-4 text-center">Изменить плейлист</h1>
                 <div class="flex flex-col mb-5 mt-6">
-                    <input [(ngModel)]="nameModel" name="name" #name="ngModel"
-                        [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Название" id="name"
-                        class="input">
-                    <textarea [(ngModel)]="descriptionModel" name="description" #description="ngModel" [ngModelOptions]="{standalone: true}" class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                    <input [(ngModel)]="nameModel" name="name" #name="ngModel" [ngModelOptions]="{standalone: true}"
+                        required="" type="text" placeholder="Название" id="name" class="input">
+                    @if (name.invalid && name.touched) {
+                    <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
+                    }
+                    <textarea [(ngModel)]="descriptionModel" name="description" #description="ngModel"
+                        [ngModelOptions]="{standalone: true}"
+                        class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
                         placeholder="Описание"></textarea>
                 </div>
                 <label class="block text-sm font-semibold mb-3">
@@ -25,7 +29,7 @@
                                 file:active:text-gray-300  
                                 file:duration-500 mb-5" type="file">
                 <div class="flex items-end justify-between">
-                    <button class="btn py-2 px-6"> Сохранить </button>
+                    <button class="btn py-2 px-6" [disabled]="name.invalid"> Сохранить </button>
                     <button (click)="closeModal()" class="btn px-6 py-2">
                         Закрыть
                     </button>
