@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AdminFormUserComponent } from "../../admin-form/admin-form-user/admin-form-user.component";
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from '../../../types/user';
-import { FormsModule } from '@angular/forms'; // Импорт FormsModule
+import { FormsModule } from '@angular/forms';
 import { UserFormService } from '../../../services/user-table/user.form.service';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,6 +34,7 @@ export class AdminPopupUserComponent {
   passwordModel: string = '';
   nicknameModel: string = '';
   isPasswordTouched = false;
+  accessRightsModel: number | undefined;
   clearPassword(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
@@ -48,6 +49,7 @@ export class AdminPopupUserComponent {
       const user: User = changes['user'].currentValue;
       this.nicknameModel = user && user.nickname ? user.nickname : '';
       this.passwordModel = user && user.password ? user.password : '';
+      this.accessRightsModel = user?.access_rights ?? 0;
     }
   }
 
@@ -62,16 +64,20 @@ export class AdminPopupUserComponent {
       console.error('Пользователя не существует');
       return;
     }
-
-    const updatedUserData = {
+  
+    const updatedUserData: any = {
       nickname: this.nicknameModel,
-      password: this.passwordModel,
-      access_rights: this.user.access_rights,
+      access_rights: this.accessRightsModel,
       avatar: 'path/to/avatar.jpg',
     };
-    console.log(updatedUserData)
-    this.userFormService.updateUser(this.user.id,updatedUserData)
-    this.closeModal()
+  
+    if (this.isPasswordTouched && this.passwordModel.trim() !== '') {
+      updatedUserData.password = this.passwordModel;
+    }
+  
+    console.log(updatedUserData);
+    this.userFormService.updateUser(this.user.id, updatedUserData);
+    this.closeModal();
   }
   
 }

@@ -35,13 +35,13 @@
 
                 <div class="mb-5 flex flex-col">
                     <label class="inline-flex items-center text-sm mb-2">
-                        <input [checked]="user.access_rights === 0" class="form-radio h-5 w-5" type="radio"
-                            name="transactionType" value="User" required>
+                        <input [(ngModel)]="accessRightsModel" class="form-radio h-5 w-5" type="radio"
+                            name="transactionType" [value]="0" required>
                         <span class="ml-2 mr-3">Пользователь</span>
                     </label>
                     <label class="inline-flex items-center text-sm">
-                        <input [checked]="user.access_rights === 1" class="form-radio h-5 w-5" type="radio"
-                            name="transactionType" value="Admin" required>
+                        <input [(ngModel)]="accessRightsModel" class="form-radio h-5 w-5" type="radio"
+                            name="transactionType" [value]="1" required>
                         <span class="ml-2">Админ</span>
                     </label>
                 </div>
@@ -58,7 +58,7 @@
                             file:active:text-gray-300  
                             file:duration-500 mb-5" type="file">
                 <div class="flex items-end justify-between">
-                    <button class="btn py-2 px-6" [disabled]="(nickname.invalid || password.invalid) && isPasswordTouched"> Сохранить </button>
+                    <button class="btn py-2 px-6" [disabled]="(nickname.invalid || isPasswordTouched) && password.invalid"> Сохранить </button>
                     <button (click)="closeModal()" class="btn px-6 py-2">
                         Закрыть
                     </button>
