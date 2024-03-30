@@ -1,6 +1,6 @@
 import { Track } from "src/tracks/entities/track.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Playlist {
@@ -16,19 +16,11 @@ export class Playlist {
     @Column({ nullable: true })
     description: string
 
-    @ManyToMany(() => User, user => user.playlists)
-    @JoinTable({
-      name: "user_playlists", // Имя таблицы связи
-      joinColumn: {
-        name: "id_playlist", // Имя столбца, который ссылается на ID плейлиста
-        referencedColumnName: "id"
-      },
-      inverseJoinColumn: {
-        name: "id_user", // Имя столбца, который ссылается на ID пользователя
-        referencedColumnName: "id"
-      }
+    @ManyToOne(() => User, user => user.playlists, {
+        onDelete: "CASCADE"
     })
-    users: User[];
+    @JoinColumn({ name: 'id_user' })
+    user: User;
 
     @ManyToMany(() => Track, track => track.playlists) // Установка отношения ManyToMany
     @JoinTable({ // JoinTable следует указывать только с одной стороны отношения, обычно с владеющей стороны.

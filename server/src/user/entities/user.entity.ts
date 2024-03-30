@@ -1,5 +1,5 @@
 import { Playlist } from "src/playlists/entities/playlist.entity";
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -18,7 +18,7 @@ export class User {
     @Column({ nullable: true })
     avatar: string
 
-    @ManyToMany(() => Playlist, playlist => playlist.users)
+    @ManyToMany(() => Playlist, playlist => playlist.user)
     playlists: Playlist[];
 
     @CreateDateColumn({ type: 'date' })

@@ -4,6 +4,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormsModule } from '@angular/forms';
 import { faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
 import { Playlist } from '../../../types/playlist';
+import { PlaylistTableService } from '../../../services/playlist-table.service';
 
 @Component({
   selector: 'app-admin-popup-playlists',
@@ -28,9 +29,36 @@ export class AdminPopupPlaylistsComponent {
   faDeleteLeft = faDeleteLeft
   @Output() close = new EventEmitter<void>();
   @Input() playlist: Playlist | null = null;
+  nameModel: string = '';
+  descriptionModel: string = '';
 
   closeModal() {
     this.close.emit();
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['playlist']) {
+      const playlist: Playlist = changes['playlist'].currentValue;
+      this.nameModel = playlist && playlist.name ? playlist.name : '';
+      this.descriptionModel = playlist && playlist.description ? playlist.description : '';
+    }
+  }
+
+  constructor(private playlistTableService: PlaylistTableService) { }
+  savePlaylist() {
+    if (!this.playlist) {
+      console.error('Пользователя не существует');
+      return;
+    }
   
+    const updatedPlaylistData: any = {
+      name: this.nameModel,
+      description: this.descriptionModel,
+      avatar: 'path/to/avatar.jpg',
+    };
+  
+    console.log(updatedPlaylistData);
+    this.playlistTableService.updatePlaylist(this.playlist.id, updatedPlaylistData);
+    this.closeModal();
+  }
 }

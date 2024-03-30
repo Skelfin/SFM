@@ -3,13 +3,14 @@
     <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
         (click)="$event.stopPropagation()">
         <div class="px-4 py-3">
-            <form>
+            <form (ngSubmit)="savePlaylist()">
                 <h1 class="bold mb-4 text-center">Изменить плейлист</h1>
                 <div class="flex flex-col mb-5 mt-6">
-                    <input required type="text" placeholder="Название" id="name" class="input">
-                    <textarea
-                    class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
-                    placeholder="Описание"></textarea>
+                    <input [(ngModel)]="nameModel" name="name" #name="ngModel"
+                        [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Название" id="name"
+                        class="input">
+                    <textarea [(ngModel)]="descriptionModel" name="description" #description="ngModel" [ngModelOptions]="{standalone: true}" class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                        placeholder="Описание"></textarea>
                 </div>
                 <label class="block text-sm font-semibold mb-3">
                     Выберите аватар

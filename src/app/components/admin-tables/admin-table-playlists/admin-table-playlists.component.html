@@ -12,6 +12,7 @@
             <th class="border border-slate-500">Название</th>
             <th class="border border-slate-500">Аватар</th>
             <th class="border border-slate-500">Описание</th>
+            <th class="border border-slate-500">Польз. ID</th>
             <th class="w-40 border border-slate-500">Дата создания</th>
             <th class="w-40 border border-slate-500">Дата обновления</th>
             <th class="w-28 border border-slate-500">Действия</th>
@@ -22,9 +23,10 @@
         <tr>
             <td class="border border-slate-500">{{ i + 1 }}</td>
             <td class="border border-slate-500">{{ playlist.id}}</td>
-            <td class="border border-slate-500">{{ playlist.name}}</td>
-            <td class="border border-slate-500">{{ playlist.avatar}}</td>
-            <td class="border border-slate-500">{{ playlist.description}}</td>
+            <td class="border border-slate-500">{{ playlist.name | truncate }}</td>
+            <td class="border border-slate-500">{{ playlist.avatar | truncate }}</td>
+            <td class="border border-slate-500">{{ playlist.description | truncate }}</td>
+            <td class="border border-slate-500">{{ playlist.user.id }}</td>
             <td class="border border-slate-500">{{ playlist.createdAt }}</td>
             <td class="border border-slate-500">{{ playlist.updatedAt }}</td>
             <td class="flex justify-evenly">
