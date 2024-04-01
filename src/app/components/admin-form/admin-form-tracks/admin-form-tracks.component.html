@@ -1,0 +1,37 @@
+<form>
+    <h1 class="font-bold mb-4">Добавление трека</h1>
+    <div class="flex flex-col">
+        <input formControlName="name" required type="text" placeholder="Название" id="name" class="input w-72">
+        <!-- @if (playlistForm.controls['name'].invalid && (playlistForm.controls['name'].dirty ||
+        playlistForm.controls['name'].touched)) {
+        <div class="text-red-500 text-xs mt-1">Введите название</div>
+        } -->
+    </div>
+    <label class="block text-sm font-semibold mt-5 mb-3">
+        Выберите путь к треку
+    </label>
+    <input formControlName="track" class="block filewidth text-sm text-white
+            file:mr-2 file:py-2 file:px-2
+            file:rounded-full file:border-0
+            file:font-semibold file:cursor-pointer 
+            file:bg-[#6B9D9E] file:text-white
+            file:active:bg-[#44686a]
+            hover:file:bg-[#5a888a]
+            file:active:text-gray-300  
+            file:duration-500 mb-5" type="file">
+    <label class="block text-sm font-semibold mt-5 mb-3">
+        Выберите аватар
+    </label>
+    <input formControlName="avatar" class="block filewidth text-sm text-white
+            file:mr-2 file:py-2 file:px-2
+            file:rounded-full file:border-0
+            file:font-semibold file:cursor-pointer 
+            file:bg-[#6B9D9E] file:text-white
+            file:active:bg-[#44686a]
+            hover:file:bg-[#5a888a]
+            file:active:text-gray-300  
+            file:duration-500 mb-5" type="file">
+    <div class="flex items-center justify-between">
+        <button class="btn py-2 px-6"> Создать </button>
+    </div>
+</form>

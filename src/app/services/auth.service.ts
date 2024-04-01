@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IAuthUser, IUser } from "../types/user.interface";
 import { catchError, tap } from "rxjs";
 import { API_URL } from "../constants/constants";
+import { IAuthUser, IUser } from "../types/user";
 
 @Injectable({
     providedIn: 'root',

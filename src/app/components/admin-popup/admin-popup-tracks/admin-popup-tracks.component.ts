@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
-import { Playlist } from '../../../types/playlist';
-import { PlaylistTableService } from '../../../services/playlist-table.service';
+import { Track } from '../../../types/track';
+import { TrackTableService } from '../../../services/track-table.service';
 
 @Component({
-  selector: 'app-admin-popup-playlists',
+  selector: 'app-admin-popup-tracks',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './admin-popup-playlists.component.html',
-  styleUrl: './admin-popup-playlists.component.scss',
+  templateUrl: './admin-popup-tracks.component.html',
+  styleUrl: './admin-popup-tracks.component.scss',
   animations: [
     trigger('slideInOut', [
       state('in', style({ transform: 'translateY(0)' })),
@@ -23,39 +23,37 @@ import { PlaylistTableService } from '../../../services/playlist-table.service';
     ])
   ]
 })
-export class AdminPopupPlaylistsComponent {
+export class AdminPopupTracksComponent {
   @Output() close = new EventEmitter<void>();
-  @Input() playlist: Playlist | null = null;
+  @Input() track: Track | null = null;
   nameModel: string = '';
-  descriptionModel: string = '';
 
   closeModal() {
     this.close.emit();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['playlist']) {
-      const playlist: Playlist = changes['playlist'].currentValue;
-      this.nameModel = playlist && playlist.name ? playlist.name : '';
-      this.descriptionModel = playlist && playlist.description ? playlist.description : '';
+    if (changes['track']) {
+      const track: Track = changes['track'].currentValue;
+      this.nameModel = track && track.name ? track.name : '';
     }
   }
 
-  constructor(private playlistTableService: PlaylistTableService) { }
-  savePlaylist() {
-    if (!this.playlist) {
+  constructor(private trackTableService: TrackTableService) { }
+  saveTrack() {
+    if (!this.track) {
       console.error('Пользователя не существует');
       return;
     }
   
-    const updatedPlaylistData: any = {
+    const updatedTrackData: any = {
       name: this.nameModel,
-      description: this.descriptionModel,
+
       avatar: 'path/to/avatar.jpg',
     };
   
-    console.log(updatedPlaylistData);
-    this.playlistTableService.updatePlaylist(this.playlist.id, updatedPlaylistData);
+    console.log(updatedTrackData);
+    this.trackTableService.updateTrack(this.track.id, updatedTrackData);
     this.closeModal();
   }
 }
