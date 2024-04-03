@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
-import * as argon2 from "argon2";
+import * as argon2 from 'argon2';
+import { promises as fs } from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class UserFormService {
@@ -16,7 +18,10 @@ export class UserFormService {
       throw new Error('Пароль должен быть от 6 до 20 символов');
     }
     const hashedPassword = await argon2.hash(userData.password);
-    const newUser = this.userRepository.create({ ...userData, password: hashedPassword });
+    const newUser = this.userRepository.create({
+      ...userData,
+      password: hashedPassword,
+    });
     await this.userRepository.save(newUser);
     return newUser;
   }
@@ -26,17 +31,28 @@ export class UserFormService {
     if (!userToUpdate) {
       throw new Error('Пользователь не найден');
     }
-    delete userData.id;
-
+  
+    // Если обновляется аватар, удаляем старый файл
+    if (userData.avatar && userToUpdate.avatar && userToUpdate.avatar !== 'Avatar_default.png') {
+      const oldAvatarPath = path.join('./uploads', userToUpdate.avatar);
+      try {
+        await fs.unlink(oldAvatarPath);
+        console.log(`Старый аватар удален: ${oldAvatarPath}`);
+      } catch (error) {
+        console.warn(`Ошибка при удалении старого аватара: ${error}`);
+      }
+    }
+  
+    // Продолжаем с обновлением пользователя...
     if (userData.password) {
       if (userData.password.length < 6 || userData.password.length > 20) {
         throw new Error('Пароль должен быть от 6 до 20 символов');
       }
       userData.password = await argon2.hash(userData.password);
     }
-
+  
     await this.userRepository.update(id, userData);
     return this.userRepository.findOne({ where: { id } });
   }
-
+  
 }

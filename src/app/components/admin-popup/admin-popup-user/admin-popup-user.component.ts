@@ -35,12 +35,24 @@ export class AdminPopupUserComponent {
   nicknameModel: string = '';
   isPasswordTouched = false;
   accessRightsModel: number | undefined;
+
+  avatarFile: File | null = null;
   clearPassword(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.passwordModel = '';
     this.isPasswordTouched = true; 
   }
+
+  fileChangeEvent(event: Event): void {
+    const element = event.target as HTMLInputElement;
+    if (element.files?.length) {
+      this.avatarFile = element.files[0];
+    } else {
+      this.avatarFile = null;
+    }
+  }
+
   onPasswordChange() {
     this.isPasswordTouched = true;
   }
@@ -59,25 +71,28 @@ export class AdminPopupUserComponent {
 
   constructor(private userFormService: UserFormService) { }
 
-  saveUser() {
-    if (!this.user) {
-      console.error('Пользователя не существует');
-      return;
-    }
-  
-    const updatedUserData: any = {
-      nickname: this.nicknameModel,
-      access_rights: this.accessRightsModel,
-      avatar: 'path/to/avatar.jpg',
-    };
-  
-    if (this.isPasswordTouched && this.passwordModel.trim() !== '') {
-      updatedUserData.password = this.passwordModel;
-    }
-  
-    console.log(updatedUserData);
-    this.userFormService.updateUser(this.user.id, updatedUserData);
-    this.closeModal();
+saveUser() {
+  if (!this.user) {
+    console.error('Пользователя не существует');
+    return;
   }
+
+  const formData = new FormData();
+  formData.append('nickname', this.nicknameModel);
+  formData.append('access_rights', String(this.accessRightsModel));
+
+  if (this.isPasswordTouched && this.passwordModel.trim() !== '') {
+    formData.append('password', this.passwordModel);
+  }
+
+  if (this.avatarFile) { // Проверка был ли выбран файл
+    formData.append('avatar', this.avatarFile, this.avatarFile.name);
+  }
+
+  // Использование FormData вместо обычного объекта
+  this.userFormService.updateUser(this.user.id, formData);
+  this.closeModal();
+}
+
   
 }

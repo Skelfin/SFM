@@ -29,7 +29,7 @@ export class UserFormService {
   }
   
 
-  updateUser(id: number, userFormData: Partial<UserForm>) {
+  updateUser(id: number, userFormData: FormData | Partial<UserForm>) {
     return this.http
       .put(`${API_URL}/user-form/${id}`, userFormData)
       .subscribe(() => {
