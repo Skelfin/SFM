@@ -44,7 +44,7 @@ export class AdminPopupPlaylistsComponent {
   constructor(private playlistTableService: PlaylistTableService) { }
   savePlaylist() {
     if (!this.playlist) {
-      console.error('Пользователя не существует');
+      console.error('Плейлиста не существует');
       return;
     }
   

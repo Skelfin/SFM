@@ -37,7 +37,7 @@ export class PlaylistsService {
   async deletePlaylist(playlistId: number): Promise<void> {
     const result = await this.playlistRepository.delete(playlistId);
     if (result.affected === 0) {
-      throw new BadRequestException('Пользователь не найден');
+      throw new BadRequestException('Плейлист не найден');
     }
   }
 

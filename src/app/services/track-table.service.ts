@@ -28,20 +28,22 @@ export class TrackTableService {
       this.snackBar.open('Успешно создано', 'OK', {
         duration: 3000,
       });
-    })
+    });
   }
 
   updateTrack(id: number, trackFormData: Partial<TrackForm>) {
-    return this.http.put(`${API_URL}/tracks/${id}`, trackFormData).subscribe(() => {
+    return this.http
+      .put(`${API_URL}/tracks/${id}`, trackFormData)
+      .subscribe(() => {
         this.trackCreatedSubject.next();
-      this.snackBar.open('Успешно обновлено', 'OK', {
-        duration: 3000,
+        this.snackBar.open('Успешно обновлено', 'OK', {
+          duration: 3000,
+        });
       });
-    })
   }
 
   deleteTrack(trackId: number): Observable<any> {
     const url = `${this.apiUrl}/${trackId}`;
-    return this.http.delete(url)
+    return this.http.delete(url);
   }
 }

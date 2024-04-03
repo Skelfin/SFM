@@ -6,30 +6,37 @@ import { API_URL } from '../../constants/constants';
 import { UserForm } from '../../types/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserFormService {
   private userCreatedSubject = new Subject<void>();
 
   userCreated$ = this.userCreatedSubject.asObservable();
 
-  constructor(private http: HttpClient, private readonly snackBar: MatSnackBar) { }
+  constructor(
+    private http: HttpClient,
+    private readonly snackBar: MatSnackBar
+  ) {}
 
-  createUser(user: UserForm) {
-    return this.http.post(`${API_URL}/user-form`, user).subscribe(() => {
-      this.userCreatedSubject.next();
-      this.snackBar.open('Успешно создано', 'OK', {
-        duration: 3000,
-      });
-    })
+  createUser(userFormData: FormData) {
+    return this.http.post(`${API_URL}/user-form`, userFormData).subscribe({
+      next: () => {
+        this.userCreatedSubject.next();
+        this.snackBar.open('Успешно создано', 'OK', { duration: 3000 });
+      },
+      error: (error) => console.error('Error creating user', error)
+    });
   }
+  
 
-  updateUser(id: number, userFormData: Partial<UserForm>){
-    return this.http.put(`${API_URL}/user-form/${id}`, userFormData).subscribe(() => {
-      this.userCreatedSubject.next();
-      this.snackBar.open('Успешно обновлено', 'OK', {
-        duration: 3000,
+  updateUser(id: number, userFormData: Partial<UserForm>) {
+    return this.http
+      .put(`${API_URL}/user-form/${id}`, userFormData)
+      .subscribe(() => {
+        this.userCreatedSubject.next();
+        this.snackBar.open('Успешно обновлено', 'OK', {
+          duration: 3000,
+        });
       });
-    })
   }
 }

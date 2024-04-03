@@ -1,3 +1,4 @@
+import { Album } from "./Album";
 import { Playlist } from "./playlist";
 
 export interface Track {
@@ -5,8 +6,8 @@ export interface Track {
     path: string;
     avatar: string;
     name: string;
-    // album: Album;
-    playlists: Playlist;
+    album: Album;
+    playlists: Playlist[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -16,8 +17,8 @@ export interface TrackForm {
     path: string;
     avatar: string;
     name: string;
-    // album: Album;
-    playlists: Playlist;
+    album: Album;
+    playlists: Playlist[];
     createdAt: Date;
     updatedAt: Date;
 }

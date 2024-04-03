@@ -20,15 +20,39 @@ export class AdminFormUserComponent {
       avatar: new FormControl(''),
   });
   }
+
+
+  onFileSelect(event: Event): void {
+    const element = event.target as HTMLInputElement;
+    if (element.files && element.files.length > 0) {
+      const file = element.files[0];
+      this.userForm.patchValue({ avatar: file });
+      // Если нужно, обновляем состояние валидации для этого поля
+      this.userForm.get('avatar')?.updateValueAndValidity();
+    }
+  }
+  
+  
   onSubmit() {
     if (this.userForm.valid) {
-      const formValue = {
-        ...this.userForm.value,
-        access_rights: Number(this.userForm.value.access_rights),
-      };
-      this.userFormService.createUser(this.userForm.value)
+      const formData = new FormData();
+      Object.keys(this.userForm.value).forEach(key => {
+        if (key !== 'avatar') {
+          formData.append(key, this.userForm.value[key]);
+        }
+      });
+  
+      // Проверяем, есть ли файл перед добавлением
+      const fileControl = this.userForm.get('avatar');
+      if (fileControl && fileControl.value) {
+        const file = fileControl.value;
+        formData.append('avatar', file, file.name);
+      }
+  
+      this.userFormService.createUser(formData)
     } else {
       console.error('Form is invalid');
     }
   }
+  
 }
