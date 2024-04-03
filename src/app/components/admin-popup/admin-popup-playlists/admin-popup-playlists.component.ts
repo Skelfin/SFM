@@ -28,6 +28,16 @@ export class AdminPopupPlaylistsComponent {
   @Input() playlist: Playlist | null = null;
   nameModel: string = '';
   descriptionModel: string = '';
+  avatarFile: File | null = null;
+
+  fileChangeEvent(event: Event): void {
+    const element = event.target as HTMLInputElement;
+    if (element.files?.length) {
+      this.avatarFile = element.files[0];
+    } else {
+      this.avatarFile = null;
+    }
+  }
 
   closeModal() {
     this.close.emit();
@@ -48,14 +58,14 @@ export class AdminPopupPlaylistsComponent {
       return;
     }
   
-    const updatedPlaylistData: any = {
-      name: this.nameModel,
-      description: this.descriptionModel,
-      avatar: 'path/to/avatar.jpg',
-    };
+    const formData = new FormData();
+    formData.append('name', this.nameModel);
+    formData.append('description', this.descriptionModel);
+    if (this.avatarFile) {
+      formData.append('avatar', this.avatarFile, this.avatarFile.name);
+    }
   
-    console.log(updatedPlaylistData);
-    this.playlistTableService.updatePlaylist(this.playlist.id, updatedPlaylistData);
+    this.playlistTableService.updatePlaylist(this.playlist.id, formData);
     this.closeModal();
   }
 }

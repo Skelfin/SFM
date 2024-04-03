@@ -18,12 +18,38 @@ export class AdminFormPlaylistsComponent {
       avatar: new FormControl('')
     });
   }
+
+  onFileSelect(event: Event): void {
+    const element = event.target as HTMLInputElement;
+    if (element.files && element.files.length > 0) {
+      const file = element.files[0];
+      this.playlistForm.patchValue({ avatar: file });
+      // Если нужно, обновляем состояние валидации для этого поля
+      this.playlistForm.get('avatar')?.updateValueAndValidity();
+    }
+  }
+
   onSubmit() {
     if (this.playlistForm.valid) {
-      this.playlistTableService.createPlaylist(this.playlistForm.value)
-    }else {
+      const formData = new FormData();
+      Object.keys(this.playlistForm.value).forEach(key => {
+        if (key !== 'avatar') {
+          formData.append(key, this.playlistForm.value[key]);
+        }
+      });
+  
+      // Проверяем, есть ли файл перед добавлением
+      const fileControl = this.playlistForm.get('avatar');
+      if (fileControl && fileControl.value) {
+        const file = fileControl.value;
+        formData.append('avatar', file, file.name);
+      }
+  
+      this.playlistTableService.createPlaylist(formData)
+    } else {
       console.error('Form is invalid');
     }
   }
+
 }
 

@@ -37,7 +37,7 @@
     <label class="block text-sm font-semibold mb-3">
         Выберите аватар
     </label>
-    <input formControlName="avatar" (change)="onFileSelect($event)" class="block filewidth text-sm text-white
+    <input formControlName="avatar" accept=".jpg, .jpeg, .png, .gif" (change)="onFileSelect($event)" class="block filewidth text-sm text-white
             file:mr-2 file:py-2 file:px-2
             file:rounded-full file:border-0
             file:font-semibold file:cursor-pointer 

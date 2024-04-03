@@ -23,12 +23,12 @@ export class PlaylistTableService {
     return this.http.get<Playlist[]>(this.apiUrl);
   }
 
-  createPlaylist(playlist: PlaylistForm) {
+  createPlaylist(userFormData: FormData) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.getToken()}`,
     });
     return this.http
-      .post(`${this.apiUrl}`, playlist, { headers })
+      .post(`${this.apiUrl}`, userFormData, { headers })
       .subscribe(() => {
         this.playlistCreatedSubject.next();
         this.snackBar.open('Успешно создано', 'OK', {
@@ -37,9 +37,9 @@ export class PlaylistTableService {
       });
   }
 
-  updatePlaylist(id: number, playlistFormData: Partial<PlaylistForm>) {
+  updatePlaylist(playlistId: number, formData: FormData) {
     return this.http
-      .put(`${API_URL}/playlists/${id}`, playlistFormData)
+      .put(`${API_URL}/playlists/${playlistId}`, formData)
       .subscribe(() => {
         this.playlistCreatedSubject.next();
         this.snackBar.open('Успешно обновлено', 'OK', {

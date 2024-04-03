@@ -56,9 +56,9 @@ export class UserService {
     }
   
     // Проверяем, что у пользователя есть аватар и это не дефолтный аватар
-    if (user.avatar && user.avatar !== 'Avatar_default.png') {
+    if (user.avatar && user.avatar !== 'avatar_default.png') {
       try {
-        const filePath = path.join('./uploads', user.avatar);
+        const filePath = path.join('./user_avatar', user.avatar);
         await fs.unlink(filePath);
         console.log(`Аватар удален: ${filePath}`);
       } catch (error) {

@@ -33,8 +33,8 @@ export class UserFormService {
     }
   
     // Если обновляется аватар, удаляем старый файл
-    if (userData.avatar && userToUpdate.avatar && userToUpdate.avatar !== 'Avatar_default.png') {
-      const oldAvatarPath = path.join('./uploads', userToUpdate.avatar);
+    if (userData.avatar && userToUpdate.avatar && userToUpdate.avatar !== 'avatar_default.png') {
+      const oldAvatarPath = path.join('./user_avatar', userToUpdate.avatar);
       try {
         await fs.unlink(oldAvatarPath);
         console.log(`Старый аватар удален: ${oldAvatarPath}`);

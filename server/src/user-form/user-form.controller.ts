@@ -21,7 +21,7 @@ export class UserFormController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: diskStorage({
-        destination: './uploads', // папка для загрузки
+        destination: './user_avatar', // папка для загрузки
         filename: (req, file, cb) => {
           const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
           cb(null, uniqueName);
@@ -33,7 +33,7 @@ export class UserFormController {
     @UploadedFile() file: Express.Multer.File,
     @Body() userData: any,
   ) {
-    userData.avatar = file ? `${file.filename}` : 'Avatar_default.png'; // Путь к файлу для сохранения в БД
+    userData.avatar = file ? `${file.filename}` : 'avatar_default.png'; // Путь к файлу для сохранения в БД
     return this.userFormService.createUser(userData);
   }
 
@@ -41,7 +41,7 @@ export class UserFormController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: diskStorage({
-        destination: './uploads',
+        destination: './user_avatar',
         filename: (req, file, cb) => {
           const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
           cb(null, uniqueName);
