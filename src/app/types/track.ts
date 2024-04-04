@@ -1,4 +1,4 @@
-import { Album } from "./Album";
+import { Album } from "./album";
 import { Playlist } from "./playlist";
 
 export interface Track {

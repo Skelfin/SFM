@@ -1,16 +1,16 @@
-<form>
+<form [formGroup]="trackForm" (ngSubmit)="onSubmit()">
     <h1 class="font-bold mb-4">Добавление трека</h1>
     <div class="flex flex-col">
         <input formControlName="name" required type="text" placeholder="Название" id="name" class="input w-72">
-        <!-- @if (playlistForm.controls['name'].invalid && (playlistForm.controls['name'].dirty ||
-        playlistForm.controls['name'].touched)) {
+        @if (trackForm.controls['name'].invalid && (trackForm.controls['name'].dirty ||
+        trackForm.controls['name'].touched)) {
         <div class="text-red-500 text-xs mt-1">Введите название</div>
-        } -->
+        }
     </div>
     <label class="block text-sm font-semibold mt-5 mb-3">
-        Выберите путь к треку
+        Выберите файл трека
     </label>
-    <input formControlName="track" class="block filewidth text-sm text-white
+    <input formControlName="path" class="block filewidth text-sm text-white
             file:mr-2 file:py-2 file:px-2
             file:rounded-full file:border-0
             file:font-semibold file:cursor-pointer 
@@ -18,7 +18,8 @@
             file:active:bg-[#44686a]
             hover:file:bg-[#5a888a]
             file:active:text-gray-300  
-            file:duration-500 mb-5" type="file">
+            file:duration-500 mb-5" type="file" (change)="onTrackSelect($event)" 
+            accept=".mp3, .wav, .flac, .aac, .ogg">
     <label class="block text-sm font-semibold mt-5 mb-3">
         Выберите аватар
     </label>
@@ -30,8 +31,8 @@
             file:active:bg-[#44686a]
             hover:file:bg-[#5a888a]
             file:active:text-gray-300  
-            file:duration-500 mb-5" type="file">
+            file:duration-500 mb-5" type="file" accept=".jpg, .jpeg, .png, .gif" (change)="onFileSelect($event)">
     <div class="flex items-center justify-between">
-        <button class="btn py-2 px-6"> Создать </button>
+        <button class="btn py-2 px-6" [disabled]="!trackForm.valid"> Создать </button>
     </div>
 </form>

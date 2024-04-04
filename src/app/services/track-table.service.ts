@@ -22,8 +22,8 @@ export class TrackTableService {
   getTrack(): Observable<Track[]> {
     return this.http.get<Track[]>(this.apiUrl);
   }
-  createTrack(track: TrackForm) {
-    return this.http.post(`${API_URL}/tracks`, track).subscribe(() => {
+  createTrack(trackFormData: FormData) {
+    return this.http.post(`${API_URL}/tracks`, trackFormData).subscribe(() => {
       this.trackCreatedSubject.next();
       this.snackBar.open('Успешно создано', 'OK', {
         duration: 3000,
@@ -31,7 +31,7 @@ export class TrackTableService {
     });
   }
 
-  updateTrack(id: number, trackFormData: Partial<TrackForm>) {
+  updateTrack(id: number, trackFormData: FormData) {
     return this.http
       .put(`${API_URL}/tracks/${id}`, trackFormData)
       .subscribe(() => {

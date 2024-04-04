@@ -10,7 +10,7 @@
             <th class="border border-slate-500">№</th>
             <th class="border border-slate-500">ID</th>
             <th class="border border-slate-500">Название</th>
-            <th class="border border-slate-500">Путь</th>
+            <th class="border border-slate-500">Файл</th>
             <th class="border border-slate-500">Аватар</th>
             <th class="border border-slate-500">ID альб.</th>
             <th class="w-40 border border-slate-500">Дата создания</th>
@@ -24,8 +24,8 @@
             <td class="border border-slate-500">{{ i + 1 }}</td>
             <td class="border border-slate-500">{{ track.id }}</td>
             <td class="border border-slate-500">{{ track.name }}</td>
-            <td class="border border-slate-500">{{ track.path }}</td>
-            <td class="border border-slate-500">{{ track.avatar }}</td>
+            <td class="border border-slate-500">{{ track.path | truncate }}</td>
+            <td class="border border-slate-500">{{ track.avatar | truncate  }}</td>
             <td class="border border-slate-500">{{ track.album }}</td>
             <td class="border border-slate-500">{{ track.createdAt }}</td>
             <td class="border border-slate-500">{{ track.updatedAt }}</td>

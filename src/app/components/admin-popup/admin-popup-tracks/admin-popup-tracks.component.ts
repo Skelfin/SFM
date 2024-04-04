@@ -27,9 +27,29 @@ export class AdminPopupTracksComponent {
   @Output() close = new EventEmitter<void>();
   @Input() track: Track | null = null;
   nameModel: string = '';
+  trackFile: File | null = null;
+  avatarFile: File | null = null;
 
   closeModal() {
     this.close.emit();
+  }
+
+  fileChangeEventAvatar(event: Event): void {
+    const element = event.target as HTMLInputElement;
+    if (element.files?.length) {
+      this.avatarFile = element.files[0];
+    } else {
+      this.avatarFile = null;
+    }
+  }
+
+  fileChangeEventTrack(event: Event): void {
+    const element = event.target as HTMLInputElement;
+    if (element.files?.length) {
+      this.trackFile = element.files[0];
+    } else {
+      this.trackFile = null;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,15 +65,18 @@ export class AdminPopupTracksComponent {
       console.error('Трека не существует');
       return;
     }
-  
-    const updatedTrackData: any = {
-      name: this.nameModel,
+    const formData = new FormData();
+    formData.append('name', this.nameModel);
 
-      avatar: 'path/to/avatar.jpg',
-    };
+    if (this.trackFile) {
+      formData.append('path', this.trackFile, this.trackFile.name);
+    }
   
-    console.log(updatedTrackData);
-    this.trackTableService.updateTrack(this.track.id, updatedTrackData);
+    if (this.avatarFile) {
+      formData.append('avatar', this.avatarFile, this.avatarFile.name);
+    }
+  
+    this.trackTableService.updateTrack(this.track.id, formData);
     this.closeModal();
   }
 }
