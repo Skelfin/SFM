@@ -13,7 +13,7 @@ export class Album {
     @Column({ nullable: true })
     description: string
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'date' })
     avatar: string
 
     @Column({ nullable: true })

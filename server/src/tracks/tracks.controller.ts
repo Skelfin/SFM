@@ -108,6 +108,6 @@ return this.tracksService.updateTrack(id, trackData, files);
 
   @Delete(':id')
   async deleteUser(@Param('id') id: number): Promise<void> {
-    return await this.tracksService.deletePlaylist(id);
+    return await this.tracksService.deleteTrack(id);
   }
 }
