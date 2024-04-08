@@ -69,7 +69,8 @@ export class AdminPopupPlaylistsComponent {
     const trackIdsArray = this.trackIdsModel
     .split(' ')
     .map(id => parseInt(id, 10))
-    .filter(id => !isNaN(id));
+    .filter(id => !isNaN(id))
+    .sort((a, b) => a - b)
 
     const formData = new FormData();
     formData.append('name', this.nameModel);

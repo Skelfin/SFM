@@ -50,12 +50,11 @@ export class PlaylistsService {
       playlistToUpdate.avatar = playlistData.avatar;
     }
 
-    if (!playlistData.trackIds || playlistData.trackIds.length === 0) {
-      playlistToUpdate.tracks = [];
+    if (playlistData.trackIds) {
+      const newTracks = playlistData.trackIds.map(id => ({ id: Number(id) }) as Track);
+      playlistToUpdate.tracks = newTracks;
     } else {
-      playlistToUpdate.tracks = playlistData.trackIds.map(
-        (id) => ({ id: Number(id) }) as Track,
-      );
+      playlistToUpdate.tracks = [];
     }
 
     if (
