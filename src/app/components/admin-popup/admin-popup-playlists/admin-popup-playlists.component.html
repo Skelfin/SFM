@@ -15,6 +15,10 @@
                         [ngModelOptions]="{standalone: true}"
                         class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
                         placeholder="Описание"></textarea>
+                        <textarea [(ngModel)]="trackIdsModel" name="trackIds" #trackIds="ngModel"
+                        [ngModelOptions]="{standalone: true}"
+                        class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                        placeholder="ID теков (через пробел)"></textarea>
                 </div>
                 <label class="block text-sm font-semibold mb-3">
                     Выберите аватар

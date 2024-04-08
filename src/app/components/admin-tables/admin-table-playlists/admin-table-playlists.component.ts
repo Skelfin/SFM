@@ -22,6 +22,14 @@ export class AdminTablePlaylistsComponent {
   showModal: boolean = false;
   selectedPlaylist: Playlist | null = null;
 
+  getTrackIds(playlist: Playlist): string {
+    if (playlist.tracks && playlist.tracks.length > 0) {
+      return playlist.tracks.map(track => track.id).join(', ');
+    } else {
+      return 'N/A';
+    }
+  }
+  
 
   openModal(playlist: Playlist) {
     this.showModal = true;

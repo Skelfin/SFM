@@ -1,3 +1,4 @@
+import { Track } from "./track";
 import { User } from "./user";
 
 export interface Playlist {
@@ -8,6 +9,7 @@ export interface Playlist {
     createdAt: Date;
     updatedAt: Date;
     user: User;
+    tracks: Track[];
   }
 export interface PlaylistForm {
     name: string
@@ -15,4 +17,6 @@ export interface PlaylistForm {
     description: string
     createdAt: Date;
     updatedAt: Date;
+    tracks: Track[];
+    trackIds: number[];
   }

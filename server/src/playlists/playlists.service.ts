@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
 import * as path from 'path';
+import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { Track } from 'src/tracks/entities/track.entity';
 
 @Injectable()
 export class PlaylistsService {
@@ -31,13 +33,29 @@ export class PlaylistsService {
 
   async updatePlaylist(
     id: number,
-    playlistData: Partial<Playlist>,
+    playlistData: Partial<UpdatePlaylistDto>,
   ): Promise<Playlist> {
     const playlistToUpdate = await this.playlistRepository.findOne({
       where: { id },
+      relations: ['tracks'],
     });
     if (!playlistToUpdate) {
       throw new Error('Плейлист не найден');
+    }
+
+    playlistToUpdate.name = playlistData.name || playlistToUpdate.name;
+    playlistToUpdate.description =
+      playlistData.description || playlistToUpdate.description;
+    if (playlistData.avatar) {
+      playlistToUpdate.avatar = playlistData.avatar;
+    }
+
+    if (!playlistData.trackIds || playlistData.trackIds.length === 0) {
+      playlistToUpdate.tracks = [];
+    } else {
+      playlistToUpdate.tracks = playlistData.trackIds.map(
+        (id) => ({ id: Number(id) }) as Track,
+      );
     }
 
     if (
@@ -59,8 +77,11 @@ export class PlaylistsService {
       }
     }
 
-    await this.playlistRepository.update(id, playlistData);
-    return this.playlistRepository.findOne({ where: { id } });
+    await this.playlistRepository.save(playlistToUpdate);
+    return this.playlistRepository.findOne({
+      where: { id },
+      relations: ['tracks'],
+    });
   }
 
   async deletePlaylist(playlistId: number): Promise<void> {

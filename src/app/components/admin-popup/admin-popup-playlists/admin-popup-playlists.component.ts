@@ -28,6 +28,7 @@ export class AdminPopupPlaylistsComponent {
   @Input() playlist: Playlist | null = null;
   nameModel: string = '';
   descriptionModel: string = '';
+  trackIdsModel: string = '';
   avatarFile: File | null = null;
 
   fileChangeEvent(event: Event): void {
@@ -39,15 +40,22 @@ export class AdminPopupPlaylistsComponent {
     }
   }
 
+  getTrackIds(playlist: Playlist): string {
+    return playlist.tracks && playlist.tracks.length > 0
+      ? playlist.tracks.map(track => track.id).join(' ') // Изменено с запятой на пробел
+      : '';
+  }
+
   closeModal() {
     this.close.emit();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['playlist']) {
+    if (changes['playlist'] && changes['playlist'].currentValue) {
       const playlist: Playlist = changes['playlist'].currentValue;
-      this.nameModel = playlist && playlist.name ? playlist.name : '';
-      this.descriptionModel = playlist && playlist.description ? playlist.description : '';
+      this.nameModel = playlist.name ? playlist.name : '';
+      this.descriptionModel = playlist.description ? playlist.description : '';
+      this.trackIdsModel = this.getTrackIds(playlist);
     }
   }
 
@@ -58,13 +66,21 @@ export class AdminPopupPlaylistsComponent {
       return;
     }
   
+    const trackIdsArray = this.trackIdsModel
+    .split(' ')
+    .map(id => parseInt(id, 10))
+    .filter(id => !isNaN(id));
+
     const formData = new FormData();
     formData.append('name', this.nameModel);
     formData.append('description', this.descriptionModel);
+    trackIdsArray.forEach(id => {
+      formData.append('trackIds[]', id.toString());
+    });
     if (this.avatarFile) {
       formData.append('avatar', this.avatarFile, this.avatarFile.name);
     }
-  
+    console.log(trackIdsArray)
     this.playlistTableService.updatePlaylist(this.playlist.id, formData);
     this.closeModal();
   }

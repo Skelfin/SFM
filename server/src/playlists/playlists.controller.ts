@@ -18,6 +18,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 
 @Controller('playlists')
 export class PlaylistsController {
@@ -70,7 +71,7 @@ export class PlaylistsController {
   )
   async updatePlaylist(
     @Param('id') id: number,
-    @Body() playlistData: Partial<CreatePlaylistDto>,
+    @Body() playlistData: Partial<UpdatePlaylistDto>,
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (file) {

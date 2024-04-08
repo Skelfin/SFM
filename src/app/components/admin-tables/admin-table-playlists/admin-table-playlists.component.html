@@ -1,6 +1,6 @@
 @if (showModal) {
-    <app-admin-popup-playlists [playlist]="selectedPlaylist" (close)="closeModal()"></app-admin-popup-playlists>
-    }
+<app-admin-popup-playlists [playlist]="selectedPlaylist" (close)="closeModal()"></app-admin-popup-playlists>
+}
 <pagination-controls previousLabel="Предыдущий" nextLabel="Следующий"
     class="flex text-xs justify-end pagination-controls" (pageChange)="currentPage = $event">
 </pagination-controls>
@@ -12,7 +12,8 @@
             <th class="border border-slate-500">Название</th>
             <th class="border border-slate-500">Аватар</th>
             <th class="border border-slate-500">Описание</th>
-            <th class="border border-slate-500">Польз. ID</th>
+            <th class="border border-slate-500">ID польз. </th>
+            <th class="border border-slate-500">ID трека</th>
             <th class="w-40 border border-slate-500">Дата создания</th>
             <th class="w-40 border border-slate-500">Дата обновления</th>
             <th class="w-28 border border-slate-500">Действия</th>
@@ -27,6 +28,9 @@
             <td class="border border-slate-500">{{ playlist.avatar | truncate }}</td>
             <td class="border border-slate-500">{{ playlist.description | truncate }}</td>
             <td class="border border-slate-500">{{ playlist.user.id }}</td>
+            <td class="border border-slate-500">
+                {{ getTrackIds(playlist) }}
+            </td>
             <td class="border border-slate-500">{{ playlist.createdAt }}</td>
             <td class="border border-slate-500">{{ playlist.updatedAt }}</td>
             <td class="flex justify-evenly">
