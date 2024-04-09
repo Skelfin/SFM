@@ -13,7 +13,7 @@
                     }
                 </div>
                 <label class="block text-sm font-semibold mt-5 mb-3">
-                    Выберите путь к треку
+                    Выберите файл трека
                 </label>
                 <input (change)="fileChangeEventTrack($event)" class="block filewidth text-sm text-white
                             file:mr-2 file:py-2 file:px-2
@@ -37,7 +37,7 @@
                             file:active:text-gray-300  
                             file:duration-500 mb-5" type="file">
                 <div class="flex items-center justify-between">
-                    <button class="btn py-2 px-6"> Создать </button>
+                    <button [disabled]="name.invalid || !nameModel.trim()" class="btn py-2 px-6"> Создать </button>
                     <button (click)="closeModal()" class="btn px-6 py-2">
                         Закрыть
                     </button>
