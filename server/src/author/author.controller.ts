@@ -1,34 +1,74 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  Put,
+} from '@nestjs/common';
 import { AuthorService } from './author.service';
-import { CreateAuthorDto } from './dto/create-author.dto';
-import { UpdateAuthorDto } from './dto/update-author.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { Author } from './entities/author.entity';
 
 @Controller('author')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Post()
-  create(@Body() createAuthorDto: CreateAuthorDto) {
-    return this.authorService.create(createAuthorDto);
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './author_avatar', // папка для загрузки
+        filename: (req, file, cb) => {
+          const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+          cb(null, uniqueName);
+        },
+      }),
+    }),
+  )
+  async createUser(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() authorData: any,
+  ) {
+    authorData.avatar = file ? `${file.filename}` : 'avatar_default.png'; // Путь к файлу для сохранения в БД
+    return this.authorService.createAuthor(authorData);
   }
 
   @Get()
-  findAll() {
-    return this.authorService.findAll();
+  async getAuthor(): Promise<Author[]> {
+    return await this.authorService.getAuthor();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authorService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
-    return this.authorService.update(+id, updateAuthorDto);
+  @Put(':id')
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './author_avatar',
+        filename: (req, file, cb) => {
+          const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+          cb(null, uniqueName);
+        },
+      }),
+    }),
+  )
+  async updateAuthor(
+    @Param('id') id: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() authorData: Partial<Author>,
+  ) {
+    if (file) {
+      authorData.avatar = file.filename;
+    }
+    return this.authorService.updateAuthor(id, authorData);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authorService.remove(+id);
+  async deleteAuthor(@Param('id') id: number): Promise<void> {
+    return await this.authorService.deleteAuthor(id);
   }
 }

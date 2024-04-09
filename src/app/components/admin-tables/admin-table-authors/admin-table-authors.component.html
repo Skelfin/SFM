@@ -1,1 +1,41 @@
-<p>admin-table-authors works!</p>
+@if (showModal) {
+    <app-admin-popup-authors [author]="selectedAuthor" (close)="closeModal()"></app-admin-popup-authors>
+    }
+<pagination-controls previousLabel="Предыдущий" nextLabel="Следующий"
+    class="flex text-xs justify-end pagination-controls" (pageChange)="currentPage = $event">
+</pagination-controls>
+<table class="w-full shadow rounded overflow-hidden border-separate border-spacing-2 border border-slate-400">
+    <thead class=" text-white bg-[#6b9d9ec6]">
+        <tr>
+            <th class="border border-slate-500">№</th>
+            <th class="border border-slate-500">ID</th>
+            <th class="border border-slate-500">Никнейм</th>
+            <th class="border border-slate-500">Описание</th>
+            <th class="border border-slate-500">Аватар</th>
+            <th class="w-40 border border-slate-500">Дата создания</th>
+            <th class="w-40 border border-slate-500">Дата обновления</th>
+            <th class="w-28 border border-slate-500">Действия</th>
+        </tr>
+    </thead>
+    @for (author of authors |paginate: { itemsPerPage: 5, currentPage }; track author.id; let i = $index) {
+    <tbody class="text-center">
+        <tr>
+            <td class="border border-slate-500">{{ i + 1 }}</td>
+            <td class="border border-slate-500">{{ author.id }}</td>
+            <td class="border border-slate-500">{{ author.nickname }}</td>
+            <td class="border border-slate-500">{{ author.description | truncate }}</td>
+            <td class="border border-slate-500">{{ author.avatar | truncate }}</td>
+            <td class="border border-slate-500">{{ author.createdAt }}</td>
+            <td class="border border-slate-500">{{ author.updatedAt }}</td>
+            <td class="flex justify-evenly">
+                <button class="btn-table text-green-500 hover:text-green-400" (click)="openModal(author)">
+                    <fa-icon [icon]="faPenToSquare" class=""></fa-icon>
+                </button>
+                 <button class="btn-table text-red-600 hover:text-red-500" (click)="deleteAuthor(author.id)">
+                    <fa-icon [icon]="faTrash" class=""></fa-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    }
+</table>
