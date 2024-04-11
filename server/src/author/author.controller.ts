@@ -23,7 +23,7 @@ export class AuthorController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: diskStorage({
-        destination: './author_avatar', // папка для загрузки
+        destination: './author_avatar',
         filename: (req, file, cb) => {
           const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
           cb(null, uniqueName);
@@ -35,7 +35,7 @@ export class AuthorController {
     @UploadedFile() file: Express.Multer.File,
     @Body() authorData: any,
   ) {
-    authorData.avatar = file ? `${file.filename}` : 'avatar_default.png'; // Путь к файлу для сохранения в БД
+    authorData.avatar = file ? `${file.filename}` : 'avatar_default.png';
     return this.authorService.createAuthor(authorData);
   }
 

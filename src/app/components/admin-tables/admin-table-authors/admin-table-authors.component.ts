@@ -38,6 +38,17 @@ export class AdminTableAuthorsComponent {
     this.selectedAuthor = author;
   }
 
+  getAlbumIds(author: Author): string {
+    if (author.albums && author.albums.length > 0) {
+      return author.albums
+        .map(album => album.id)
+        .sort((a, b) => a - b)
+        .join(', ');
+    } else {
+      return 'N/A';
+    }
+  }
+
   closeModal() {
     this.showModal = false;
     this.loadAuthor();

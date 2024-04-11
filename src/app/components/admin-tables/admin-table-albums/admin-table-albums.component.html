@@ -29,8 +29,8 @@
             <td class="border border-slate-500">{{ album.description | truncate }}</td>
             <td class="border border-slate-500">{{ album.avatar | truncate }}</td>
             <td class="border border-slate-500">{{ album.year }}</td>
-            <td class="border border-slate-500">{{ getAuthors(album) }}</td>
-            <td class="border border-slate-500">{{ getTrackIds(album) }}</td>
+            <td class="border border-slate-500">{{ getAuthors(album) | truncate }}</td>
+            <td class="border border-slate-500">{{ getTrackIds(album) | truncate }}</td>
             <td class="border border-slate-500">{{ album.createdAt }}</td>
             <td class="border border-slate-500">{{ album.updatedAt }}</td>
             <td class="flex justify-evenly">

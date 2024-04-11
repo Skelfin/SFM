@@ -1,26 +1,30 @@
 @if(author) {
-    <div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (click)="closeModal()">
-        <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
-            (click)="$event.stopPropagation()">
-            <div class="px-4 py-3">
-                <form (ngSubmit)="saveAuthor()">
-                    <h1 class="bold mb-4 text-center">Изменить плейлист</h1>
-                    <div class="flex flex-col mb-5 mt-6">
-                        <input [(ngModel)]="nicknameModel" name="nickname" #nickname="ngModel"
+<div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (click)="closeModal()">
+    <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
+        (click)="$event.stopPropagation()">
+        <div class="px-4 py-3">
+            <form (ngSubmit)="saveAuthor()">
+                <h1 class="bold mb-4 text-center">Изменить плейлист</h1>
+                <div class="flex flex-col mb-5 mt-6">
+                    <input [(ngModel)]="nicknameModel" name="nickname" #nickname="ngModel"
                         [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Nickname"
                         id="nickname" class="input">
                     @if (nickname.invalid && nickname.touched) {
                     <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
                     }
-                        <textarea [(ngModel)]="descriptionModel" name="description" #description="ngModel"
-                            [ngModelOptions]="{standalone: true}"
-                            class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
-                            placeholder="Описание"></textarea>
-                    </div>
-                    <label class="block text-sm font-semibold mb-3">
-                        Выберите аватар
-                    </label>
-                    <input class="block filewidth text-sm text-white
+                    <textarea [(ngModel)]="descriptionModel" name="description" #description="ngModel"
+                        [ngModelOptions]="{standalone: true}"
+                        class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                        placeholder="Описание"></textarea>
+                    <textarea [(ngModel)]="albumIdsModel" name="albumIds" #albumIds="ngModel"
+                        [ngModelOptions]="{standalone: true}"
+                        class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                        placeholder="ID альбома/ов (через пробел)"></textarea>
+                </div>
+                <label class="block text-sm font-semibold mb-3">
+                    Выберите аватар
+                </label>
+                <input class="block filewidth text-sm text-white
                                     file:mr-2 file:py-2 file:px-2
                                     file:rounded-full file:border-0
                                     file:font-semibold file:cursor-pointer 
@@ -28,15 +32,16 @@
                                     file:active:bg-[#44686a]
                                     hover:file:bg-[#5a888a]
                                     file:active:text-gray-300  
-                                    file:duration-500 mb-5" accept=".jpg, .jpeg, .png, .gif" (change)="fileChangeEvent($event)" type="file">
-                    <div class="flex items-end justify-between">
-                        <button class="btn py-2 px-6" [disabled]="nickname.invalid"> Сохранить </button>
-                        <button (click)="closeModal()" class="btn px-6 py-2">
-                            Закрыть
-                        </button>
-                    </div>
-                </form>
-            </div>
+                                    file:duration-500 mb-5" accept=".jpg, .jpeg, .png, .gif"
+                    (change)="fileChangeEvent($event)" type="file">
+                <div class="flex items-end justify-between">
+                    <button class="btn py-2 px-6" [disabled]="nickname.invalid"> Сохранить </button>
+                    <button (click)="closeModal()" class="btn px-6 py-2">
+                        Закрыть
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-    }
+</div>
+}

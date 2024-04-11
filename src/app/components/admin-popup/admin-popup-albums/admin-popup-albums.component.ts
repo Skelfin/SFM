@@ -40,6 +40,8 @@ export class AdminPopupAlbumsComponent {
   @Input() album: Album | null = null;
   nameModel: string = '';
   descriptionModel: string = '';
+  trackIdsModel: string = '';
+  authorIdsModel: string = '';
   avatarFile: File | null = null;
   yearModel: number | null = null;
 
@@ -52,6 +54,17 @@ export class AdminPopupAlbumsComponent {
     }
   }
 
+  getIdsAsString(items: { id: number }[]): string {
+    return items && items.length > 0
+      ? items
+          .sort((a, b) => a.id - b.id)
+          .map(item => item.id)
+          .join(' ')
+      : '';
+  }
+  
+  
+
   closeModal() {
     this.close.emit();
   }
@@ -62,13 +75,23 @@ export class AdminPopupAlbumsComponent {
       this.nameModel = album.name ? album.name : '';
       this.descriptionModel = album.description ? album.description : '';
       this.yearModel = album.year ? album.year : null;
+      this.trackIdsModel = this.getIdsAsString(album.tracks);
+      this.authorIdsModel = this.getIdsAsString(album.authors);
     }
   }
 
   formValid(): boolean {
-    return this.nameModel.trim() !== '' && this.descriptionModel.trim() !== '' && this.yearModel !== null && this.yearModel >= 1800 && this.yearModel <= 2024;
+    return this.nameModel.trim() !== '' && this.yearModel !== null && this.yearModel >= 1800 && this.yearModel <= 2024;
   }
 
+  parseIdsFromString(idsString: string): number[] {
+    return idsString
+      .split(' ')
+      .map(id => parseInt(id, 10))
+      .filter(id => !isNaN(id))
+      .sort((a, b) => a - b);
+  }
+  
   constructor(private albumTableService: AlbumTableService) {}
   saveAlbum() {
     if (!this.album) {
@@ -76,9 +99,14 @@ export class AdminPopupAlbumsComponent {
       return;
     }
 
+    const trackIdsArray = this.parseIdsFromString(this.trackIdsModel);
+    const authorIdsArray = this.parseIdsFromString(this.authorIdsModel);
+
     const formData = new FormData();
     formData.append('name', this.nameModel);
     formData.append('description', this.descriptionModel);
+    trackIdsArray.forEach(id => formData.append('trackIds[]', id.toString()));
+    authorIdsArray.forEach(id => formData.append('authorIds[]', id.toString()));
     if (this.avatarFile) {
       formData.append('avatar', this.avatarFile, this.avatarFile.name);
     }

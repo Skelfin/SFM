@@ -38,7 +38,10 @@ export class AdminTableAlbumsComponent {
 
   getTrackIds(album: Album): string {
     if (album.tracks && album.tracks.length > 0) {
-      return album.tracks.map(track => track.id).join(', ');
+      return album.tracks
+        .map(track => track.id)
+        .sort((a, b) => a - b)
+        .join(', ');
     } else {
       return 'N/A';
     }

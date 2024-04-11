@@ -4,12 +4,17 @@ import { Repository } from 'typeorm';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Album } from 'src/albums/entities/album.entity';
+import { Track } from 'src/tracks/entities/track.entity';
+import { UpdateAuthorDto } from './dto/update-author.dto';
 
 @Injectable()
 export class AuthorService {
   constructor(
     @InjectRepository(Author)
     private authorRepository: Repository<Author>,
+    @InjectRepository(Album)
+    private albumRepository: Repository<Album>,
   ) {}
 
   async createAuthor(authorData: Author): Promise<Author> {
@@ -18,15 +23,25 @@ export class AuthorService {
     return newAuthor;
   }
 
-  async updateAuthor(id: number, authorData: Partial<Author>): Promise<Author> {
+  async updateAuthor(id: number, authorData: Partial<UpdateAuthorDto>): Promise<Author> {
     const authorToUpdate = await this.authorRepository.findOne({
       where: { id },
+      relations: ['albums']
     });
     if (!authorToUpdate) {
       throw new Error('Пользователь не найден');
     }
 
-    // Если обновляется аватар, удаляем старый файл
+    authorToUpdate.nickname = authorData.nickname || authorToUpdate.nickname;
+    authorToUpdate.description = authorData.description || authorToUpdate.description;
+
+    if (authorData.albumIds) {
+      const newAlbums = authorData.albumIds.map(id => ({ id: Number(id) }) as Album);
+      authorToUpdate.albums = newAlbums;
+    } else {
+      authorToUpdate.albums = [];
+    }
+
     if (
       authorData.avatar &&
       authorToUpdate.avatar &&
@@ -41,8 +56,8 @@ export class AuthorService {
       }
     }
 
-    await this.authorRepository.update(id, authorData);
-    return this.authorRepository.findOne({ where: { id } });
+    await this.authorRepository.save(authorToUpdate);
+    return this.authorRepository.findOne({ where: { id }, relations: ['albums'] });
   }
 
   async getAuthor(): Promise<Author[]> {
@@ -56,25 +71,56 @@ export class AuthorService {
       where: {
         id: authorId,
       },
+      relations: ['albums'],
     });
-  
+
     if (!author) {
       throw new BadRequestException('Автор не найден');
     }
+    
+    for (const album of author.albums) {
+      const albumAuthors = await this.albumRepository.createQueryBuilder('album')
+        .leftJoinAndSelect('album.authors', 'author')
+        .where('album.id = :id', { id: album.id })
+        .getOne();
   
-    // Проверяем, что у пользователя есть аватар и это не дефолтный аватар
+      if (albumAuthors.authors.length === 1) {
+        // Очищаем связь альбома с треками
+        await this.albumRepository.createQueryBuilder()
+          .relation(Album, 'tracks')
+          .of(album)
+          .loadMany()
+          .then(async tracks => {
+            for (const track of tracks) {
+              await this.albumRepository.createQueryBuilder()
+                .update(Track)
+                .set({ album: null })
+                .where('id = :id', { id: track.id })
+                .execute();
+            }
+          });
+  
+        // Удаляем альбом, если у него не осталось других авторов
+        await this.albumRepository.delete(album.id);
+      } else {
+        // Удаляем только связь с этим автором
+        await this.albumRepository.createQueryBuilder()
+          .relation(Album, 'authors')
+          .of(album)
+          .remove(author);
+      }
+    }
+
     if (author.avatar && author.avatar !== 'avatar_default.png') {
       try {
         const filePath = path.join('./author_avatar', author.avatar);
         await fs.unlink(filePath);
         console.log(`Аватар удален: ${filePath}`);
       } catch (error) {
-        // Логируем ошибку, но не прерываем процесс, чтобы пользователь все равно был удален
         console.error(`Ошибка при удалении аватара: ${error}`);
       }
     }
-  
-    // Удаляем пользователя после обработки его аватара
-    const result = await this.authorRepository.delete(authorId);
+
+    await this.authorRepository.delete(authorId);
   }
 }

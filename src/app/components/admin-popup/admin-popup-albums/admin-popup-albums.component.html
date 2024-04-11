@@ -4,7 +4,7 @@
         (click)="$event.stopPropagation()">
         <div class="px-4 py-3">
             <form (ngSubmit)="saveAlbum()">
-                <h1 class="bold mb-4 text-center">Изменить плейлист</h1>
+                <h1 class="bold mb-4 text-center">Изменить альбом</h1>
                 <div class="flex flex-col mt-6">
                     <input [(ngModel)]="nameModel" name="name" #name="ngModel" [ngModelOptions]="{standalone: true}"
                         required="" type="text" placeholder="Название" id="name" class="input">
@@ -23,6 +23,14 @@
                     @if (year.invalid && (year.dirty || year.touched)) {
                     <div class="text-red-500 text-xs mt-1">Введите год от 1800 до 2024</div>
                     }
+                    <textarea [(ngModel)]="authorIdsModel" name="authorIds" #authorIds="ngModel"
+                    [ngModelOptions]="{standalone: true}"
+                    class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                    placeholder="ID автора/ов (через пробел)"></textarea>
+                    <textarea [(ngModel)]="trackIdsModel" name="trackIds" #trackIds="ngModel"
+                    [ngModelOptions]="{standalone: true}"
+                    class="resize-y overflow-auto textarea mt-5 min-h-11 max-h-72"
+                    placeholder="ID тека/ов (через пробел)"></textarea>
                 </div>
                 <label class="block text-sm font-semibold mt-5 mb-3">
                     Выберите аватар

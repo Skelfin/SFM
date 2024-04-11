@@ -40,9 +40,12 @@ export class AdminPopupPlaylistsComponent {
     }
   }
 
-  getTrackIds(playlist: Playlist): string {
-    return playlist.tracks && playlist.tracks.length > 0
-      ? playlist.tracks.map(track => track.id).join(' ') // Изменено с запятой на пробел
+  getIdsAsString(items: { id: number }[]): string {
+    return items && items.length > 0
+      ? items
+          .sort((a, b) => a.id - b.id)
+          .map(item => item.id)
+          .join(' ')
       : '';
   }
 
@@ -55,7 +58,7 @@ export class AdminPopupPlaylistsComponent {
       const playlist: Playlist = changes['playlist'].currentValue;
       this.nameModel = playlist.name ? playlist.name : '';
       this.descriptionModel = playlist.description ? playlist.description : '';
-      this.trackIdsModel = this.getTrackIds(playlist);
+      this.trackIdsModel = this.getIdsAsString(playlist.tracks);
     }
   }
 
@@ -81,7 +84,6 @@ export class AdminPopupPlaylistsComponent {
     if (this.avatarFile) {
       formData.append('avatar', this.avatarFile, this.avatarFile.name);
     }
-    console.log(trackIdsArray)
     this.playlistTableService.updatePlaylist(this.playlist.id, formData);
     this.closeModal();
   }

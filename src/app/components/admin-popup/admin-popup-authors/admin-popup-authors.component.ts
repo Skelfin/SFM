@@ -41,6 +41,7 @@ export class AdminPopupAuthorsComponent {
   nicknameModel: string = '';
   descriptionModel: string = '';
   avatarFile: File | null = null;
+  albumIdsModel: string = '';
 
   fileChangeEvent(event: Event): void {
     const element = event.target as HTMLInputElement;
@@ -49,6 +50,15 @@ export class AdminPopupAuthorsComponent {
     } else {
       this.avatarFile = null;
     }
+  }
+
+  getIdsAsString(items: { id: number }[]): string {
+    return items && items.length > 0
+      ? items
+          .sort((a, b) => a.id - b.id)
+          .map(item => item.id)
+          .join(' ')
+      : '';
   }
 
   closeModal() {
@@ -60,7 +70,16 @@ export class AdminPopupAuthorsComponent {
       const author: Author = changes['author'].currentValue;
       this.nicknameModel = author.nickname ? author.nickname : '';
       this.descriptionModel = author.description ? author.description : '';
+      this.albumIdsModel = this.getIdsAsString(author.albums);
     }
+  }
+
+  parseIdsFromString(idsString: string): number[] {
+    return idsString
+      .split(' ')
+      .map(id => parseInt(id, 10))
+      .filter(id => !isNaN(id))
+      .sort((a, b) => a - b);
   }
 
   constructor(private authorTableService: AuthorTableService) {}
@@ -69,14 +88,16 @@ export class AdminPopupAuthorsComponent {
       console.error('Автора не существует');
       return;
     }
+    
+    const albumIdsArray = this.parseIdsFromString(this.albumIdsModel);
 
     const formData = new FormData();
     formData.append('nickname', this.nicknameModel);
     formData.append('description', this.descriptionModel);
+    albumIdsArray.forEach(id => formData.append('albumIds[]', id.toString()));
     if (this.avatarFile) {
       formData.append('avatar', this.avatarFile, this.avatarFile.name);
     }
-
     this.authorTableService.updateAuthor(this.author.id, formData);
     this.closeModal();
   }
