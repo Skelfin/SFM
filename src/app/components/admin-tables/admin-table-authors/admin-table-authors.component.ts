@@ -3,10 +3,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TruncatePipe } from '../../../truncate.pipe';
-import { Author } from '../../../types/author';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthorTableService } from '../../../services/author-table.service';
 import { AdminPopupAuthorsComponent } from '../../admin-popup/admin-popup-authors/admin-popup-authors.component';
+import { Author } from '../../../types/author';
 
 @Component({
   selector: 'app-admin-table-authors',

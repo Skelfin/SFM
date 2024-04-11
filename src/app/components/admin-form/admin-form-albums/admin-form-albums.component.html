@@ -1,0 +1,34 @@
+<form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
+    <h1 class="font-bold mb-4">Создание альбома</h1>
+    <div class="flex flex-col">
+        <input formControlName="name" required type="text" placeholder="Название" id="name" class="input w-72">
+        @if (albumForm.controls['name'].invalid && (albumForm.controls['name'].dirty ||
+        albumForm.controls['name'].touched)) {
+        <div class="text-red-500 text-xs mt-1">Введите название</div>
+        }
+        <textarea formControlName="description"
+            class="resize overflow-auto textarea mt-5 min-h-11 max-h-72 min-w-72 sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl"
+            placeholder="Описание" id="description"></textarea>
+    </div>
+    <div class="flex flex-col">
+        <input formControlName="year" min="1800" max="2024" required type="number" placeholder="Год создания" id="year" class="input w-36 mt-5">
+        @if (albumForm.controls['year'].invalid && (albumForm.controls['year'].dirty || albumForm.controls['year'].touched)) {
+        <div class="text-red-500 text-xs mt-1">Введите год от 1900 до 2024</div>
+        }
+    </div>
+    <label class="block text-sm font-semibold mt-5 mb-3">
+        Выберите аватар
+    </label>
+    <input formControlName="avatar" accept=".jpg, .jpeg, .png, .gif" (change)="onFileSelect($event)" class="block filewidth text-sm text-white
+            file:mr-2 file:py-2 file:px-2
+            file:rounded-full file:border-0
+            file:font-semibold file:cursor-pointer 
+            file:bg-[#6B9D9E] file:text-white
+            file:active:bg-[#44686a]
+            hover:file:bg-[#5a888a]
+            file:active:text-gray-300  
+            file:duration-500 mb-5" type="file">
+    <div class="flex items-center justify-between">
+        <button class="btn py-2 px-6" [disabled]="!albumForm.valid"> Создать </button>
+    </div>
+</form>

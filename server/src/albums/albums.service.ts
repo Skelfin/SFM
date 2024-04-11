@@ -1,26 +1,78 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAlbumDto } from './dto/create-album.dto';
-import { UpdateAlbumDto } from './dto/update-album.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { promises as fs } from 'fs';
+import * as path from 'path';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Album } from './entities/album.entity';
 
 @Injectable()
 export class AlbumsService {
-  create(createAlbumDto: CreateAlbumDto) {
-    return 'This action adds a new album';
+  constructor(
+    @InjectRepository(Album)
+    private albumRepository: Repository<Album>,
+  ) {}
+
+  async createAlbum(albumData: Album): Promise<Album> {
+    const newAlbum = this.albumRepository.create(albumData);
+    await this.albumRepository.save(newAlbum);
+    return newAlbum;
   }
 
-  findAll() {
-    return `This action returns all albums`;
+  async updateAlbum(id: number, albumData: Partial<Album>): Promise<Album> {
+    const albumToUpdate = await this.albumRepository.findOne({
+      where: { id },
+    });
+    if (!albumToUpdate) {
+      throw new Error('Пользователь не найден');
+    }
+
+    if (
+      albumData.avatar &&
+      albumToUpdate.avatar &&
+      albumToUpdate.avatar !== 'avatar_default.png'
+    ) {
+      const oldAvatarPath = path.join('./album_avatar', albumToUpdate.avatar);
+      try {
+        await fs.unlink(oldAvatarPath);
+        console.log(`Старый аватар удален: ${oldAvatarPath}`);
+      } catch (error) {
+        console.warn(`Ошибка при удалении старого аватара: ${error}`);
+      }
+    }
+
+    await this.albumRepository.update(id, albumData);
+    return this.albumRepository.findOne({ where: { id } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} album`;
+  async getAlbum(): Promise<Album[]> {
+    return await this.albumRepository.find({
+      relations: ['tracks', 'authors'],
+    });
   }
 
-  update(id: number, updateAlbumDto: UpdateAlbumDto) {
-    return `This action updates a #${id} album`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} album`;
+  async deleteAlbum(albumId: number): Promise<void> {
+    const album = await this.albumRepository.findOne({
+      where: {
+        id: albumId,
+      },
+    });
+  
+    if (!album) {
+      throw new BadRequestException('Автор не найден');
+    }
+  
+    // Проверяем, что у пользователя есть аватар и это не дефолтный аватар
+    if (album.avatar && album.avatar !== 'avatar_default.png') {
+      try {
+        const filePath = path.join('./album_avatar', album.avatar);
+        await fs.unlink(filePath);
+        console.log(`Аватар удален: ${filePath}`);
+      } catch (error) {
+        // Логируем ошибку, но не прерываем процесс, чтобы пользователь все равно был удален
+        console.error(`Ошибка при удалении аватара: ${error}`);
+      }
+    }
+  
+    const result = await this.albumRepository.delete(albumId);
   }
 }

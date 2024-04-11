@@ -1,34 +1,74 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  Put,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { AlbumsService } from './albums.service';
-import { CreateAlbumDto } from './dto/create-album.dto';
-import { UpdateAlbumDto } from './dto/update-album.dto';
+import { Album } from './entities/album.entity';
+
 
 @Controller('albums')
 export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
-
   @Post()
-  create(@Body() createAlbumDto: CreateAlbumDto) {
-    return this.albumsService.create(createAlbumDto);
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './album_avatar', 
+        filename: (req, file, cb) => {
+          const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+          cb(null, uniqueName);
+        },
+      }),
+    }),
+  )
+  async createAlbum(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() albumData: any,
+  ) {
+    albumData.avatar = file ? `${file.filename}` : 'avatar_default.png';
+    return this.albumsService.createAlbum(albumData);
   }
 
   @Get()
-  findAll() {
-    return this.albumsService.findAll();
+  async getAuthor(): Promise<Album[]> {
+    return await this.albumsService.getAlbum();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.albumsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
-    return this.albumsService.update(+id, updateAlbumDto);
+  @Put(':id')
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './album_avatar',
+        filename: (req, file, cb) => {
+          const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+          cb(null, uniqueName);
+        },
+      }),
+    }),
+  )
+  async updateAlbum(
+    @Param('id') id: number,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() albumData: Partial<Album>,
+  ) {
+    if (file) {
+      albumData.avatar = file.filename;
+    }
+    return this.albumsService.updateAlbum(id, albumData);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.albumsService.remove(+id);
+  async deleteAlbum(@Param('id') id: number): Promise<void> {
+    return await this.albumsService.deleteAlbum(id);
   }
 }

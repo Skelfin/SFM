@@ -6,7 +6,7 @@ export interface Album {
     name: string;
     description: string;
     avatar: string;
-    year: Date;
+    year: number;
     tracks: Track[];
     authors: Author[];
     createdAt: Date;

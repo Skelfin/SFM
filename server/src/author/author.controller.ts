@@ -31,7 +31,7 @@ export class AuthorController {
       }),
     }),
   )
-  async createUser(
+  async createAuthor(
     @UploadedFile() file: Express.Multer.File,
     @Body() authorData: any,
   ) {

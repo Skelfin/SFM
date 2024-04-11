@@ -13,11 +13,11 @@ export class Album {
     @Column({ nullable: true })
     description: string
 
-    @Column({ nullable: true, type: 'date' })
+    @Column({ nullable: true })
     avatar: string
 
-    @Column({ nullable: true })
-    year: Date
+    @Column({ nullable: true, type: 'int' })
+    year: number
 
     @OneToMany(() => Track, track => track.album)
     tracks: Track[];
