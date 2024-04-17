@@ -9,6 +9,7 @@ import { AdminTracksComponent } from './pages/admin-tracks/admin-tracks.componen
 import { AdminPlaylistsComponent } from './pages/admin-playlists/admin-playlists.component';
 import { AdminAlbumsComponent } from './pages/admin-albums/admin-albums.component';
 import { AdminAuthorsComponent } from './pages/admin-authors/admin-authors.component';
+import { UserMainComponent } from './pages/user-main/user-main.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,11 @@ export const routes: Routes = [
         path: 'signup',
         component: SignupComponent,
         title: 'Signup',
+    },
+    {
+        path: 'main',
+        component: UserMainComponent,
+        title: 'Главная',
     },
     {
         path: 'admin/users',

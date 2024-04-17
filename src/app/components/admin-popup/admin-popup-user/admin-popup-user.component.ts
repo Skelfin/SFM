@@ -85,11 +85,10 @@ saveUser() {
     formData.append('password', this.passwordModel);
   }
 
-  if (this.avatarFile) { // Проверка был ли выбран файл
+  if (this.avatarFile) {
     formData.append('avatar', this.avatarFile, this.avatarFile.name);
   }
 
-  // Использование FormData вместо обычного объекта
   this.userFormService.updateUser(this.user.id, formData);
   this.closeModal();
 }
