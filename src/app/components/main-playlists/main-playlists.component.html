@@ -1,0 +1,24 @@
+<div class="flex items-center">
+  <h1 class="text-3xl text-white font-bold pl-3">Все плейлисты</h1>
+  <div class="arrows ml-3 mb-2" [class.opacity-50]="!canScrollLeft" [class.cursor-not-allowed]="!canScrollLeft" (click)="canScrollLeft && scrollLeft()">
+    <fa-icon [icon]="faArrowLeft" class="fa-lg"></fa-icon>
+  </div>
+  <div class="arrows ml-2 mb-2" [class.opacity-50]="!canScrollRight" [class.cursor-not-allowed]="!canScrollRight" (click)="canScrollRight && scrollRight()">
+    <fa-icon [icon]="faArrowRight" class="fa-lg"></fa-icon>
+  </div>
+</div>
+
+<div class="relative flex items-center">
+  <div class="flex overflow-hidden" #scrollContainer>
+    @for (card of shuffledMusicCards; track card.id) {
+    <a class="flex-none w-40 mx-2 bg-[#6b9d9ec6] rounded-lg pl_block">
+      <div class="overflow-hidden shadow-lg rounded-lg">
+        <img class="w-40 h-40 object-cover select-none" [src]="card.image" alt="{{ card.title }}">
+        <div class="font-bold text-lg pl-3 mb-2 truncate">{{ card.title }}</div>
+        <a class="text-gray-200 mb-2 w-full px-2 text-sm line-clamp-2 hover:underline">{{ card.description }}</a>
+      </div>
+    </a>
+    }
+  </div>
+
+</div>

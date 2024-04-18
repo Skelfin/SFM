@@ -22,6 +22,15 @@
     .tabs {
         @apply text-white block py-2.5 px-4 transition duration-300 hover:bg-[#466b6e] active:bg-[#385658] select-none cursor-pointer
     }
+    
+    .pl_block {
+        @apply transition duration-300 hover:bg-[#466b6e] active:bg-[#385658] select-none cursor-pointer
+    }
+
+    .arrows {
+        @apply text-white flex justify-center items-center w-9 h-9 bg-[#6b9d9e86]
+        bg-opacity-50 rounded-full cursor-pointer select-none transition duration-300 hover:bg-opacity-75 hover:scale-110
+    }
 
     .fontstyle {
         font-family: "Kanit", sans-serif;

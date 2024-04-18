@@ -41,90 +41,90 @@ export class UserSidebarComponent {
       author: 'Автор 2',
       imageUrl: '../assets/Home.jpg'
     },
-    {
-      id: 4,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 5,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 6,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 7,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 8,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 9,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 10,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 11,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 12,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 13,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 14,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
-    {
-      id: 15,
-      name: 'Название плейлиста 2 dasdsasd',
-      tracks: 8,
-      author: 'Автор 2',
-      imageUrl: '../assets/Home.jpg'
-    },
+    // {
+    //   id: 4,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 5,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 6,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 7,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 8,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 9,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 10,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 11,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 12,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 13,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 14,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
+    // {
+    //   id: 15,
+    //   name: 'Название плейлиста 2 dasdsasd',
+    //   tracks: 8,
+    //   author: 'Автор 2',
+    //   imageUrl: '../assets/Home.jpg'
+    // },
 
 ]
 }

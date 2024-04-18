@@ -1,9 +1,9 @@
 <div class="bg-[#04111d] w-80 px-3 py-3 hidden text-base border-r-2 border-[#162A3E] sm:block rounded-br-lg h-screen">
     <nav class="bg-[#6b9d9ec6] border-2 border-[#162A3E] rounded-md font-semibold mb-2">
-        <a routerLinkActive="bg-[#44686a]" class="tabs rounded-t border-b border-gray-700">
+        <a routerLinkActive="" class="tabs rounded-t border-b border-gray-700">
             <fa-icon [icon]="faHouse" class="fa-lg"></fa-icon> Главная
         </a>
-        <a routerLinkActive="bg-[#44686a]" class="tabs rounded-b">
+        <a routerLinkActive="" class="tabs rounded-b">
             <fa-icon [icon]="faMagnifyingGlass" class="fa-lg"></fa-icon> Поиск
         </a>
     </nav>
@@ -13,7 +13,7 @@
     </div>
     <nav class="flex flex-col overflow-y-auto auto h-[calc(100%-250px)]">
         @for (playlist of playlists; track playlist.id; let i = $index ) {
-        <a routerLinkActive="bg-[#44686a]" class="bg-[#6b9d9ec6] flex items-center p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }} bg-[#44686a]">
+        <a routerLinkActive="" class="bg-[#6b9d9ec6] flex items-center p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }} bg-[#44686a]">
             <img [src]="playlist.imageUrl" [alt]="playlist.name" class="rounded-md mr-2 w-12 h-12 object-cover"/>
             <div class="flex flex-1 min-w-0">
                 <div class="flex flex-col flex-1 min-w-0">
