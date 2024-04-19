@@ -27,7 +27,6 @@ export class HeaderComponent {
     this.dropdownOpen = false;
   }
 
-  // Добавленный метод для проверки, находимся ли мы на странице логина
   get isAuthPage(): boolean {
     return this.router.url === '/login' || this.router.url === '/signup';
   }

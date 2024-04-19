@@ -14,7 +14,7 @@
     <nav class="flex flex-col overflow-y-auto auto h-[calc(100%-250px)]">
         @for (playlist of playlists; track playlist.id; let i = $index ) {
         <a routerLinkActive="" class="bg-[#6b9d9ec6] flex items-center p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }} bg-[#44686a]">
-            <img [src]="playlist.imageUrl" [alt]="playlist.name" class="rounded-md mr-2 w-12 h-12 object-cover"/>
+            <img [src]="playlist.imageUrl" [alt]="playlist.name" class="rounded-md mr-2 w-12 h-12 object-cover pointer-events-none"/>
             <div class="flex flex-1 min-w-0">
                 <div class="flex flex-col flex-1 min-w-0">
                     <div class="text-white text-base truncate">

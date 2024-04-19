@@ -11,9 +11,9 @@
 <div class="relative flex items-center">
   <div class="flex overflow-hidden" #scrollContainer>
     @for (card of shuffledMusicCards; track card.id) {
-      <a class="flex-none w-48 mx-2 bg-[#6b9d9ec6] rounded-lg pl_block p-2">
+      <a class="flex-none w-48 border-2 border-[#162A3E] mx-2 bg-[#6b9d9ec6] rounded-lg pl_block p-2">
       <div class="overflow-hidden rounded-lg">
-        <img class="w-48 h-44 object-cover select-none rounded-lg" [src]="card.image" alt="{{ card.title }}">
+        <img class="w-48 h-44 object-cover select-none rounded-lg pointer-events-none" [src]="card.image" alt="{{ card.title }}">
         <div class="font-bold text-lg px-3 mt-2 mb-2 truncate">{{ card.title }}</div>
         <a class="text-gray-200 mb-2 w-full px-2 text-sm line-clamp-2 hover:underline">{{ card.description }}</a>
       </div>

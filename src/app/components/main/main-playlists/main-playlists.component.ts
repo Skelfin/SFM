@@ -54,18 +54,18 @@ export class MainPlaylistsComponent implements OnInit {
 
 
   private musicCards: MusicCard[] = [
-    { id: 1, title: 'KimBops!', image: '../assets/Home.jpg', description: 'Rolling with the \'bops\' in your Kimbap.' },
-    { id: 2, title: 'pov1', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 3, title: 'pov2', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 4, title: 'pov3', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 5, title: 'pov4', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 6, title: 'pov5', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 7, title: 'pov6', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 8, title: 'pov7', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 9, title: 'pov8', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 10, title: 'pov9', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 11, title: 'pov10', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
-    { id: 12, title: 'pov11', image: '../assets/Home.jpg', description: 'when you wake up next to him in the middle of the...' },
+    { id: 1, title: 'KimBops!', image: '../assets/3.png', description: 'Rolling with the \'bops\' in your Kimbap.' },
+    { id: 2, title: 'pov1', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 3, title: 'pov2', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 4, title: 'pov3', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 5, title: 'pov4', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 6, title: 'pov5', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 7, title: 'pov6', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 8, title: 'pov7', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 9, title: 'pov8', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 10, title: 'pov9', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 11, title: 'pov10', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
+    { id: 12, title: 'pov11', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
   ];
 
   shuffledMusicCards: MusicCard[] = [];

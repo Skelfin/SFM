@@ -7,13 +7,12 @@
       <fa-icon [icon]="faArrowRight" class="fa-lg"></fa-icon>
     </div>
   </div>
-  
   <div class="relative flex items-center">
     <div class="flex overflow-hidden" #scrollContainer>
       @for (card of shuffledMusicCards; track card.id) {
-      <a class="flex-none w-48 mx-2 bg-[#6b9d9ec6] rounded-t-full my_border pl_block p-1">
+      <a class="flex-none w-48 mx-2 border-2 border-[#162A3E] bg-[#6b9d9ec6] rounded-t-full my_border pl_block p-1">
         <div class="overflow-hidden">
-          <img class="w-48 h-44 object-cover select-none rounded-full" [src]="card.image" alt="{{ card.title }}">
+          <img class="w-48 h-44 object-cover select-none rounded-full pointer-events-none" [src]="card.image" alt="{{ card.title }}">
           <div class="font-bold mt-2 pb-2 text-lg px-3 truncate">{{ card.title }}</div>
         </div>
       </a>
