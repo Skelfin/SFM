@@ -53,7 +53,7 @@ export class MainAuthorsComponent {
 
 
   private musicCards: MusicCard[] = [
-    { id: 1, title: 'Трахер Карлсон', image: '../assets/2.png'},
+    { id: 1, title: 'pov12', image: '../assets/Home.jpg'},
     { id: 2, title: 'pov1', image: '../assets/Home.jpg'},
     { id: 3, title: 'pov2', image: '../assets/Home.jpg'},
     { id: 4, title: 'pov3', image: '../assets/Home.jpg'},
