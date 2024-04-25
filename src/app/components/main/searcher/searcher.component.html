@@ -1,0 +1,9 @@
+<div class="relative">
+    <input type="search" class="input w-96" [(ngModel)]="searchText" placeholder="Поиск" aria-label="Search">
+    @if (searchText) {
+    <button 
+        class="absolute inset-y-0 right-0 px-3 flex items-center justify-center text-gray-100 hover:bg-gray-600 hover:bg-opacity-20 focus:outline-none focus:ring-1 focus:ring-sky-400"
+        (click)="searchText = ''">
+    </button>
+    }
+</div>

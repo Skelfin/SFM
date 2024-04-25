@@ -10,6 +10,7 @@ import { AdminPlaylistsComponent } from './pages/admin-playlists/admin-playlists
 import { AdminAlbumsComponent } from './pages/admin-albums/admin-albums.component';
 import { AdminAuthorsComponent } from './pages/admin-authors/admin-authors.component';
 import { UserMainComponent } from './pages/user-main/user-main.component';
+import { UserSearchComponent } from './pages/user-search/user-search.component';
 
 export const routes: Routes = [
     {
@@ -31,6 +32,11 @@ export const routes: Routes = [
         path: 'main',
         component: UserMainComponent,
         title: 'Главная',
+    },
+    {
+        path: 'search',
+        component: UserSearchComponent,
+        title: 'Поиск',
     },
     {
         path: 'admin/users',
