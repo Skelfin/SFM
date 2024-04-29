@@ -1,6 +1,8 @@
-import { Component, ViewChild, ElementRef, HostListener, OnInit  } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { SearchService } from '../../../services/SearchService';
 
 interface MusicCard {
   id: number
@@ -17,8 +19,8 @@ interface MusicCard {
   styleUrl: './main-playlists.component.scss'
 })
 export class MainPlaylistsComponent implements OnInit {
-  faArrowLeft = faArrowLeft
-  faArrowRight = faArrowRight
+  faArrowLeft = faArrowLeft;
+  faArrowRight = faArrowRight;
   canScrollLeft: boolean = false;
   canScrollRight: boolean = true;
   @ViewChild('scrollContainer') scrollContainerRef!: ElementRef<HTMLElement>;
@@ -52,7 +54,7 @@ export class MainPlaylistsComponent implements OnInit {
     setTimeout(() => this.updateScrollButtons(), 200);
   }
 
-
+  private searchSubscription!: Subscription;
   private musicCards: MusicCard[] = [
     { id: 1, title: 'KimBops!', image: '../assets/3.png', description: 'Rolling with the \'bops\' in your Kimbap.' },
     { id: 2, title: 'pov1', image: '../assets/3.png', description: 'when you wake up next to him in the middle of the...' },
@@ -69,20 +71,33 @@ export class MainPlaylistsComponent implements OnInit {
   ];
 
   shuffledMusicCards: MusicCard[] = [];
+  filteredMusicCards: MusicCard[] = [];
+
+  constructor(private searchService: SearchService) {}
 
   ngOnInit(): void {
     this.shuffledMusicCards = this.shuffleMusicCards();
+    this.filteredMusicCards = this.shuffledMusicCards;
+    this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
+      this.filterMusicCards(text);
+    });
+  }
+
+  filterMusicCards(searchText: string): void {
+    this.filteredMusicCards = this.shuffledMusicCards.filter(card =>
+      card.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setTimeout(() => {
+      this.updateScrollButtons();
+    }, 0);
   }
 
   shuffleMusicCards(): any[] {
-    // Копируем массив
     let array = [...this.musicCards];
-    // Перемешиваем массив
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
-    // Возвращаем до 8 элементов
     return array;
   }
 }

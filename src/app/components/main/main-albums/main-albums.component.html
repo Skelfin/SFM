@@ -1,5 +1,5 @@
 <div class="flex items-center">
-  <h1 class="text-3xl text-white font-bold pl-3">Все альбомы</h1>
+  <h1 class="text-3xl text-white font-bold pl-3">Альбомы</h1>
   <div class="arrows ml-3 mb-2" [class.opacity-50]="!canScrollLeft" [class.cursor-not-allowed]="!canScrollLeft"
     (click)="canScrollLeft && scrollLeft()">
     <fa-icon [icon]="faArrowLeft" class="fa-lg"></fa-icon>
@@ -12,7 +12,7 @@
 
 <div class="relative flex items-center">
   <div class="flex overflow-hidden" #scrollContainer>
-    @for (card of shuffledMusicCards; track card.id) {
+    @for (card of filteredMusicCards; track card.id) {
     <a class="flex-none w-48 mx-2 border-2 border-[#162A3E] bg-[#6b9d9ec6] rounded-lg pl_block p-2">
       <div class="overflow-hidden rounded-lg">
         <img class="w-48 h-44 border-2 border-[#162A3E] object-cover select-none rounded-lg pointer-events-none" [src]="card.image"

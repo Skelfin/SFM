@@ -1,19 +1,15 @@
 <div class="relative w-96">
-    <h1 class="text-3xl text-white font-bold pl-3">Пора найти то что хотел</h1>
     <div class="relative flex items-center ml-3">
-        <input type="input" class="input w-full pr-10 rounded" [(ngModel)]="searchText" placeholder="Поиск"
-            aria-label="Search">
-        @if (searchText) {
-        <button
-            class="absolute inset-y-0 right-0 px-3 flex rounded-r-lg items-center hover:bg-gray-300 hover:bg-opacity-20 focus:outline-none"
-            (click)="searchText = ''">
-            <fa-icon [icon]="faXmark" class="fa-lg"></fa-icon>
-        </button>
-        }
+        <div class="relative w-full">
+            <fa-icon [icon]="faMagnifyingGlass" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"></fa-icon>
+            <input type="input" class="input w-full pl-10 pr-10 rounded" [(ngModel)]="searchText" (ngModelChange)="updateSearchText(searchText)" placeholder="Поиск" aria-label="Search">
+            @if (searchText) {
+            <button
+                class="absolute inset-y-0 right-0 px-3 flex rounded-r-lg items-center hover:bg-gray-700 hover:bg-opacity-20 focus:outline-none"
+                (click)="clearSearch()">
+                <fa-icon [icon]="faXmark" class="fa-lg"></fa-icon>
+            </button>
+            }
+        </div>
     </div>
 </div>
-
-
-<!-- .input {
-    @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded border border-gray-600 focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
-} -->

@@ -1,6 +1,8 @@
-import { Component, ViewChild, ElementRef, HostListener, OnInit  } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { SearchService } from '../../../services/SearchService';
+import { Subscription } from 'rxjs';
 
 interface MusicCard {
   id: number
@@ -15,7 +17,7 @@ interface MusicCard {
   templateUrl: './main-authors.component.html',
   styleUrl: './main-authors.component.scss'
 })
-export class MainAuthorsComponent {
+export class MainAuthorsComponent implements OnInit {
   faArrowLeft = faArrowLeft
   faArrowRight = faArrowRight
   canScrollLeft: boolean = false;
@@ -51,7 +53,7 @@ export class MainAuthorsComponent {
     setTimeout(() => this.updateScrollButtons(), 200);
   }
 
-
+  private searchSubscription!: Subscription;
   private musicCards: MusicCard[] = [
     { id: 1, title: 'pov12', image: '../assets/Home.jpg'},
     { id: 2, title: 'pov1', image: '../assets/Home.jpg'},
@@ -68,9 +70,25 @@ export class MainAuthorsComponent {
   ];
 
   shuffledMusicCards: MusicCard[] = [];
+  filteredMusicCards: MusicCard[] = [];
+
+  constructor(private searchService: SearchService) {}
 
   ngOnInit(): void {
     this.shuffledMusicCards = this.shuffleMusicCards();
+    this.filteredMusicCards = this.shuffledMusicCards;
+    this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
+      this.filterMusicCards(text);
+    });
+  }
+
+  filterMusicCards(searchText: string): void {
+    this.filteredMusicCards = this.shuffledMusicCards.filter(card =>
+      card.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setTimeout(() => {
+      this.updateScrollButtons();
+    }, 0);
   }
 
   shuffleMusicCards(): any[] {
