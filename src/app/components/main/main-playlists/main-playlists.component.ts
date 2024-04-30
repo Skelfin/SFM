@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, debounceTime } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { SearchService } from '../../../services/SearchService';
@@ -24,10 +24,13 @@ export class MainPlaylistsComponent implements OnInit {
   canScrollLeft: boolean = false;
   canScrollRight: boolean = true;
   @ViewChild('scrollContainer') scrollContainerRef!: ElementRef<HTMLElement>;
+  private scrollEventDebouncer$ = new Subject<void>();
 
   ngAfterViewInit(): void {
-    this.updateScrollButtons();
-    this.scrollContainerRef.nativeElement.addEventListener('scroll', this.updateScrollButtons.bind(this));
+    this.scrollContainerRef.nativeElement.addEventListener('scroll', () => {
+      this.scrollEventDebouncer$.next();
+    });
+    this.scrollContainerRef.nativeElement.addEventListener('wheel', this.handleMouseWheel.bind(this), { passive: false });
   }
 
   @HostListener('window:resize')
@@ -43,15 +46,22 @@ export class MainPlaylistsComponent implements OnInit {
   }
 
   scrollLeft(): void {
-    const scrollContainer = this.scrollContainerRef.nativeElement;
-    scrollContainer.scrollBy({ left: -450, behavior: 'smooth' });
-    setTimeout(() => this.updateScrollButtons(), 200);
+    this.performScroll(-650);
   }
 
   scrollRight(): void {
+    this.performScroll(650);
+  }
+
+  handleMouseWheel(event: WheelEvent): void {
+    event.preventDefault();
+    const delta = event.deltaY > 0 ? 400 : -400; 
+    this.performScroll(delta);
+  }
+
+  performScroll(delta: number): void {
     const scrollContainer = this.scrollContainerRef.nativeElement;
-    scrollContainer.scrollBy({ left: 450, behavior: 'smooth' });
-    setTimeout(() => this.updateScrollButtons(), 200);
+    scrollContainer.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
   private searchSubscription!: Subscription;
@@ -81,15 +91,18 @@ export class MainPlaylistsComponent implements OnInit {
     this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
       this.filterMusicCards(text);
     });
+    this.scrollEventDebouncer$.pipe(
+      debounceTime(0)
+    ).subscribe(() => {
+      this.updateScrollButtons();
+    });
   }
 
   filterMusicCards(searchText: string): void {
     this.filteredMusicCards = this.shuffledMusicCards.filter(card =>
       card.title.toLowerCase().includes(searchText.toLowerCase())
     );
-    setTimeout(() => {
-      this.updateScrollButtons();
-    }, 0);
+    this.scrollEventDebouncer$.next();
   }
 
   shuffleMusicCards(): any[] {
