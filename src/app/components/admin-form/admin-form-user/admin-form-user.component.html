@@ -23,12 +23,12 @@
         }
     </div>
     <div class="mb-5 flex flex-col mt-5">
-        <label class="inline-flex items-center text-sm mb-2">
+        <label class="inline-flex items-center text-sm mb-2 radiowidth_user">
             <input formControlName="access_rights" [value]="0" class="form-radio h-5 w-5 inline-block p-2 rounded"
                 type="radio" name="transactionType" required>
-            <span class="ml-2 mr-3">Пользователь</span>
+            <span class="ml-2">Пользователь</span>
         </label>
-        <label class="inline-flex items-center text-sm">
+        <label class="inline-flex items-center text-sm radiowidth_admin">
             <input formControlName="access_rights" class="form-radio h-5 w-5 inline-block p-2 rounded" type="radio"
                 name="transactionType" [value]="1" required>
             <span class="ml-2">Админ</span>

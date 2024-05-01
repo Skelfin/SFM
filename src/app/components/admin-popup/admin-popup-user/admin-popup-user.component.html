@@ -34,12 +34,12 @@
                 </div>
 
                 <div class="mb-5 flex flex-col">
-                    <label class="inline-flex items-center text-sm mb-2">
+                    <label class="inline-flex items-center text-sm mb-2 radiowidth_user">
                         <input [(ngModel)]="accessRightsModel" class="form-radio h-5 w-5" type="radio"
                             name="transactionType" [value]="0" required>
-                        <span class="ml-2 mr-3">Пользователь</span>
+                        <span class="ml-2">Пользователь</span>
                     </label>
-                    <label class="inline-flex items-center text-sm">
+                    <label class="inline-flex items-center text-sm radiowidth_admin">
                         <input [(ngModel)]="accessRightsModel" class="form-radio h-5 w-5" type="radio"
                             name="transactionType" [value]="1" required>
                         <span class="ml-2">Админ</span>

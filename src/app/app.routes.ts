@@ -11,6 +11,7 @@ import { AdminAlbumsComponent } from './pages/admin-albums/admin-albums.componen
 import { AdminAuthorsComponent } from './pages/admin-authors/admin-authors.component';
 import { UserMainComponent } from './pages/user-main/user-main.component';
 import { UserSearchComponent } from './pages/user-search/user-search.component';
+import { UserPlaylistsComponent } from './pages/user-playlists/user-playlists.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +38,11 @@ export const routes: Routes = [
         path: 'search',
         component: UserSearchComponent,
         title: 'Поиск',
+    },    
+    {
+        path: 'playlist',
+        component: UserPlaylistsComponent,
+        title: 'Плейлист',
     },
     {
         path: 'admin/users',

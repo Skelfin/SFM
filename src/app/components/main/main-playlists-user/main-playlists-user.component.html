@@ -2,7 +2,7 @@
     @for (card of shuffledMusicCards; track card.id) {
     <a class="flex items-center border-2 border-[#162A3E] bg-[#6b9d9ec6] pl_block rounded-lg shadow-lg overflow-hidden p-1">
         <img class="w-14 h-14 object-cover rounded-lg select-none pointer-events-none" [src]="card.image" alt="{{ card.title }}">
-        <div class="text-white text-sm font-medium truncate px-4 py-2 w-0 flex-1">
+        <div class="text-white text-base font-medium truncate pl-2 pr-4 py-2 w-0 flex-1">
             {{ card.title }}
         </div>
     </a>

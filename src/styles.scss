@@ -1,10 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,501;1,501&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 @layer components {
+    .font {
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 501;
+        font-style: normal;
+      }
+
     .input {
         @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded border border-gray-600 focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
     }
@@ -30,10 +37,6 @@
     .arrows {
         @apply text-white flex justify-center items-center w-9 h-9 bg-[#6b9d9e86]
         bg-opacity-50 rounded-full cursor-pointer select-none transition duration-300 hover:bg-opacity-75 hover:scale-110
-    }
-
-    .fontstyle {
-        font-family: "Kanit", sans-serif;
     }
 
     .btn-table {
@@ -63,14 +66,15 @@
 
     .input-with-btn-form {
         @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded-l-lg border border-gray-600 focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
-    }
+    }    
 
     .divider {
         height: 2px;
-        /* Height of the divider */
         background-color: #162A3E;
-        /* Color of the divider */
         margin: 20px 0;
-        /* Spacing above and below the divider */
+    }
+
+    .filewidth {
+        width: 265px;
     }
 }

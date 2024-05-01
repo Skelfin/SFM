@@ -1,4 +1,4 @@
-<div class="flex flex-col h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('assets/Home.jpg');">
+<div class="font flex flex-col h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('assets/Home.jpg');">
     <div class="flex-1 flex overflow-hidden border-y-2 border-[#162A3E]">
         <app-user-sidebar></app-user-sidebar>
         <div class="flex flex-col flex-1 overflow-hidden">
@@ -7,10 +7,10 @@
                 <div class="pb-4 p-8">
                     <app-searcher></app-searcher>
                 </div>
+                @if (searchText) {
                 <div class="pb-4 p-8">
                     <app-found-tracks></app-found-tracks>
                 </div>
-                <!-- @if (searchText) { -->
                 <div class="pb-4 p-8">
                     <app-main-playlists></app-main-playlists>
                 </div>
@@ -20,7 +20,7 @@
                 <div class="pb-4 p-8">
                     <app-main-authors></app-main-authors>
                 </div>
-                <!-- } -->
+                }
                 <app-footer class="mt-auto"></app-footer>
             </div>
         </div>
