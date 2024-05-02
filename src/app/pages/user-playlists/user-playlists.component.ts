@@ -6,14 +6,15 @@ import { MainPlaylistsUserComponent } from "../../components/main/main-playlists
 import { MainPlaylistsComponent } from "../../components/main/main-playlists/main-playlists.component";
 import { MainAlbumsComponent } from "../../components/main/main-albums/main-albums.component";
 import { MainAuthorsComponent } from "../../components/main/main-authors/main-authors.component";
-import { InfoComponent } from "../../components/user-playlist-album/info/info.component";
+import { TablePlaylistComponent } from "../../components/user-playlist-album/table-playlist/table-playlist.component";
+import { PlaylistInfoComponent } from "../../components/user-playlist-album/playlist-info/playlist-info.component";
 
 @Component({
     selector: 'app-user-playlists',
     standalone: true,
     templateUrl: './user-playlists.component.html',
     styleUrl: './user-playlists.component.scss',
-    imports: [UserSidebarComponent, FooterComponent, HeaderComponent, MainPlaylistsUserComponent, MainPlaylistsComponent, MainAlbumsComponent, MainAuthorsComponent, InfoComponent]
+    imports: [UserSidebarComponent, FooterComponent, HeaderComponent, MainPlaylistsUserComponent, MainPlaylistsComponent, MainAlbumsComponent, MainAuthorsComponent, TablePlaylistComponent, PlaylistInfoComponent]
 })
 export class UserPlaylistsComponent {
 

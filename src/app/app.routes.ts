@@ -12,6 +12,7 @@ import { AdminAuthorsComponent } from './pages/admin-authors/admin-authors.compo
 import { UserMainComponent } from './pages/user-main/user-main.component';
 import { UserSearchComponent } from './pages/user-search/user-search.component';
 import { UserPlaylistsComponent } from './pages/user-playlists/user-playlists.component';
+import { AlbumComponent } from './pages/album/album.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +44,11 @@ export const routes: Routes = [
         path: 'playlist',
         component: UserPlaylistsComponent,
         title: 'Плейлист',
+    },
+    {
+        path: 'album',
+        component: AlbumComponent,
+        title: 'Альбом',
     },
     {
         path: 'admin/users',
