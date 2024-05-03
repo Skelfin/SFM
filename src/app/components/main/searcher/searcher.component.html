@@ -1,8 +1,11 @@
-<div class="relative w-96">
+<div class="relative w-full pb-4 p-8" 
+    style="background-image: linear-gradient(to bottom, #04111D, #0a1928);">
     <div class="relative flex items-center ml-3">
-        <div class="relative w-full">
-            <fa-icon [icon]="faMagnifyingGlass" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"></fa-icon>
-            <input type="input" class="input w-full pl-10 pr-10 rounded" [(ngModel)]="searchText" (ngModelChange)="updateSearchText(searchText)" placeholder="Что хочешь включить?" aria-label="Search">
+        <div class="relative w-80">
+            <fa-icon [icon]="faMagnifyingGlass"
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"></fa-icon>
+            <input type="input" class="input w-80 pl-10 pr-10 rounded" [(ngModel)]="searchText"
+                (ngModelChange)="updateSearchText(searchText)" placeholder="Что хочешь включить?" aria-label="Search">
             @if (searchText) {
             <button
                 class="absolute inset-y-0 right-0 px-3 flex rounded-r-lg items-center hover:bg-gray-700 hover:bg-opacity-20 focus:outline-none"

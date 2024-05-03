@@ -1,13 +1,12 @@
-<div class="font flex flex-col h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('assets/Home.jpg');">
+<div class="font flex flex-col h-screen bg-cover bg-center bg-no-repeat"
+    style="background-image: url('assets/Home.jpg');">
     <div class="flex-1 flex overflow-hidden border-y-2 border-[#162A3E]">
         <app-user-sidebar></app-user-sidebar>
         <div class="flex flex-col flex-1 overflow-hidden">
             <app-header></app-header>
-            <div class="flex-1 flex flex-col bg-[#0a1928] border-t-2 border-[#162A3E] shadow-md overflow-auto">
-                <div class="p-5">
-                    <app-playlist-info></app-playlist-info>
-                    <app-table-playlist></app-table-playlist>
-                </div>
+            <div class="flex-1 flex flex-col bg-[#0a1928] shadow-md overflow-auto">
+                <app-playlist-info></app-playlist-info>
+                <app-table-playlist></app-table-playlist>
                 <app-footer class="mt-auto"></app-footer>
             </div>
         </div>
