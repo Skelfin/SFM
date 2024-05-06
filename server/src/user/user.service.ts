@@ -43,6 +43,18 @@ export class UserService {
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
   }
+
+  async findOneById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new BadRequestException('Пользователь не найден');
+    }
+
+    return user;
+  }
   
   async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepository.findOne({

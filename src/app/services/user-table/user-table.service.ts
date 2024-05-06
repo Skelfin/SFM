@@ -16,8 +16,15 @@ export class UserTableService {
     return this.http.get<User[]>(this.apiUrl);
   }
 
+  getUserById(userId: string): Observable<User> {
+    const url = `${this.apiUrl}/${userId}`;
+    return this.http.get<User>(url);
+  }
+
   deleteUser(userId: number): Observable<any> {
     const url = `${this.apiUrl}/${userId}`;
     return this.http.delete(url)
   }
+
+  
 }

@@ -18,6 +18,11 @@ export class UserController {
     return await this.userService.getUsers();
   }
 
+  @Get(':id')
+  async getUser(@Param('id') id: number): Promise<User> {
+    return this.userService.findOneById(id);
+  }
+
   @Delete(':id')
   async deleteUser(@Param('id') id: number): Promise<void> {
     return await this.userService.deleteUser(id);
