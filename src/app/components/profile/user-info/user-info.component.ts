@@ -15,17 +15,14 @@ import { jwtDecode } from 'jwt-decode';
     imports: [UserPopupComponent, FontAwesomeModule]
 })
 export class UserInfoComponent implements OnInit {
-  hover: boolean = false;
   faPen = faPen
   showModal: boolean = false;
-  selectedUser: User | null = null;
   currentUser: User | null = null;
 
   openModal() {
     const decodedToken = this.decodeToken();
     if (decodedToken && decodedToken.id) {
       this.userTableService.getUserById(decodedToken.id).subscribe(user => {
-        this.selectedUser = user;
         this.showModal = true;
       });
     } else {
@@ -40,16 +37,15 @@ export class UserInfoComponent implements OnInit {
   
   closeModal() {
     this.showModal = false;
-    this.loadUsers();
+    this.loadCurrentUser();
   }
-  constructor(private userTableService: UserTableService, private userFormService: UserFormService) { }
 
-  users: User[] = [];
+  constructor(private userTableService: UserTableService, private userFormService: UserFormService) { }
 
   ngOnInit(): void {
     this.loadCurrentUser();
     this.userFormService.userCreated$.subscribe(() => {
-      this.loadUsers();
+      this.loadCurrentUser();
     });
   }
 
@@ -60,11 +56,5 @@ export class UserInfoComponent implements OnInit {
         this.currentUser = user;
       });
     }
-  }
-
-  loadUsers(): void {
-    this.userTableService.getUsers().subscribe(users => {
-      this.users = users;
-    });
   }
 }

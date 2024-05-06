@@ -31,6 +31,13 @@ export class PlaylistsService {
     });
   }
 
+  async getPlaylistsByUser(userId: number): Promise<Playlist[]> {
+    return await this.playlistRepository.find({
+      where: { user: { id: userId } },
+      relations: ['user', 'tracks'],
+    });
+  }
+
   async updatePlaylist(
     id: number,
     playlistData: Partial<UpdatePlaylistDto>,

@@ -58,7 +58,7 @@ export class TracksController {
     const avatar =
       files.avatar && files.avatar[0]
         ? files.avatar[0].filename
-        : 'default_avatar.png';
+        : 'avatar_default.png';
 
     const completeTrackData = {
       ...trackData,

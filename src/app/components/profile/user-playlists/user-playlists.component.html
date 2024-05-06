@@ -1,0 +1,24 @@
+<div class="flex items-center">
+    <h1 class="text-3xl text-white font-bold pl-3">Плейлисты</h1>
+    <div class="arrows ml-3 mb-2" [class.opacity-50]="!canScrollLeft" [class.cursor-not-allowed]="!canScrollLeft" (click)="canScrollLeft && scrollLeft()">
+      <fa-icon [icon]="faArrowLeft" class="fa-lg"></fa-icon>
+    </div>
+    <div class="arrows ml-2 mb-2" [class.opacity-50]="!canScrollRight" [class.cursor-not-allowed]="!canScrollRight" (click)="canScrollRight && scrollRight()">
+      <fa-icon [icon]="faArrowRight" class="fa-lg"></fa-icon>
+    </div>
+  </div>
+  
+  <div class="relative flex items-center">
+    <div class="flex overflow-hidden" #scrollContainer>
+      @for (playlist of filteredMusicCards; track playlist.id) {
+        <a class="flex-none w-48 border-2 border-[#162A3E] mx-2 bg-[#6b9d9ec6] rounded-lg pl_block p-2">
+        <div class="overflow-hidden rounded-lg">
+          <img class="w-48 h-44 object-cover select-none rounded-lg pointer-events-none" [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}">
+          <div class="font-bold text-lg px-3 mt-2 mb-2 truncate">{{ playlist.name }}</div>
+          <a class="text-gray-200 mb-2 w-full px-2 text-sm line-clamp-2 hover:underline">{{ playlist.description }}</a>
+        </div>
+      </a>
+      }
+    </div>
+  
+  </div>

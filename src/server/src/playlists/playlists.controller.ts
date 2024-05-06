@@ -45,7 +45,7 @@ export class PlaylistsController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     // Если файл не загружен, используем имя файла дефолтного аватара
-    createPlaylistDto.avatar = file ? file.filename : 'default-avatar.png';
+    createPlaylistDto.avatar = file ? file.filename : 'avatar_default.png';
 
     return this.playlistsService.create(req.user.id, createPlaylistDto);
   }
@@ -54,6 +54,11 @@ export class PlaylistsController {
   async getPlaylists(): Promise<Playlist[]> {
     // Переименован метод для корректного отображения его назначения
     return await this.playlistsService.getPlaylists(); // Использование playlistsService для получения списка плейлистов
+  }
+
+  @Get('/user/:userId')
+  async getPlaylistsByUser(@Param('userId') userId: number): Promise<Playlist[]> {
+    return await this.playlistsService.getPlaylistsByUser(userId);
   }
 
   @Put(':id')

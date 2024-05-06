@@ -4,13 +4,14 @@ import { FooterComponent } from "../../components/footer/footer.component";
 import { HeaderComponent } from "../../components/header/header.component";
 import { UserInfoComponent } from "../../components/profile/user-info/user-info.component";
 import { MainPlaylistsComponent } from "../../components/main/main-playlists/main-playlists.component";
+import { UserProfilePlaylistsComponent } from "../../components/profile/user-playlists/user-playlists.component";
 
 @Component({
     selector: 'app-profile',
     standalone: true,
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss',
-    imports: [UserSidebarComponent, FooterComponent, HeaderComponent, UserInfoComponent, MainPlaylistsComponent]
+    imports: [UserSidebarComponent, FooterComponent, HeaderComponent, UserInfoComponent, MainPlaylistsComponent, UserProfilePlaylistsComponent]
 })
 export class ProfileComponent {
 

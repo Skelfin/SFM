@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { Playlist, PlaylistForm } from '../types/playlist';
+import { Playlist } from '../types/playlist';
 import { API_URL } from '../constants/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
