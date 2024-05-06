@@ -1,0 +1,57 @@
+@if(user) {
+    <div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (click)="closeModal()">
+        <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
+            (click)="$event.stopPropagation()">
+            <div class="px-4 py-3">
+                <form (ngSubmit)="saveUser()">
+                    <h1 class="bold mb-4 text-center">Изменить пользователя</h1>
+                    <div class="flex flex-col mb-5">
+                        <input [(ngModel)]="nicknameModel" name="nickname" #nickname="ngModel"
+                            [ngModelOptions]="{standalone: true}" required="" type="text" placeholder="Nickname"
+                            id="nickname" class="input">
+                        @if (nickname.invalid && nickname.touched) {
+                        <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
+                        }
+                        <div class="flex mt-6">
+                            <input [(ngModel)]="passwordModel" name="password" #password="ngModel"
+                                (blur)="passwordTouched=true" [ngModelOptions]="{standalone: true}" required=""
+                                minlength="6" maxlength="20" type="text" placeholder="Пароль" id="password"
+                                class="input-with-btn-form flex-grow" (input)="onPasswordChange()">
+                            <button class="btn-delete-form text-red-600 hover:text-red-500" (click)="clearPassword($event)">
+                                <fa-icon [icon]="faDeleteLeft" class="fa-lg"></fa-icon>
+                            </button>
+                        </div>
+                        @if (password.invalid && password.touched && isPasswordTouched) {
+                        @if(password.errors?.['minlength']) {
+                        <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
+                        }
+                        @else if(password.errors?.['maxlength']) {
+                        <div class="text-red-500 text-xs mt-2">Пароль должен быть до 20 символов</div>
+                        }@else {
+                            <div class="text-red-500 text-xs mt-1">Введите пароль</div>
+                        }
+                        }
+                    </div>
+                    <label class="block text-sm font-semibold mb-3">
+                        Выберите аватар
+                    </label>
+                    <input class="block filewidth text-sm text-white
+                                file:mr-2 file:py-2 file:px-2
+                                file:rounded-full file:border-0
+                                file:font-semibold file:cursor-pointer 
+                                file:bg-[#6B9D9E] file:text-white
+                                file:active:bg-[#44686a]
+                                hover:file:bg-[#5a888a]
+                                file:active:text-gray-300  
+                                file:duration-500 mb-5" (change)="fileChangeEvent($event)" type="file" accept=".jpg, .jpeg, .png, .gif">
+                    <div class="flex items-end justify-between">
+                        <button class="btn py-2 px-6" [disabled]="(nickname.invalid || isPasswordTouched) && password.invalid"> Сохранить </button>
+                        <button (click)="closeModal()" class="btn px-6 py-2">
+                            Закрыть
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    }

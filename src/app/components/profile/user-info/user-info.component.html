@@ -1,0 +1,20 @@
+@if (showModal) {
+    <app-user-popup [user]="selectedUser" (close)="closeModal()"></app-user-popup>
+    }
+<div class="flex p-5" 
+     style="background-image: linear-gradient(to bottom, #04111D, #0a1928);">
+     <div class="relative group w-48 h-48 flex-shrink-0">
+        <img src="../../../../assets/3.png" alt="Картинка"
+            class="w-full h-full object-cover rounded-full border-2 border-[#162A3E]" (click)="openModal(user)">
+            <div  
+            class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center rounded-full opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">
+            <fa-icon [icon]="faPen" class="fa-2xl"></fa-icon>
+            <span class="mt-2 select-none">Изменить</span>
+        </div>
+    </div>
+    <div class="pl-5 mb-6 flex flex-col justify-end select-none">
+        <div class="text-base font-semibold ml-1">Пользователь</div>
+        <div class="text-7xl font-bold mb-4 line-clamp-1" (click)="openModal(user)">Skell</div>
+    </div>
+</div>
+
