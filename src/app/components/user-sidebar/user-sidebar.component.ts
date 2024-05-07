@@ -7,6 +7,7 @@ import { Playlist } from '../../types/playlist';
 import { UserProfilePlaylistService } from '../../services/profile-playlist-user';
 import { PluralPipe } from '../../pipes/plural.pipe';
 import { UserCreatePlaylistPopupComponent } from "../user-create-playlist-popup/user-create-playlist-popup.component";
+import { PlaylistTableService } from '../../services/playlist-table.service';
 
 @Component({
     selector: 'app-user-sidebar',
@@ -25,10 +26,13 @@ export class UserSidebarComponent implements OnInit {
   playlists: Playlist[] = [];
   userId!: number;
 
-  constructor(private UserProfilePlaylistService: UserProfilePlaylistService) {}
+  constructor(private UserProfilePlaylistService: UserProfilePlaylistService, private playlistTableService: PlaylistTableService) {}
 
   ngOnInit(): void {
     this.loadUserPlaylists();
+    this.playlistTableService.playlistCreated$.subscribe(() => {
+      this.loadUserPlaylists();
+    });
   }
 
   decodeToken(): any {
@@ -50,7 +54,7 @@ export class UserSidebarComponent implements OnInit {
     this.showModal = true;
   }
   closeModal() {
-    this.loadUserPlaylists();
     this.showModal = false;
+    this.loadUserPlaylists();
   }
 }
