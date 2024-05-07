@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { TruncatePipe } from '../../../truncate.pipe';
+import { TruncatePipe } from '../../../pipes/truncate.pipe';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthorTableService } from '../../../services/author-table.service';
 import { AdminPopupAuthorsComponent } from '../../admin-popup/admin-popup-authors/admin-popup-authors.component';

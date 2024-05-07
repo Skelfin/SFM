@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { Subscription, Subject, debounceTime } from 'rxjs';
+import { Subject, debounceTime } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { jwtDecode } from 'jwt-decode';
@@ -59,14 +59,13 @@ export class UserProfilePlaylistsComponent implements OnInit {
     scrollContainer.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
-  filteredMusicCards: Playlist[] = [];
+  playlists: Playlist[] = [];
   userId!: number;
 
   constructor(private UserProfilePlaylistService: UserProfilePlaylistService) {}
 
   ngOnInit(): void {
     this.loadUserPlaylists();
-    console.log('Initial filteredMusicCards:', this.filteredMusicCards);
     this.scrollEventDebouncer$.pipe(
       debounceTime(0)
     ).subscribe(() => {
@@ -76,22 +75,14 @@ export class UserProfilePlaylistsComponent implements OnInit {
 
   loadUserPlaylists() {
     const decodedToken = this.decodeToken();
-    console.log('Decoded Token:', decodedToken);
-  
     if (decodedToken && decodedToken.id) {
       this.userId = decodedToken.id;
-      console.log('User ID:', this.userId);
-  
       this.UserProfilePlaylistService.getUserPlaylists(this.userId).subscribe(playlists => {
-        this.filteredMusicCards = playlists;
-        console.log('Filtered Music Cards:', JSON.stringify(this.filteredMusicCards, null, 2));
-      }, error => {
-        console.error('Error loading playlists:', error);
+        this.playlists = playlists;
       });
-    } else {
-      console.log('No valid token found or missing user ID');
     }
   }
+  
   
 
   decodeToken(): any {

@@ -25,14 +25,14 @@
           <!-- Dropdown Menu -->
           <ul class="absolute hidden text-gray-700 pt-1 right-0" [class.hidden]="!dropdownOpen"
             style="min-width: 12rem;">
-            <li (click)="closeDropdown()"
+            <li routerLink="/profile" (click)="closeDropdown()"
               class="rounded-t bg-gray-200 select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap border-b border-gray-400 text-base">
-              <a routerLink="/profile">Профиль</a>
+              <a class="cursor-pointer">Профиль</a>
             </li>
 
             <li (click)="logout()"
               class="rounded-b bg-gray-200 select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap text-base">
-              <a href="####№">Выход</a>
+              <a class="cursor-pointer">Выход</a>
             </li>
           </ul>
         </li>

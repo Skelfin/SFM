@@ -5,7 +5,7 @@ import { AdminPopupUserComponent } from '../../admin-popup/admin-popup-user/admi
 import { User } from '../../../types/user';
 import { UserTableService } from '../../../services/user-table/user-table.service';
 import { UserFormService } from '../../../services/user-table/user.form.service';
-import { TruncatePipe } from "../../../truncate.pipe";
+import { TruncatePipe } from "../../../pipes/truncate.pipe";
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

@@ -8,20 +8,25 @@
         </a>
     </nav>
 
-    <div class="text-white text-xl font-semibold px-3 pt-2 mb-2">
-        Мои плейлисты
+    <div class="text-xl font-semibold px-3 pt-2 mb-2 flex justify-between items-center">
+        <div>
+            Мои плейлисты
+        </div>
+        <button class="w-9 btn_side_bar flex justify-center items-center" (click)="openModal()">
+            <fa-icon [icon]="faPlus" class="fa-lg p-5px_my"></fa-icon>
+        </button>
     </div>
     <nav class="flex flex-col overflow-y-auto auto h-[calc(100%-250px)]">
         @for (playlist of playlists; track playlist.id; let i = $index ) {
         <a routerLinkActive="" class="bg-[#6b9d9ec6] flex items-center p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }} bg-[#44686a]">
-            <img [src]="playlist.imageUrl" [alt]="playlist.name" class="rounded-md mr-2 w-12 h-12 object-cover pointer-events-none"/>
+            <img [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}" class="rounded-md mr-2 w-12 h-12 object-cover pointer-events-none"/>
             <div class="flex flex-1 min-w-0">
                 <div class="flex flex-col flex-1 min-w-0">
-                    <div class="text-white text-base truncate">
+                    <div class="text-base truncate">
                         {{ playlist.name }}
                     </div>
                     <div class="text-gray-300 text-sm truncate">
-                        {{ playlist.tracks }} треков
+                        {{ playlist.tracks.length + ' ' + (playlist.tracks.length | plural: ['трек', 'трека', 'треков']) }}
                     </div>
                 </div>
             </div>
@@ -31,3 +36,7 @@
 }
 </nav>
 </div>
+<app-user-create-playlist-popup
+  [showModal]="showModal"
+  (close)="closeModal()" class="fixed z-50"
+></app-user-create-playlist-popup>

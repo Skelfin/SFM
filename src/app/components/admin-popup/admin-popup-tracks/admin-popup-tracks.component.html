@@ -4,7 +4,7 @@
         (click)="$event.stopPropagation()">
         <div class="px-4 py-3">
             <form (ngSubmit)="saveTrack()">
-                <h1 class="font-bold mb-4">Добавление трека</h1>
+                <h1 class="bold mb-4 text-center">Добавление трека</h1>
                 <div class="flex flex-col">
                     <input [(ngModel)]="nameModel" name="name" #name="ngModel" [ngModelOptions]="{standalone: true}"
                         required="" type="text" placeholder="Название" id="name" class="input">

@@ -1,5 +1,5 @@
 <form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
-    <h1 class="font-bold mb-4">Создание альбома</h1>
+    <h1 class="bold mb-4">Создание альбома</h1>
     <div class="flex flex-col">
         <input formControlName="name" required type="text" placeholder="Название" id="name" class="input w-72">
         @if (albumForm.controls['name'].invalid && (albumForm.controls['name'].dirty ||

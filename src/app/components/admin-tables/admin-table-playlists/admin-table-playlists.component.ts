@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TruncatePipe } from "../../../truncate.pipe";
+import { TruncatePipe } from "../../../pipes/truncate.pipe";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { Playlist } from '../../../types/playlist';

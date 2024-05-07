@@ -9,7 +9,7 @@
                     <input [(ngModel)]="nameModel" name="name" #name="ngModel" [ngModelOptions]="{standalone: true}"
                         required="" type="text" placeholder="Название" id="name" class="input">
                     @if (name.invalid && name.touched) {
-                    <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
+                    <div class="text-red-500 text-xs mt-2">Введите название</div>
                     }
                     <textarea [(ngModel)]="descriptionModel" name="description" #description="ngModel"
                         [ngModelOptions]="{standalone: true}"

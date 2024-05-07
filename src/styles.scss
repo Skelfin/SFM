@@ -26,6 +26,10 @@
         @apply text-white bg-[#6B9D9E] font-semibold rounded-full hover:bg-[#5a888a] hover:shadow-lg hover:scale-105 active:bg-[#44686a] active:text-gray-300 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed transition duration-500 ease-in-out transform;
     }
 
+    .btn_side_bar {
+        @apply text-white bg-[#6B9D9E] font-semibold rounded-full hover:bg-[#5a888a] hover:scale-110 active:bg-[#44686a] active:text-gray-300 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out transform;
+    }
+
     .tabs {
         @apply text-white block py-2.5 px-4 transition duration-300 hover:bg-[#466b6e] active:bg-[#385658] select-none cursor-pointer
     }
@@ -77,4 +81,8 @@
     .filewidth {
         width: 265px;
     }
+
+    .bold {
+    font-weight: 700;
+}
 }

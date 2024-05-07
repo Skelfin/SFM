@@ -10,7 +10,7 @@
   
   <div class="relative flex items-center">
     <div class="flex overflow-hidden" #scrollContainer>
-      @for (playlist of filteredMusicCards; track playlist.id) {
+      @for (playlist of playlists; track playlist.id) {
         <a class="flex-none w-48 border-2 border-[#162A3E] mx-2 bg-[#6b9d9ec6] rounded-lg pl_block p-2">
         <div class="overflow-hidden rounded-lg">
           <img class="w-48 h-44 object-cover select-none rounded-lg pointer-events-none" [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}">
