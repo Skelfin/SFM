@@ -41,7 +41,7 @@ export class PlaylistsService {
   async getTracksByPlaylistId(playlistId: number): Promise<Track[]> {
     const playlist = await this.playlistRepository.findOne({
       where: { id: playlistId },
-      relations: ['tracks', 'tracks.album'], 
+      relations: ['tracks', 'tracks.album', 'tracks.album.authors'], 
     });
     return playlist.tracks;
   }

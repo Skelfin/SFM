@@ -34,6 +34,9 @@ export class TablePlaylistComponent implements OnInit {
     });
   }
   
+  getAuthors(track: Track): string {
+    return track.album && track.album.authors ? track.album.authors.map(author => author.nickname).join(', ') : 'No authors';
+  }
 
   loadTracksForPlaylist(): void {
     this.route.paramMap.subscribe(params => {
