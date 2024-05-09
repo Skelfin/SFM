@@ -38,6 +38,14 @@ export class PlaylistsService {
     });
   }
 
+  async getTracksByPlaylistId(playlistId: number): Promise<Track[]> {
+    const playlist = await this.playlistRepository.findOne({
+      where: { id: playlistId },
+      relations: ['tracks', 'tracks.album'], 
+    });
+    return playlist.tracks;
+  }
+
   async updatePlaylist(
     id: number,
     playlistData: Partial<UpdatePlaylistDto>,

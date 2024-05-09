@@ -10,6 +10,7 @@ export interface Track {
     playlists: Playlist[];
     createdAt: Date;
     updatedAt: Date;
+    duration?: string;
 }
 
 export interface TrackForm {

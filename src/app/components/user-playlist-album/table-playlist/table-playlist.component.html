@@ -9,17 +9,19 @@
                 <th class="w-8 pb-2 text-center"><fa-icon [icon]="faClock" class=""></fa-icon></th>
             </tr>
         </thead>
+        @for (track of tracks; track track.id ; let i = $index) {
         <tbody>
             <tr class="border-b border-gray-700">
-                <td class="py-4 text-center">1000</td>
+                <td class="py-4 text-center">{{ i + 1 }}</td>
                 <td class="pl-2 text-left">
-                    <div class="truncate">Название asdaisd ajisdj paosd jaksd kasda</div>
-                    <div class="truncate text-gray-400 text-sm">Исполнитель asdkjaskjd asjd oajoid ajoid</div>
+                    <div class="truncate">{{ track.name }}</div>
+                    <div class="truncate text-gray-400 text-sm"> ### </div>
                 </td>
-                <td class="truncate text-left">Альбом alfknhakf asoif k afpiasjoifjafjaojso </td>
+                <td class="truncate text-left">{{ track.album.name }}</td>
                 <td class="text-center"><fa-icon [icon]="faCircle" class=""></fa-icon></td>
-                <td class="text-center">12:38</td>
+                <td class="text-center">{{ track.duration }}</td>
             </tr>
         </tbody>
+        }
     </table>
 </div>

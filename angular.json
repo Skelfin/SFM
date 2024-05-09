@@ -29,7 +29,9 @@
               "src/favicon.ico",
               "src/assets",
               "src/server/user_avatar",
-              "src/server/playlist_avatar"
+              "src/server/playlist_avatar",
+              "src/server/playlist_avatar",
+              "src/server/track_path"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",

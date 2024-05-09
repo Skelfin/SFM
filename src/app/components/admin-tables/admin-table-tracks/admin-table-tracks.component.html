@@ -26,7 +26,7 @@
             <td class="border border-slate-500">{{ track.name }}</td>
             <td class="border border-slate-500">{{ track.path | truncate }}</td>
             <td class="border border-slate-500">{{ track.avatar | truncate  }}</td>
-            <td class="border border-slate-500">{{ track.album ? track.album.id : 'N/A' }}</td>
+            <td class="border border-slate-500">{{ track.album ? track.album.name : 'N/A' }}</td>
             <td class="border border-slate-500">{{ track.createdAt }}</td>
             <td class="border border-slate-500">{{ track.updatedAt }}</td>
             <td class="flex justify-evenly">

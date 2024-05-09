@@ -19,6 +19,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { Track } from 'src/tracks/entities/track.entity';
 
 @Controller('playlists')
 export class PlaylistsController {
@@ -59,6 +60,11 @@ export class PlaylistsController {
   @Get('/user/:userId')
   async getPlaylistsByUser(@Param('userId') userId: number): Promise<Playlist[]> {
     return await this.playlistsService.getPlaylistsByUser(userId);
+  }
+
+  @Get(':playlistId/tracks')
+  async getTracksByPlaylistId(@Param('playlistId') playlistId: number): Promise<Track[]> {
+    return await this.playlistsService.getTracksByPlaylistId(playlistId);
   }
 
   @Put(':id')

@@ -42,7 +42,7 @@ export const routes: Routes = [
         title: 'Поиск',
     },    
     {
-        path: 'playlist',
+        path: 'playlist/:id',
         component: UserPlaylistsComponent,
         title: 'Плейлист',
     },

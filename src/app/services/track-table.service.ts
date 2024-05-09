@@ -10,6 +10,7 @@ import { Track } from '../types/track';
 })
 export class TrackTableService {
   private apiUrl = `${API_URL}/tracks`;
+  private apiUrlPlaylistId = `${API_URL}/playlists`;
   private trackCreatedSubject = new Subject<void>();
 
   trackCreated$ = this.trackCreatedSubject.asObservable();
@@ -22,6 +23,11 @@ export class TrackTableService {
   getTrack(): Observable<Track[]> {
     return this.http.get<Track[]>(this.apiUrl);
   }
+
+  getTracksByPlaylistId(playlistId: number): Observable<Track[]> {
+    return this.http.get<Track[]>(`${this.apiUrlPlaylistId}/${playlistId}/tracks`);
+  }
+
   createTrack(trackFormData: FormData) {
     return this.http.post(`${API_URL}/tracks`, trackFormData).subscribe(() => {
       this.trackCreatedSubject.next();

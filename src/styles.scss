@@ -33,7 +33,7 @@
     .tabs {
         @apply text-white block py-2.5 px-4 transition duration-300 hover:bg-[#466b6e] active:bg-[#385658] select-none cursor-pointer
     }
-    
+
     .pl_block {
         @apply transition duration-300 hover:bg-[#466b6e] active:bg-[#385658] select-none cursor-pointer
     }
@@ -84,5 +84,13 @@
 
     .bold {
     font-weight: 700;
+
+    .active {
+        background-color: #44686a; /* Цвет активной ссылки */
+    }
+    
+    .tabs:not(.active) {
+        background-color: #6b9d9ec6; /* Цвет неактивных ссылок */
+    }
 }
 }
