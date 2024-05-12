@@ -3,6 +3,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormsModule } from '@angular/forms';
 import { Playlist } from '../../../types/playlist';
 import { PlaylistTableService } from '../../../services/playlist-table.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-playlist-popup',
@@ -51,7 +53,7 @@ export class PlaylistPopupComponent {
     }
   }
 
-  constructor(private playlistTableService: PlaylistTableService) { }
+  constructor(private playlistTableService: PlaylistTableService, private readonly snackBar: MatSnackBar, private router: Router) { }
   savePlaylist() {
     if (!this.playlist) {
       console.error('Плейлиста не существует');
@@ -66,5 +68,14 @@ export class PlaylistPopupComponent {
     }
     this.playlistTableService.updateBasicUserPlaylist(this.playlist.id, formData);
     this.closeModal();
+  }
+
+  deletePlaylist(playlistId: number) {
+    this.playlistTableService.deletePlaylist(playlistId).subscribe(() => {
+      this.snackBar.open('Плейлист удален', 'ОК', {
+        duration: 3000,
+      });
+      this.router.navigate(['/main']);
+    });
   }
 }
