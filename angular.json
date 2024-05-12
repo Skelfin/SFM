@@ -30,8 +30,8 @@
               "src/assets",
               "src/server/user_avatar",
               "src/server/playlist_avatar",
-              "src/server/playlist_avatar",
-              "src/server/track_path"
+              "src/server/track_path",
+              "src/server/album_avatar"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",

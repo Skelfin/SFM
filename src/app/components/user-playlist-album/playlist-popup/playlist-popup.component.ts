@@ -58,14 +58,13 @@ export class PlaylistPopupComponent {
       return;
     }
 
-
     const formData = new FormData();
     formData.append('name', this.nameModel);
     formData.append('description', this.descriptionModel);
     if (this.avatarFile) {
       formData.append('avatar', this.avatarFile, this.avatarFile.name);
     }
-    this.playlistTableService.updatePlaylist(this.playlist.id, formData);
+    this.playlistTableService.updateBasicUserPlaylist(this.playlist.id, formData);
     this.closeModal();
   }
 }

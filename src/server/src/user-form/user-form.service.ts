@@ -31,19 +31,11 @@ export class UserFormService {
     if (!userToUpdate) {
       throw new Error('Пользователь не найден');
     }
-  
-    // Если обновляется аватар, удаляем старый файл
-    if (userData.avatar && userToUpdate.avatar && userToUpdate.avatar !== 'avatar_default.png') {
-      const oldAvatarPath = path.join('./user_avatar', userToUpdate.avatar);
-      try {
-        await fs.unlink(oldAvatarPath);
-        console.log(`Старый аватар удален: ${oldAvatarPath}`);
-      } catch (error) {
-        console.warn(`Ошибка при удалении старого аватара: ${error}`);
-      }
-    }
-  
-    // Продолжаем с обновлением пользователя...
+
+    const oldAvatarPath = userToUpdate.avatar && userToUpdate.avatar !== 'avatar_default.png' 
+    ? path.join('./user_avatar', userToUpdate.avatar) 
+    : null;
+
     if (userData.password) {
       if (userData.password.length < 6 || userData.password.length > 20) {
         throw new Error('Пароль должен быть от 6 до 20 символов');
@@ -51,8 +43,21 @@ export class UserFormService {
       userData.password = await argon2.hash(userData.password);
     }
   
-    await this.userRepository.update(id, userData);
-    return this.userRepository.findOne({ where: { id } });
+    if (userData.avatar) {
+      try {
+        await this.userRepository.update(id, userData); // Обновляем данные пользователя
+        if (oldAvatarPath) {
+          await fs.unlink(oldAvatarPath); // Удаляем старый аватар после успешного обновления
+          console.log(`Старый аватар удален: ${oldAvatarPath}`);
+        }
+        return this.userRepository.findOne({ where: { id } });
+      } catch (error) {
+        console.warn(`Ошибка при обновлении пользователя: ${error}`);
+        throw new Error('Ошибка при обновлении данных пользователя');
+      }
+    } else {
+      return this.userRepository.update(id, userData).then(() => this.userRepository.findOne({ where: { id } }));
+    }
   }
   
 }

@@ -66,7 +66,7 @@ export class UserSidebarComponent implements OnInit {
       this.userId = decodedToken.id;
       this.UserProfilePlaylistService.getUserPlaylists(this.userId).subscribe(
         (playlists) => {
-          this.playlists = playlists;
+          this.playlists = playlists.sort((a, b) => a.id - b.id);
         }
       );
     }

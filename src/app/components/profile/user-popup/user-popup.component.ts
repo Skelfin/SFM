@@ -33,7 +33,6 @@ export class UserPopupComponent {
   passwordModel: string = '';
   nicknameModel: string = '';
   isPasswordTouched = false;
-  accessRightsModel: number | undefined;
 
   avatarFile: File | null = null;
   clearPassword(event: MouseEvent) {
@@ -60,7 +59,6 @@ export class UserPopupComponent {
       const user: User = changes['user'].currentValue;
       this.nicknameModel = user && user.nickname ? user.nickname : '';
       this.passwordModel = user && user.password ? user.password : '';
-      this.accessRightsModel = user?.access_rights ?? 0;
     }
   }
 
@@ -78,7 +76,6 @@ saveUser() {
 
   const formData = new FormData();
   formData.append('nickname', this.nicknameModel);
-  formData.append('access_rights', String(this.accessRightsModel));
 
   if (this.isPasswordTouched && this.passwordModel.trim() !== '') {
     formData.append('password', this.passwordModel);

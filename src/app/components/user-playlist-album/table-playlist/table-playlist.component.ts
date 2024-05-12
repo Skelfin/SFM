@@ -30,7 +30,6 @@ export class TablePlaylistComponent implements OnInit {
   loadAlbum(): void {
     this.albumTableService.getAlbum().subscribe((albums) => {
       this.albums = albums;
-      console.log(albums);
     });
   }
   

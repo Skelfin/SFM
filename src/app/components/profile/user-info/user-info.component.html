@@ -5,7 +5,7 @@
 }
 <div class="flex p-5" style="background-image: linear-gradient(to bottom, #04111D, #0a1928);">
     <div class="relative group w-48 h-48 flex-shrink-0 blur-effect">
-        <img [src]="'server/user_avatar/' + currentUser?.avatar" alt="Картинка"
+        <img [src]="'server/user_avatar/' + currentUser?.avatar"
             class="w-full h-full object-cover rounded-full border-2 border-[#162A3E]">
         <div class="absolute cursor-pointer inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center rounded-full opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out"
             (click)="openModal()">

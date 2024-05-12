@@ -31,6 +31,13 @@ export class PlaylistsService {
     });
   }
 
+  async getPlaylistById(id: number): Promise<Playlist> {
+    return this.playlistRepository.findOne({
+      where: { id: id }, 
+      relations: ['user', 'tracks'], 
+    });
+  }
+
   async getPlaylistsByUser(userId: number): Promise<Playlist[]> {
     return await this.playlistRepository.find({
       where: { user: { id: userId } },
@@ -58,12 +65,6 @@ export class PlaylistsService {
       throw new Error('Плейлист не найден');
     }
 
-    playlistToUpdate.name = playlistData.name || playlistToUpdate.name;
-    playlistToUpdate.description =
-      playlistData.description || playlistToUpdate.description;
-    if (playlistData.avatar) {
-      playlistToUpdate.avatar = playlistData.avatar;
-    }
 
     if (playlistData.trackIds) {
       const newTracks = playlistData.trackIds.map(id => ({ id: Number(id) }) as Track);
@@ -78,7 +79,7 @@ export class PlaylistsService {
       playlistToUpdate.avatar !== 'avatar_default.png'
     ) {
       const oldAvatarPath = path.join(
-        './playlist_avatar',
+        'playlist_avatar',
         playlistToUpdate.avatar,
       );
       try {
@@ -89,6 +90,58 @@ export class PlaylistsService {
           `Ошибка при удалении старого аватара плейлиста: ${error}`,
         );
       }
+    }
+
+    playlistToUpdate.name = playlistData.name || playlistToUpdate.name;
+    playlistToUpdate.description =
+      playlistData.description || playlistToUpdate.description;
+    if (playlistData.avatar) {
+      playlistToUpdate.avatar = playlistData.avatar;
+    }
+
+    await this.playlistRepository.save(playlistToUpdate);
+    return this.playlistRepository.findOne({
+      where: { id },
+      relations: ['tracks'],
+    });
+  }
+
+  async updatePlaylistBasicInfo(
+    id: number,
+    playlistData: Partial<UpdatePlaylistDto>,
+  ): Promise<Playlist> {
+    const playlistToUpdate = await this.playlistRepository.findOne({
+      where: { id },
+      relations: ['tracks'],
+    });
+    if (!playlistToUpdate) {
+      throw new Error('Плейлист не найден');
+    }
+
+    if (
+      playlistData.avatar &&
+      playlistToUpdate.avatar &&
+      playlistToUpdate.avatar !== 'avatar_default.png'
+    ) {
+      const oldAvatarPath = path.join(
+        'playlist_avatar',
+        playlistToUpdate.avatar,
+      );
+      try {
+        await fs.unlink(oldAvatarPath);
+        console.log(`Старый аватар плейлиста удален: ${oldAvatarPath}`);
+      } catch (error) {
+        console.error(
+          `Ошибка при удалении старого аватара плейлиста: ${error}`,
+        );
+      }
+    }
+
+    playlistToUpdate.name = playlistData.name || playlistToUpdate.name;
+    playlistToUpdate.description =
+      playlistData.description || playlistToUpdate.description;
+    if (playlistData.avatar) {
+      playlistToUpdate.avatar = playlistData.avatar;
     }
 
     await this.playlistRepository.save(playlistToUpdate);
@@ -113,7 +166,7 @@ export class PlaylistsService {
     // Проверяем, что у плейлиста есть аватар и это не дефолтный аватар
     if (playlist.avatar && playlist.avatar !== 'avatar_default.png') {
       try {
-        const filePath = path.join('./playlist_avatar', playlist.avatar);
+        const filePath = path.join('playlist_avatar', playlist.avatar);
         await fs.unlink(filePath);
         console.log(`Аватар плейлиста удален: ${filePath}`);
       } catch (error) {

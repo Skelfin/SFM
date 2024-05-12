@@ -64,6 +64,10 @@ export class AlbumsService {
       }
     }
 
+    if (albumData.avatar) {
+      albumToUpdate.avatar = albumData.avatar;
+    }
+
     await this.albumRepository.save(albumToUpdate);
     return this.albumRepository.findOne({ where: { id }, relations: ['tracks', 'authors'] });
   }

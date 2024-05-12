@@ -46,7 +46,7 @@ export class PlaylistsController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     // Если файл не загружен, используем имя файла дефолтного аватара
-    createPlaylistDto.avatar = file ? file.filename : 'avatar_default.png';
+    createPlaylistDto.avatar = file ? `${file.filename}` : 'avatar_default.png';
 
     return this.playlistsService.create(req.user.id, createPlaylistDto);
   }
@@ -55,6 +55,11 @@ export class PlaylistsController {
   async getPlaylists(): Promise<Playlist[]> {
     // Переименован метод для корректного отображения его назначения
     return await this.playlistsService.getPlaylists(); // Использование playlistsService для получения списка плейлистов
+  }
+
+  @Get(':id')
+  async getPlaylistById(@Param('id') id: number): Promise<Playlist> {
+    return this.playlistsService.getPlaylistById(id);
   }
 
   @Get('/user/:userId')
@@ -71,7 +76,7 @@ export class PlaylistsController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: diskStorage({
-        destination: './playlist_avatar',
+        destination: 'playlist_avatar',
         filename: (req, file, cb) => {
           const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
           const extension = extname(file.originalname);
@@ -89,6 +94,30 @@ export class PlaylistsController {
       playlistData.avatar = file.filename;
     }
     return this.playlistsService.updatePlaylist(id, playlistData);
+  }
+
+  @Put(':id/basic-info')
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: 'playlist_avatar',
+        filename: (req, file, cb) => {
+          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+          const extension = extname(file.originalname);
+          cb(null, `${uniqueSuffix}${extension}`);
+        },
+      }),
+    }),
+  )
+  async updatePlaylistBasicInfo(
+    @Param('id') id: number,
+    @Body() playlistData: Partial<UpdatePlaylistDto>,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (file) {
+      playlistData.avatar = file.filename;
+    }
+    return this.playlistsService.updatePlaylistBasicInfo(id, playlistData);
   }
 
   @Delete(':id')

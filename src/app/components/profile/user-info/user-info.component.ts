@@ -25,8 +25,6 @@ export class UserInfoComponent implements OnInit {
       this.userTableService.getUserById(decodedToken.id).subscribe(user => {
         this.showModal = true;
       });
-    } else {
-      console.error('Token is invalid or not present');
     }
   }
   
