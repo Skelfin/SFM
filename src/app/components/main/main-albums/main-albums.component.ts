@@ -3,19 +3,15 @@ import { Subscription, Subject, debounceTime } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { SearchService } from '../../../services/SearchService';
-
-interface MusicCard {
-  id: number
-  title: string;
-  image: string;
-  description: string;
-}
+import { Album } from '../../../../server/dist/albums/entities/album.entity';
+import { AlbumTableService } from '../../../services/album-table.service';
+import { ArrowsBlockComponent } from "../../arrows-block/arrows-block.component";
 
 @Component({
-  selector: 'app-main-albums',
-  standalone: true,
+    selector: 'app-main-albums',
+    standalone: true,
   imports: [FontAwesomeModule],
-  templateUrl: './main-albums.component.html',
+    templateUrl: './main-albums.component.html',
   styleUrl: './main-albums.component.scss'
 })
 export class MainAlbumsComponent implements OnInit {
@@ -65,31 +61,20 @@ export class MainAlbumsComponent implements OnInit {
   }
 
   private searchSubscription!: Subscription;
-  private musicCards: MusicCard[] = [
-    { id: 1, title: 'аль1', image: '../assets/1.png', description: 'Rolling with the \'bops\' in your Kimbap.' },
-    { id: 2, title: 'аль1', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 3, title: 'аль2', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 4, title: 'аль3', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 5, title: 'аль4', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 6, title: 'аль5', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 7, title: 'аль6', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 8, title: 'аль7', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 9, title: 'аль8', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 10, title: 'аль9', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 11, title: 'аль10', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-    { id: 12, title: 'аль11', image: '../assets/1.png', description: 'when you wake up next to him in the middle of the...' },
-  ];
+  private album: Album[] = [];
 
-  filteredMusicCards: MusicCard[] = [];
-  shuffledMusicCards: MusicCard[] = [];
+  filteredAlbums: Album[] = [];
 
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService, private albumTableService: AlbumTableService) {}
+
+  getAuthors(album: Album): string {
+    return album.authors ? album.authors.map(author => author.nickname).join(', ') : 'No authors';
+  }
 
   ngOnInit(): void {
-    this.shuffledMusicCards = this.shuffleMusicCards();
-    this.filteredMusicCards = this.shuffledMusicCards;
+    this.loadAlbum()
     this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
-      this.filterMusicCards(text);
+      this.filterAlbum(text);
     });
     this.scrollEventDebouncer$.pipe(
       debounceTime(0)
@@ -98,16 +83,24 @@ export class MainAlbumsComponent implements OnInit {
     });
   }
 
+  loadAlbum(): void {
+    this.albumTableService.getAlbum().subscribe(album => {
+      this.album = album;
+      this.album = album;
+      this.filteredAlbums = this.shuffleAlbum([...this.album]);
+    });
+  }
   
-  filterMusicCards(searchText: string): void {
-    this.filteredMusicCards = this.shuffledMusicCards.filter(card =>
-      card.title.toLowerCase().includes(searchText.toLowerCase())
+  filterAlbum(searchText: string): void {
+    const searchTextLower = searchText.toLowerCase();
+    this.filteredAlbums = this.album.filter(card =>
+      card.name.toLowerCase().includes(searchTextLower)
     );
+    this.filteredAlbums = this.shuffleAlbum([...this.filteredAlbums]);
     this.scrollEventDebouncer$.next();
   }
 
-  shuffleMusicCards(): any[] {
-    let array = [...this.musicCards];
+  shuffleAlbum(array: Album[]): Album[] {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
