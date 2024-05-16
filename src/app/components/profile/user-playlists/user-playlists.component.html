@@ -11,11 +11,11 @@
   <div class="relative flex items-center">
     <div class="flex overflow-hidden" #scrollContainer>
       @for (playlist of playlists; track playlist.id) {
-        <a class="flex-none w-48 border-2 border-[#162A3E] mx-2 bg-[#6b9d9ec6] rounded-lg pl_block p-2">
+        <a [routerLink]="['/playlist', encodeId(playlist.id)]" class="flex-none w-48 border-2 border-[#162A3E] mx-2 bg-[#6b9d9ec6] rounded-lg pl_block p-2">
         <div class="overflow-hidden rounded-lg">
           <img class="w-48 h-44 object-cover select-none rounded-lg pointer-events-none" [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}">
-          <div class="font-bold text-lg px-3 mt-2 mb-2 truncate">{{ playlist.name }}</div>
-          <a class="text-gray-200 mb-2 w-full px-2 text-sm line-clamp-2 hover:underline">{{ playlist.description }}</a>
+          <div class="font-bold px-1 mt-2 mb-2 truncate">{{ playlist.name }}</div>
+          <a class="text-gray-200 mb-2 w-full px-1 text-sm line-clamp-2">{{ playlist.description }}</a>
         </div>
       </a>
       }

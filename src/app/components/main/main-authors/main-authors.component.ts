@@ -3,21 +3,69 @@ import { Subscription, Subject, debounceTime } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { SearchService } from '../../../services/SearchService';
-
-interface MusicCard {
-  id: number
-  title: string;
-  image: string;
-}
+import { Author } from '../../../types/author';
+import { AuthorTableService } from '../../../services/author-table.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-main-authors',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, RouterLink],
   templateUrl: './main-authors.component.html',
   styleUrl: './main-authors.component.scss'
 })
 export class MainAuthorsComponent implements OnInit {
+  private searchSubscription!: Subscription;
+  private author: Author[] = []; 
+
+  filteredAuthors: Author[] = [];
+  shuffledAuthors: Author[] = [];
+
+  constructor(private searchService: SearchService, private authorTableService: AuthorTableService) {}
+
+  ngOnInit(): void {
+    this.loadAuthor()
+    this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
+      this.filterAuthor(text);
+    });
+    this.scrollEventDebouncer$.pipe(
+      debounceTime(0)
+    ).subscribe(() => {
+      this.updateScrollButtons();
+    });
+  }
+
+  loadAuthor(): void {
+    this.authorTableService.getAuthor().subscribe(author => {
+      this.author = author;
+      this.shuffledAuthors = this.shuffleAuthor();
+      this.filteredAuthors = this.shuffledAuthors;
+    });
+  }
+
+  filterAuthor(searchText: string): void {
+    this.filteredAuthors = this.shuffledAuthors.filter(card =>
+      card.nickname.toLowerCase().includes(searchText.toLowerCase())
+    );
+    this.scrollEventDebouncer$.next();
+  }
+
+  shuffleAuthor(): any[] {
+    let array = [...this.author];
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+
+  encodeId(id: number): string {
+    const salt = 'Sec1t';
+    const saltedId = `${salt}${id}${salt}`;
+    return btoa(saltedId);
+  }
+
   faArrowLeft = faArrowLeft
   faArrowRight = faArrowRight
   canScrollLeft: boolean = false;
@@ -63,53 +111,4 @@ export class MainAuthorsComponent implements OnInit {
     scrollContainer.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
-  private searchSubscription!: Subscription;
-  private musicCards: MusicCard[] = [
-    { id: 1, title: 'pov12', image: '../assets/Home.jpg'},
-    { id: 2, title: 'pov1', image: '../assets/Home.jpg'},
-    { id: 3, title: 'pov2', image: '../assets/Home.jpg'},
-    { id: 4, title: 'pov3', image: '../assets/Home.jpg'},
-    { id: 5, title: 'pov4', image: '../assets/Home.jpg'},
-    { id: 6, title: 'pov5', image: '../assets/Home.jpg'},
-    { id: 7, title: 'pov6', image: '../assets/Home.jpg'},
-    { id: 8, title: 'pov7', image: '../assets/Home.jpg'},
-    { id: 9, title: 'pov8', image: '../assets/Home.jpg'},
-    { id: 10, title: 'pov9', image: '../assets/Home.jpg'},
-    { id: 11, title: 'pov10', image: '../assets/Home.jpg'},
-    { id: 12, title: 'pov11', image: '../assets/Home.jpg'},
-  ];
-
-  shuffledMusicCards: MusicCard[] = [];
-  filteredMusicCards: MusicCard[] = [];
-
-  constructor(private searchService: SearchService) {}
-
-  ngOnInit(): void {
-    this.shuffledMusicCards = this.shuffleMusicCards();
-    this.filteredMusicCards = this.shuffledMusicCards;
-    this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
-      this.filterMusicCards(text);
-    });
-    this.scrollEventDebouncer$.pipe(
-      debounceTime(0)
-    ).subscribe(() => {
-      this.updateScrollButtons();
-    });
-  }
-
-  filterMusicCards(searchText: string): void {
-    this.filteredMusicCards = this.shuffledMusicCards.filter(card =>
-      card.title.toLowerCase().includes(searchText.toLowerCase())
-    );
-    this.scrollEventDebouncer$.next();
-  }
-
-  shuffleMusicCards(): any[] {
-    let array = [...this.musicCards];
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
 }

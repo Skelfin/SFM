@@ -1,6 +1,6 @@
 <header class="py-1 px-8 bg-[#04111D]">
   <div class="container mx-auto flex justify-between py-2">
-    <a routerLink=" ">
+    <a routerLink="" class="select-none">
       <img src="assets/Prg_ico.png" alt="Logo" class="h-12">
     </a>
     <nav class="flex justify-end">
@@ -26,13 +26,13 @@
           <ul class="absolute hidden text-gray-700 pt-1 right-0" [class.hidden]="!dropdownOpen"
             style="min-width: 12rem;">
             <li routerLink="/profile" (click)="closeDropdown()"
-              class="rounded-t bg-gray-200 select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap border-b border-gray-400 text-base">
-              <a class="cursor-pointer">Профиль</a>
+              class="rounded-t bg-gray-200 cursor-pointer select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap border-b border-gray-400 text-base">
+              <a>Профиль</a>
             </li>
 
             <li (click)="logout()"
-              class="rounded-b bg-gray-200 select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap text-base">
-              <a class="cursor-pointer">Выход</a>
+              class="rounded-b bg-gray-200 cursor-pointer select-none hover:bg-gray-400 py-3 px-4 block whitespace-no-wrap text-base">
+              <a>Выход</a>
             </li>
           </ul>
         </li>

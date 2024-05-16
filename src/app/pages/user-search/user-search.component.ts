@@ -6,7 +6,6 @@ import { MainAuthorsComponent } from "../../components/main/main-authors/main-au
 import { MainAlbumsComponent } from "../../components/main/main-albums/main-albums.component";
 import { MainPlaylistsComponent } from "../../components/main/main-playlists/main-playlists.component";
 import { SearcherComponent } from "../../components/main/searcher/searcher.component";
-import { MainPlaylistsUserComponent } from "../../components/main/main-playlists-user/main-playlists-user.component";
 import { SearchService } from '../../services/SearchService';
 import { Subscription } from 'rxjs';
 import { FoundTracksComponent } from "../../components/main/found-tracks/found-tracks.component";
@@ -16,7 +15,7 @@ import { FoundTracksComponent } from "../../components/main/found-tracks/found-t
     standalone: true,
     templateUrl: './user-search.component.html',
     styleUrl: './user-search.component.scss',
-    imports: [UserSidebarComponent, HeaderComponent, FooterComponent, MainAuthorsComponent, MainAlbumsComponent, MainPlaylistsComponent, SearcherComponent, MainPlaylistsUserComponent, FoundTracksComponent]
+    imports: [UserSidebarComponent, HeaderComponent, FooterComponent, MainAuthorsComponent, MainAlbumsComponent, MainPlaylistsComponent, SearcherComponent, FoundTracksComponent]
 })
 export class UserSearchComponent implements OnInit {
     private searchTextSubscription!: Subscription;

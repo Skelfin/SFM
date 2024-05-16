@@ -4,7 +4,7 @@
         <div class="relative w-80">
             <fa-icon [icon]="faMagnifyingGlass"
                 class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"></fa-icon>
-            <input type="input" class="input w-80 pl-10 pr-10 rounded" [(ngModel)]="searchText"
+            <input type="input" class="input w-80 pl-10 pr-10 rounded select-none" [(ngModel)]="searchText"
                 (ngModelChange)="updateSearchText(searchText)" placeholder="Что хочешь включить?" aria-label="Search">
             @if (searchText) {
             <button

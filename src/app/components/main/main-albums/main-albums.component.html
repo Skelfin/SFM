@@ -13,9 +13,9 @@
 <div class="relative flex items-center">
   <div class="flex overflow-hidden" #scrollContainer>
     @for (album of filteredAlbums; track album.id) {
-    <a class="flex-none w-48 mx-2 border-2 border-[#162A3E] bg-[#6b9d9ec6] rounded-lg pl_block p-2">
+    <a [routerLink]="['/album', encodeId(album.id)]" class="flex-none w-48 mx-2 border-2 border-[#162A3E] bg-[#6b9d9ec6] rounded-lg pl_block p-2">
       <div class="overflow-hidden rounded-lg">
-        <img class="w-48 h-44 border-2 border-[#162A3E] object-cover select-none rounded-lg pointer-events-none" [src]="'server/album_avatar/' + album.avatar"
+        <img class="w-48 h-44 object-cover select-none rounded-lg pointer-events-none" [src]="'server/album_avatar/' + album.avatar"
           alt="{{ album.name }}">
         <div class="font-bold px-1 mt-2 mb-2 truncate">{{ album.name }}</div>
         <a class="text-gray-300 mb-2 w-full px-1 text-sm line-clamp-2 hover:underline"> {{ getAuthors(album) }}</a>

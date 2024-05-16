@@ -47,12 +47,12 @@ export const routes: Routes = [
         title: 'Плейлист',
     },
     {
-        path: 'album',
+        path: 'album/:id',
         component: AlbumComponent,
         title: 'Альбом',
     },
     {
-        path: 'author',
+        path: 'author/:id',
         component: AuthorsComponent,
         title: 'Автор',
     },

@@ -1,21 +1,24 @@
 <div class="flex items-center">
-    <h1 class="text-3xl text-white font-bold pl-3">Исполнители</h1>
-    <div class="arrows ml-3 mb-2" [class.opacity-50]="!canScrollLeft" [class.cursor-not-allowed]="!canScrollLeft" (click)="canScrollLeft && scrollLeft()">
-      <fa-icon [icon]="faArrowLeft" class="fa-lg"></fa-icon>
-    </div>
-    <div class="arrows ml-2 mb-2" [class.opacity-50]="!canScrollRight" [class.cursor-not-allowed]="!canScrollRight" (click)="canScrollRight && scrollRight()">
-      <fa-icon [icon]="faArrowRight" class="fa-lg"></fa-icon>
-    </div>
+  <h1 class="text-3xl text-white font-bold pl-3">Исполнители</h1>
+  <div class="arrows ml-3 mb-2" [class.opacity-50]="!canScrollLeft" [class.cursor-not-allowed]="!canScrollLeft"
+    (click)="canScrollLeft && scrollLeft()">
+    <fa-icon [icon]="faArrowLeft" class="fa-lg"></fa-icon>
   </div>
-  <div class="relative flex items-center">
-    <div class="flex overflow-hidden" #scrollContainer>
-      @for (card of filteredMusicCards; track card.id) {
-      <a class="flex-none w-48 mx-2 border-2 border-[#162A3E] bg-[#6b9d9ec6] rounded-t-full my_border pl_block p-1">
-        <div class="overflow-hidden">
-          <img class="w-48 h-44 object-cover select-none rounded-full pointer-events-none" [src]="card.image" alt="{{ card.title }}">
-          <div class="font-bold mt-2 pb-2 text-lg px-3 truncate">{{ card.title }}</div>
-        </div>
-      </a>
-      }
-    </div>
+  <div class="arrows ml-2 mb-2" [class.opacity-50]="!canScrollRight" [class.cursor-not-allowed]="!canScrollRight"
+    (click)="canScrollRight && scrollRight()">
+    <fa-icon [icon]="faArrowRight" class="fa-lg"></fa-icon>
   </div>
+</div>
+<div class="relative flex items-center">
+  <div class="flex overflow-hidden" #scrollContainer>
+    @for (author of filteredAuthors; track author.id) {
+    <a [routerLink]="['/author', encodeId(author.id)]" class="flex-none w-48 mx-2 border-2 border-[#162A3E] bg-[#6b9d9ec6] rounded-t-full my_border pl_block p-1">
+      <div class="overflow-hidden">
+        <img class="w-48 h-44 object-cover select-none rounded-full pointer-events-none" [src]="'server/author_avatar/' + author.avatar"
+          alt="{{ author.nickname }}">
+        <div class="font-bold mt-2 pb-2 px-1 truncate">{{ author.nickname }}</div>
+      </div>
+    </a>
+    }
+  </div>
+</div>

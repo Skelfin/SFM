@@ -31,7 +31,9 @@
               "src/server/user_avatar",
               "src/server/playlist_avatar",
               "src/server/track_path",
-              "src/server/album_avatar"
+              "src/server/track_avatar",
+              "src/server/album_avatar",
+              "src/server/author_avatar"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",

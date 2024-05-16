@@ -15,7 +15,7 @@
     </div>
     <div class="pl-5 flex flex-col justify-center select-none">
         <div class="text-sm font-semibold ml-1">Плейлист</div>
-        <div class="text-7xl font-bold mb-4 cursor-pointer" 
+        <div class="text-7xl font-bold mb-4 cursor-pointer truncate" 
         [ngClass]="{'cursor-pointer': isCreator}" (click)="isCreator ? openModal() : null">{{ playlist?.name }}</div>
         <div class="line-clamp-2 cursor-pointer text-gray-300 font-medium overflow-hidden text-base ml-1 mb-2"
         [ngClass]="{'cursor-pointer': isCreator}" (click)="isCreator ? openModal() : null">

@@ -1,54 +1,20 @@
 <h1 class="text-3xl text-white font-bold pl-3">Треки</h1>
 <div class="grid grid-cols-2 gap-4 ml-3">
-    @for (card of filteredMusicCards; track card.id; let i = $index) {
+    @for (track of filteredTracks; track track.id; let i = $index) {
     @if (i < 8) { <a
         class="relative flex items-center border-2 border-[#162A3E] bg-[#6b9d9ec6] pl_block rounded-lg shadow-lg overflow-visible p-1">
-        <img class="w-14 h-14 object-cover rounded-lg select-none pointer-events-none" [src]="card.image"
-            alt="{{ card.title }}">
+        <img class="w-14 h-14 object-cover rounded-lg select-none pointer-events-none"
+        [src]="'server/track_avatar/' + track.avatar" alt="{{ track.name }}" >
         <div class="text-white text-sm font-medium truncate px-4 py-2 w-0 flex-1">
-            {{ card.title }}
-            <div class="text-gray-200 text-sm truncate opacity-95 hover:underline">
-                {{ card.album }}
+            {{ track.name }}
+            <div class="text-gray-200 text-sm truncate opacity-95">
+                <span [routerLink]="['/album', encodeId(track.album.id)]" class="hover:underline">
+                    {{ track.album.name }}
+                </span>
             </div>
         </div>
-        <div class="flex items-center ml-auto">
-            <div class="relative">
-                <button (click)="toggleDropdown(card.id - 1)" class="pt-1 pr-4">
-                    <fa-icon [icon]="trackSelections[card.id - 1] ? faCircleCheck : faCirclePlus" class="fa-xl fa-regular"
-                      [ngClass]="{'text-green-500': trackSelections[card.id - 1], 'text-gray-300': !trackSelections[card.id - 1]}"></fa-icon>
-                  </button>
-                @if (openDropdownIndex === i) {
-                <div
-                    class="absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
-                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <div class="flex justify-between items-center px-4 py-2 text-sm text-gray-700">
-                            Любимые треки
-                            <button (click)="toggleIcon(card.id - 1)" class="focus:outline-none">
-                                <fa-icon [icon]="selectedIcon[card.id - 1] ? faCircleCheck : faCircle" class="fa-lg"
-                                    [ngClass]="{'text-green-500': selectedIcon[card.id - 1], 'text-gray-300': !selectedIcon[card.id - 1]}"></fa-icon>
-                            </button>
-                        </div>
-                        <div class="flex justify-between items-center px-4 py-2 text-sm text-gray-700">
-                            Return
-                            <button (click)="toggleIcon(card.id - 1)" class="focus:outline-none">
-                                <fa-icon [icon]="selectedIcon[card.id - 1] ? faCircleCheck : faCircle" class="fa-lg"
-                                    [ngClass]="{'text-green-500': selectedIcon[card.id - 1], 'text-gray-300': !selectedIcon[card.id - 1]}"></fa-icon>
-                            </button>
-                        </div>
-                        <div class="flex justify-end space-x-4 p-4">
-                            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                (click)="finalizeSelection()">Готово</button>
-                            <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                (click)="closeDropdown()">Отмена</button>
-
-                        </div>
-                    </div>
-                </div>
-                }
-            </div>
-            <div class="text-white text-sm pr-4 pt-1">
-                00:00
-            </div>
+        <div class="text-white text-sm pr-4 pt-1">
+            {{ track.duration }}
         </div>
         </a>
         }

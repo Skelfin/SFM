@@ -78,6 +78,13 @@ export class AlbumsService {
     });
   }
 
+  async getAlbumById(id: number): Promise<Album> {
+    return this.albumRepository.findOne({
+      where: { id: id }, 
+      relations: ['tracks', 'authors'], 
+    });
+  }
+
   async deleteAlbum(albumId: number): Promise<void> {
     const album = await this.albumRepository.findOne({
       where: {

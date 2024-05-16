@@ -5,16 +5,71 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { SearchService } from '../../../services/SearchService';
 import { Album } from '../../../../server/dist/albums/entities/album.entity';
 import { AlbumTableService } from '../../../services/album-table.service';
-import { ArrowsBlockComponent } from "../../arrows-block/arrows-block.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-main-albums',
     standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, RouterLink],
     templateUrl: './main-albums.component.html',
   styleUrl: './main-albums.component.scss'
 })
 export class MainAlbumsComponent implements OnInit {
+
+  private searchSubscription!: Subscription;
+  private album: Album[] = [];
+
+  filteredAlbums: Album[] = [];
+  shuffledAlbums: Album[] = [];
+
+  constructor(private searchService: SearchService, private albumTableService: AlbumTableService) {}
+
+  getAuthors(album: Album): string {
+    return album.authors ? album.authors.map(author => author.nickname).join(', ') : 'No authors';
+  }
+
+  ngOnInit(): void {
+    this.loadAlbum()
+    this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
+      this.filterAlbum(text);
+    });
+    this.scrollEventDebouncer$.pipe(
+      debounceTime(0)
+    ).subscribe(() => {
+      this.updateScrollButtons();
+    });
+  }
+
+  loadAlbum(): void {
+    this.albumTableService.getAlbum().subscribe(album => {
+      this.album = album;
+      this.shuffledAlbums = this.shuffleAlbum();
+      this.filteredAlbums = this.shuffledAlbums;
+    });
+  }
+  
+  filterAlbum(searchText: string): void {
+    this.filteredAlbums = this.shuffledAlbums.filter(card =>
+      card.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    this.scrollEventDebouncer$.next();
+  }
+  
+  shuffleAlbum(): any[] {
+    let array = [...this.album];
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  encodeId(id: number): string {
+    const salt = 'Sec1t';
+    const saltedId = `${salt}${id}${salt}`;
+    return btoa(saltedId);
+  }
+
   faArrowLeft = faArrowLeft
   faArrowRight = faArrowRight
   canScrollLeft: boolean = false;
@@ -60,51 +115,4 @@ export class MainAlbumsComponent implements OnInit {
     scrollContainer.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
-  private searchSubscription!: Subscription;
-  private album: Album[] = [];
-
-  filteredAlbums: Album[] = [];
-
-  constructor(private searchService: SearchService, private albumTableService: AlbumTableService) {}
-
-  getAuthors(album: Album): string {
-    return album.authors ? album.authors.map(author => author.nickname).join(', ') : 'No authors';
-  }
-
-  ngOnInit(): void {
-    this.loadAlbum()
-    this.searchSubscription = this.searchService.getSearchText().subscribe(text => {
-      this.filterAlbum(text);
-    });
-    this.scrollEventDebouncer$.pipe(
-      debounceTime(0)
-    ).subscribe(() => {
-      this.updateScrollButtons();
-    });
-  }
-
-  loadAlbum(): void {
-    this.albumTableService.getAlbum().subscribe(album => {
-      this.album = album;
-      this.album = album;
-      this.filteredAlbums = this.shuffleAlbum([...this.album]);
-    });
-  }
-  
-  filterAlbum(searchText: string): void {
-    const searchTextLower = searchText.toLowerCase();
-    this.filteredAlbums = this.album.filter(card =>
-      card.name.toLowerCase().includes(searchTextLower)
-    );
-    this.filteredAlbums = this.shuffleAlbum([...this.filteredAlbums]);
-    this.scrollEventDebouncer$.next();
-  }
-
-  shuffleAlbum(array: Album[]): Album[] {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
 }

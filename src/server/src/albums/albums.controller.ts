@@ -40,9 +40,15 @@ export class AlbumsController {
   }
 
   @Get()
-  async getAuthor(): Promise<Album[]> {
+  async getAlbum(): Promise<Album[]> {
     return await this.albumsService.getAlbum();
   }
+
+  @Get(':id')
+  async getAlbumById(@Param('id') id: number): Promise<Album> {
+    return this.albumsService.getAlbumById(id);
+  }
+
 
   @Put(':id')
   @UseInterceptors(

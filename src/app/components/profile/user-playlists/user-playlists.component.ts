@@ -5,11 +5,12 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { jwtDecode } from 'jwt-decode';
 import { UserProfilePlaylistService } from '../../../services/profile-playlist-user';
 import { Playlist } from '../../../types/playlist';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile-playlists',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, RouterLink],
   templateUrl: './user-playlists.component.html',
   styleUrl: './user-playlists.component.scss'
 })
@@ -83,7 +84,11 @@ export class UserProfilePlaylistsComponent implements OnInit {
     }
   }
   
-  
+  encodeId(id: number): string {
+    const salt = 'Sec1t';
+    const saltedId = `${salt}${id}${salt}`;
+    return btoa(saltedId);
+  }
 
   decodeToken(): any {
     const token = localStorage.getItem('token');

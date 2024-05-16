@@ -9,15 +9,39 @@
             </tr>
         </thead>
         <tbody>
+            @for (track of album?.tracks; track track.id; let i = $index) {
             <tr class="border-b border-gray-700">
-                <td class="py-4 text-center">1</td>
-                <td class="pl-2 text-left">
-                    <div class="truncate">Awake Return</div>
-                    <div class="truncate text-gray-400 text-sm">Skl</div>
+
+                <td class="py-4 text-center">
+                    <span>
+                        {{ i + 1 }}
+                    </span>
                 </td>
-                <td class="text-center"><fa-icon [icon]="faCircle" class=""></fa-icon></td>
-                <td class="text-center">2:07</td>
+                <td class="pl-2 text-left">
+                    <div class="truncate">
+                        <span>
+                            {{ track.name }}
+                        </span>
+                    </div>
+                    <div class="truncate text-gray-400 text-sm">
+                        <span class="hover:underline cursor-pointer">
+                            {{ getAuthors() }}
+                        </span>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span>
+                        <fa-icon [icon]="faCircle" class=""></fa-icon>
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span>
+                        {{ track.duration }}
+                    </span>
+                </td>
+
             </tr>
+            }
         </tbody>
     </table>
 </div>

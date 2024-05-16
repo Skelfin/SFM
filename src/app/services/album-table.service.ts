@@ -23,6 +23,10 @@ export class AlbumTableService {
     return this.http.get<Album[]>(this.apiUrl);
   }
 
+  getAlbumById(id: number): Observable<Album> {
+    return this.http.get<Album>(`${this.apiUrl}/${id}`);
+  }
+
   createAlbum(albumFormData: FormData) {
     return this.http.post(`${API_URL}/albums`, albumFormData).subscribe(() => {
       this.albumCreatedSubject.next();
