@@ -44,6 +44,11 @@ export class AuthorController {
     return await this.authorService.getAuthor();
   }
 
+  @Get(':id')
+  async getAuthorById(@Param('id') id: number): Promise<Author> {
+    return this.authorService.getAuthorById(id);
+  }
+
   @Put(':id')
   @UseInterceptors(
     FileInterceptor('avatar', {

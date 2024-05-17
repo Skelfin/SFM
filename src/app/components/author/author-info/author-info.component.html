@@ -1,18 +1,11 @@
 <div class="flex p-5" 
      style="background-image: linear-gradient(to bottom, #04111D, #0a1928);">
     <div class="flex justify-center items-center">
-        <img src="../../../../assets/3.png" alt="Картинка"
+        <img [src]="'server/author_avatar/' + author?.avatar" alt="Картинка"
             class="w-48 h-48 object-cover rounded-full border-2 border-[#162A3E]">
     </div>
-    <div class="pl-5 mb-6 flex flex-col justify-end select-none">
+    <div class="pl-5 mb-6 flex flex-col justify-end select-none truncate">
         <div class="text-base font-semibold ml-1">Исполнитель</div>
-        <div class="text-7xl font-bold mb-4 line-clamp-1">Chalk</div>
+        <div class="text-7xl font-bold mb-4 truncate">{{ author?.nickname }}</div>
     </div>
 </div>
-
-
-<!-- <div class="line-clamp-2 text-gray-300 font-medium overflow-hidden text-base ml-1 mb-2">
-            Описание альбома здесь. Это текст может быть очень длинным и содержать много информации о плейлисте,
-            включая авторов треков, стили музыки и многое другое. Продолжение описания, которое не должно отображаться
-            полностью, если оно слишком длинное.
-        </div> -->

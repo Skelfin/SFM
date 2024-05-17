@@ -66,6 +66,13 @@ export class AuthorService {
     });
   }
 
+  async getAuthorById(id: number): Promise<Author> {
+    return this.authorRepository.findOne({
+      where: { id: id }, 
+      relations: ['albums'], 
+    });
+  }
+
   async deleteAuthor(authorId: number): Promise<void> {
     const author = await this.authorRepository.findOne({
       where: {

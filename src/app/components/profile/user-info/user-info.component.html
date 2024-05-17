@@ -13,8 +13,8 @@
             <span class="mt-2 select-none">Изменить</span>
         </div>
     </div>
-    <div class="pl-5 mb-6 flex flex-col justify-end select-none">
+    <div class="pl-5 mb-6 flex flex-col justify-end select-none truncate">
         <div class="text-base font-semibold ml-1">Пользователь</div>
-        <div class="text-7xl font-bold mb-4 line-clamp-1 cursor-pointer" (click)="openModal()">{{ currentUser?.nickname }}</div>
+        <div class="text-7xl font-bold mb-4 cursor-pointer truncate" (click)="openModal()">{{ currentUser?.nickname }}</div>
     </div>
 </div>

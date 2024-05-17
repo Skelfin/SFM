@@ -23,6 +23,10 @@ export class AuthorTableService {
     return this.http.get<Author[]>(this.apiUrl);
   }
 
+  getAuthorById(id: number): Observable<Author> {
+    return this.http.get<Author>(`${this.apiUrl}/${id}`);
+  }
+
   createAuthor(authorFormData: FormData) {
     return this.http.post(`${API_URL}/author`, authorFormData).subscribe(() => {
       this.authorCreatedSubject.next();
