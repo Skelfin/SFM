@@ -27,6 +27,10 @@ export class PlaylistTableService {
     return this.http.get<Playlist>(`${this.apiUrl}/${id}`);
   }
 
+  getPlaylistsByUser(userId: number): Observable<Playlist[]> {
+    return this.http.get<Playlist[]>(`${this.apiUrl}/user/${userId}`);
+  }
+
   createPlaylist(userFormData: FormData) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.getToken()}`,

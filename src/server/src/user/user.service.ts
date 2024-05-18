@@ -7,30 +7,44 @@ import * as argon2 from "argon2";
 import { JwtService } from '@nestjs/jwt';
 import { promises as fs } from 'fs';
 import * as path from 'path';
+import { PlaylistsService } from 'src/playlists/playlists.service';
+import { CreatePlaylistDto } from 'src/playlists/dto/create-playlist.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly playlistsService: PlaylistsService,
   ) { }
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto, file: Express.Multer.File) {
     const existUser = await this.userRepository.findOne({
       where: {
         nickname: createUserDto.nickname
       },
     })
     if (existUser) throw new BadRequestException('Такой пользователь уже есть')
+    if (createUserDto.password.length < 6 || createUserDto.password.length > 20) {
+      throw new BadRequestException('Пароль должен быть от 6 до 20 символов');
+    }
+
     const user = await this.userRepository.save({
       nickname: createUserDto.nickname,
       password: await argon2.hash(createUserDto.password),
       access_rights: 0,
-    })
+      avatar: file ? `${file.filename}` : 'avatar_default.png',
+    });
 
-    const token = this.jwtService.sign({ nickname: createUserDto.nickname })
+    const createPlaylistDto: CreatePlaylistDto = {
+      name: 'Любимые треки',
+      avatar: 'favorite.png',
+    };
+    await this.playlistsService.create(user.id, createPlaylistDto);
 
-    return { user, token }
+    const token = this.jwtService.sign({ nickname: createUserDto.nickname });
+
+    return { user, token };
   }
 
   async findOne(nickname: string) {

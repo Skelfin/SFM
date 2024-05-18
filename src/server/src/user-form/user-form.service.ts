@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -14,6 +14,13 @@ export class UserFormService {
   ) {}
 
   async createUser(userData: User): Promise<User> {
+    const { nickname } = userData;
+    const existUser = await this.userRepository.findOne({
+      where: {
+        nickname: nickname,
+      },
+    })
+    if (existUser) throw new BadRequestException('Такой пользователь уже есть')
     if (userData.password.length < 6 || userData.password.length > 20) {
       throw new Error('Пароль должен быть от 6 до 20 символов');
     }
@@ -31,6 +38,14 @@ export class UserFormService {
     if (!userToUpdate) {
       throw new Error('Пользователь не найден');
     }
+
+    const { nickname } = userData;
+    const existUser = await this.userRepository.findOne({
+      where: {
+        nickname: nickname,
+      },
+    })
+    if (existUser) throw new BadRequestException('Такой пользователь уже есть')
 
     const oldAvatarPath = userToUpdate.avatar && userToUpdate.avatar !== 'avatar_default.png' 
     ? path.join('./user_avatar', userToUpdate.avatar) 

@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { Subject, debounceTime } from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { jwtDecode } from 'jwt-decode';
@@ -80,6 +80,7 @@ export class UserProfilePlaylistsComponent implements OnInit {
       this.userId = decodedToken.id;
       this.UserProfilePlaylistService.getUserPlaylists(this.userId).subscribe(playlists => {
         this.playlists = playlists;
+        this.scrollEventDebouncer$.next();
       });
     }
   }

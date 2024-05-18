@@ -8,6 +8,7 @@ import { UserFormService } from '../../../services/user-table/user.form.service'
 import { TruncatePipe } from "../../../pipes/truncate.pipe";
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   templateUrl: './admin-table-user.component.html',
   styleUrl: './admin-table-user.component.scss',
-  imports: [FontAwesomeModule, AdminPopupUserComponent, TruncatePipe, NgxPaginationModule],
+  imports: [FontAwesomeModule, AdminPopupUserComponent, TruncatePipe, NgxPaginationModule, DatePipe],
 })
 export class AdminTablesUserComponent implements OnInit {
   currentPage = 1

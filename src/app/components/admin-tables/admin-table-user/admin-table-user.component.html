@@ -1,5 +1,5 @@
 @if (showModal) {
-    <app-admin-popup-user [user]="selectedUser" (close)="closeModal()"></app-admin-popup-user>
+    <app-admin-popup-user class="fixed z-50" [user]="selectedUser" (close)="closeModal()"></app-admin-popup-user>
     }
 <pagination-controls previousLabel="Предыдущий" nextLabel="Следующий"
     class="flex text-xs justify-end pagination-controls" (pageChange)="currentPage = $event">
@@ -27,8 +27,8 @@
             <td class="border border-slate-500">{{ user.password | truncate }}</td>
             <td class="border border-slate-500">{{ user.access_rights }}</td>
             <td class="border border-slate-500">{{ user.avatar | truncate }}</td>
-            <td class="border border-slate-500">{{ user.createdAt }}</td>
-            <td class="border border-slate-500">{{ user.updatedAt }}</td>
+            <td class="border border-slate-500">{{ user.createdAt | date: 'dd.MM.yyyy' }}</td>
+            <td class="border border-slate-500">{{ user.updatedAt | date: 'dd.MM.yyyy' }}</td>
             <td class="flex justify-evenly">
                 <button class="btn-table text-green-500 hover:text-green-400" (click)="openModal(user)">
                     <fa-icon [icon]="faPenToSquare" class=""></fa-icon>

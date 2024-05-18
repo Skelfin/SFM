@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PlaylistsModule } from 'src/playlists/playlists.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           expiresIn: '30d'},
       }),
       inject: [ConfigService],
-     })
+     }),
+     PlaylistsModule,
     ],
   controllers: [UserController],
   providers: [UserService],

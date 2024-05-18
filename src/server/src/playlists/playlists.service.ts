@@ -26,9 +26,28 @@ export class PlaylistsService {
   }
 
   async getPlaylists(): Promise<Playlist[]> {
-    return await this.playlistRepository.find({
+    const playlists = await this.playlistRepository.find({
       relations: ['user', 'tracks'],
     });
+
+    const filteredPlaylists = playlists.filter(playlist => {
+      const user = playlist.user;
+
+      // Для пользователей с access_rights = 0, исключаем первый плейлист
+      if (user.access_rights === 0) {
+        const userPlaylists = playlists.filter(p => p.user.id === user.id);
+        const firstPlaylist = userPlaylists.reduce((prev, curr) => {
+          return new Date(prev.createdAt) <= new Date(curr.createdAt) ? prev : curr;
+        });
+
+        return playlist.id !== firstPlaylist.id;
+      }
+
+      // Для администраторов с access_rights = 1, ничего не исключаем
+      return true;
+    });
+
+    return filteredPlaylists;
   }
 
   async getPlaylistById(id: number): Promise<Playlist> {
@@ -76,7 +95,9 @@ export class PlaylistsService {
     if (
       playlistData.avatar &&
       playlistToUpdate.avatar &&
-      playlistToUpdate.avatar !== 'avatar_default.png'
+      playlistToUpdate.avatar !== 'avatar_default.png' &&
+      playlistToUpdate.avatar !== 'favorite.png' &&
+      playlistToUpdate.avatar !== 'favorite.png'
     ) {
       const oldAvatarPath = path.join(
         'playlist_avatar',
@@ -93,8 +114,9 @@ export class PlaylistsService {
     }
 
     playlistToUpdate.name = playlistData.name || playlistToUpdate.name;
-    playlistToUpdate.description =
-      playlistData.description || playlistToUpdate.description;
+    if (playlistData.description !== undefined) {
+      playlistToUpdate.description = playlistData.description;
+    }
     if (playlistData.avatar) {
       playlistToUpdate.avatar = playlistData.avatar;
     }
@@ -121,7 +143,8 @@ export class PlaylistsService {
     if (
       playlistData.avatar &&
       playlistToUpdate.avatar &&
-      playlistToUpdate.avatar !== 'avatar_default.png'
+      playlistToUpdate.avatar !== 'avatar_default.png' &&
+      playlistToUpdate.avatar !== 'favorite.png'
     ) {
       const oldAvatarPath = path.join(
         'playlist_avatar',
@@ -138,8 +161,9 @@ export class PlaylistsService {
     }
 
     playlistToUpdate.name = playlistData.name || playlistToUpdate.name;
-    playlistToUpdate.description =
-      playlistData.description || playlistToUpdate.description;
+    if (playlistData.description !== undefined) {
+      playlistToUpdate.description = playlistData.description;
+    }
     if (playlistData.avatar) {
       playlistToUpdate.avatar = playlistData.avatar;
     }
@@ -164,7 +188,7 @@ export class PlaylistsService {
     }
 
     // Проверяем, что у плейлиста есть аватар и это не дефолтный аватар
-    if (playlist.avatar && playlist.avatar !== 'avatar_default.png') {
+    if (playlist.avatar && playlist.avatar !== 'avatar_default.png' && playlist.avatar !== 'favorite.png') {
       try {
         const filePath = path.join('playlist_avatar', playlist.avatar);
         await fs.unlink(filePath);

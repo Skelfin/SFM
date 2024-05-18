@@ -9,5 +9,6 @@ import { Track } from 'src/tracks/entities/track.entity';
   imports: [TypeOrmModule.forFeature([Playlist]), TypeOrmModule.forFeature([Track])],
   controllers: [PlaylistsController],
   providers: [PlaylistsService],
+  exports: [PlaylistsService],
 })
 export class PlaylistsModule {}

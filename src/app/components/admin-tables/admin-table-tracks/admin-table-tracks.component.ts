@@ -7,13 +7,14 @@ import { Track } from '../../../types/track';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TrackTableService } from '../../../services/track-table.service';
 import { AdminPopupTracksComponent } from "../../admin-popup/admin-popup-tracks/admin-popup-tracks.component";
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-admin-table-tracks',
     standalone: true,
     templateUrl: './admin-table-tracks.component.html',
     styleUrl: './admin-table-tracks.component.scss',
-    imports: [TruncatePipe, FontAwesomeModule, NgxPaginationModule, AdminPopupTracksComponent]
+    imports: [TruncatePipe, FontAwesomeModule, NgxPaginationModule, AdminPopupTracksComponent, DatePipe]
 })
 export class AdminTableTracksComponent {
   currentPage = 1

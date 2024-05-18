@@ -7,13 +7,14 @@ import { PlaylistTableService } from '../../../services/playlist-table.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminPopupPlaylistsComponent } from "../../admin-popup/admin-popup-playlists/admin-popup-playlists.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-admin-table-playlists',
     standalone: true,
     templateUrl: './admin-table-playlists.component.html',
     styleUrl: './admin-table-playlists.component.scss',
-    imports: [TruncatePipe, FontAwesomeModule, NgxPaginationModule, AdminPopupPlaylistsComponent]
+    imports: [TruncatePipe, FontAwesomeModule, NgxPaginationModule, AdminPopupPlaylistsComponent, DatePipe]
 })
 export class AdminTablePlaylistsComponent {
   currentPage = 1

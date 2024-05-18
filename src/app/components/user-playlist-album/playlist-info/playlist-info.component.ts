@@ -21,6 +21,7 @@ export class PlaylistInfoComponent implements OnInit {
   showModal: boolean = false;
   playlist: Playlist | null = null;
   isCreator: boolean = false;
+  isFirstPlaylist: boolean = false;
 
   constructor(
     private playlistTableService: PlaylistTableService,
@@ -53,6 +54,7 @@ export class PlaylistInfoComponent implements OnInit {
           .subscribe((playlist) => {
             this.playlist = playlist;
             this.checkCreator();
+            this.checkIfFirstPlaylist();
           });
       }
     });
@@ -64,6 +66,27 @@ export class PlaylistInfoComponent implements OnInit {
       decodedToken &&
       this.playlist &&
       decodedToken.id === this.playlist.user.id;
+  }
+
+  checkIfFirstPlaylist(): void {
+    if (this.playlist && this.playlist.user) {
+      // Проверка прав доступа пользователя
+      if (this.playlist.user.access_rights === 1) {
+        // Администратор
+        this.isFirstPlaylist = false;
+      } else {
+        // Обычный пользователь
+        this.playlistTableService.getPlaylistsByUser(this.playlist.user.id)
+          .subscribe((playlists: Playlist[]) => {
+            if (playlists.length > 0) {
+              const firstPlaylist = playlists.reduce((prev: Playlist, curr: Playlist) => {
+                return new Date(prev.createdAt) <= new Date(curr.createdAt) ? prev : curr;
+              });
+              this.isFirstPlaylist = firstPlaylist.id === this.playlist?.id;
+            }
+          });
+      }
+    }
   }
 
   decodeToken(): any {

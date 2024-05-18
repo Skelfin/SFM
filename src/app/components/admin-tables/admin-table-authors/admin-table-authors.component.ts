@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthorTableService } from '../../../services/author-table.service';
 import { AdminPopupAuthorsComponent } from '../../admin-popup/admin-popup-authors/admin-popup-authors.component';
 import { Author } from '../../../types/author';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-admin-table-authors',
@@ -18,6 +19,7 @@ import { Author } from '../../../types/author';
     TruncatePipe,
     NgxPaginationModule,
     AdminPopupAuthorsComponent,
+    DatePipe
   ],
 })
 export class AdminTableAuthorsComponent {

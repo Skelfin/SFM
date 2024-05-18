@@ -1,5 +1,5 @@
 @if (showModal) {
-<app-admin-popup-playlists [playlist]="selectedPlaylist" (close)="closeModal()"></app-admin-popup-playlists>
+<app-admin-popup-playlists class="fixed z-50" [playlist]="selectedPlaylist" (close)="closeModal()"></app-admin-popup-playlists>
 }
 <pagination-controls previousLabel="Предыдущий" nextLabel="Следующий"
     class="flex text-xs justify-end pagination-controls" (pageChange)="currentPage = $event">
@@ -31,8 +31,8 @@
             <td class="border border-slate-500">
                 {{ getTrackIds(playlist) }}
             </td>
-            <td class="border border-slate-500">{{ playlist.createdAt }}</td>
-            <td class="border border-slate-500">{{ playlist.updatedAt }}</td>
+            <td class="border border-slate-500">{{ playlist.createdAt | date: 'dd.MM.yyyy' }}</td>
+            <td class="border border-slate-500">{{ playlist.updatedAt | date: 'dd.MM.yyyy' }}</td>
             <td class="flex justify-evenly">
                 <button class="btn-table text-green-500 hover:text-green-400" (click)="openModal(playlist)">
                     <fa-icon [icon]="faPenToSquare" class=""></fa-icon>

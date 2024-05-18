@@ -7,13 +7,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Album } from '../../../types/album';
 import { AlbumTableService } from '../../../services/album-table.service';
 import { AdminPopupAlbumsComponent } from "../../admin-popup/admin-popup-albums/admin-popup-albums.component";
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-admin-table-albums',
     standalone: true,
     templateUrl: './admin-table-albums.component.html',
     styleUrl: './admin-table-albums.component.scss',
-    imports: [FontAwesomeModule, TruncatePipe, NgxPaginationModule, AdminPopupAlbumsComponent]
+    imports: [FontAwesomeModule, TruncatePipe, NgxPaginationModule, AdminPopupAlbumsComponent, DatePipe]
 })
 export class AdminTableAlbumsComponent {
   currentPage = 1;

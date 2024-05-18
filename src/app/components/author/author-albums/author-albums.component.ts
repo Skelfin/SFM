@@ -47,6 +47,7 @@ export class AuthorAlbumsComponent implements OnInit {
       this.album = album.filter(album => album.authors.some(author => author.id === this.authorId));
       this.shuffledAlbums = this.shuffleAlbum();
       this.filteredAlbums = this.shuffledAlbums;
+      this.scrollEventDebouncer$.next();
     });
   }
   
