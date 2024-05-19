@@ -42,6 +42,7 @@ export class AdminPopupAuthorsComponent {
   descriptionModel: string = '';
   avatarFile: File | null = null;
   albumIdsModel: string = '';
+  private isMouseDownInsideModal: boolean = false;
 
   fileChangeEvent(event: Event): void {
     const element = event.target as HTMLInputElement;
@@ -63,6 +64,18 @@ export class AdminPopupAuthorsComponent {
 
   closeModal() {
     this.close.emit();
+  }
+
+  onMouseDownInsideModal(event: MouseEvent): void {
+    this.isMouseDownInsideModal = true;
+    event.stopPropagation();
+  }
+
+  onMouseUp(event: MouseEvent): void {
+    if (!this.isMouseDownInsideModal) {
+      this.closeModal();
+    }
+    this.isMouseDownInsideModal = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

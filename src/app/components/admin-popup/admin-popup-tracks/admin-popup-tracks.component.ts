@@ -29,9 +29,22 @@ export class AdminPopupTracksComponent {
   nameModel: string = '';
   trackFile: File | null = null;
   avatarFile: File | null = null;
+  private isMouseDownInsideModal: boolean = false;
 
   closeModal() {
     this.close.emit();
+  }
+
+  onMouseDownInsideModal(event: MouseEvent): void {
+    this.isMouseDownInsideModal = true;
+    event.stopPropagation();
+  }
+
+  onMouseUp(event: MouseEvent): void {
+    if (!this.isMouseDownInsideModal) {
+      this.closeModal();
+    }
+    this.isMouseDownInsideModal = false;
   }
 
   fileChangeEventAvatar(event: Event): void {

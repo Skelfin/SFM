@@ -33,6 +33,7 @@ export class UserPopupComponent {
   passwordModel: string = '';
   nicknameModel: string = '';
   isPasswordTouched = false;
+  private isMouseDownInsideModal: boolean = false;
 
   avatarFile: File | null = null;
   clearPassword(event: MouseEvent) {
@@ -64,6 +65,18 @@ export class UserPopupComponent {
 
   closeModal() {
     this.close.emit();
+  }
+
+  onMouseDownInsideModal(event: MouseEvent): void {
+    this.isMouseDownInsideModal = true;
+    event.stopPropagation();
+  }
+
+  onMouseUp(event: MouseEvent): void {
+    if (!this.isMouseDownInsideModal) {
+      this.closeModal();
+    }
+    this.isMouseDownInsideModal = false;
   }
 
   constructor(private userFormService: UserFormService) { }

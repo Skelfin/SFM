@@ -1,10 +1,10 @@
 @if(track) {
-<div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (click)="closeModal()">
+<div class="fixed inset-0 bg-gray-950 backdrop-blur-md bg-opacity-50 overflow-y-auto" (mouseup)="onMouseUp($event)">
     <div class="relative top-20 mx-auto p-5 border border-[#162A3E] w-96 shadow-lg rounded-md bg-[#0a1928]" @slideInOut
-        (click)="$event.stopPropagation()">
+    (mousedown)="onMouseDownInsideModal($event)" (mouseup)="onMouseDownInsideModal($event)">
         <div class="px-4 py-3">
             <form (ngSubmit)="saveTrack()">
-                <h1 class="bold mb-4 text-center">Добавление трека</h1>
+                <h1 class="bold mb-4 text-center">Изменить трек</h1>
                 <div class="flex flex-col">
                     <input [(ngModel)]="nameModel" name="name" #name="ngModel" [ngModelOptions]="{standalone: true}"
                         required="" type="text" placeholder="Название" id="name" class="input">

@@ -35,6 +35,7 @@ export class AdminPopupUserComponent {
   nicknameModel: string = '';
   isPasswordTouched = false;
   accessRightsModel: number | undefined;
+  private isMouseDownInsideModal: boolean = false;
 
   avatarFile: File | null = null;
   clearPassword(event: MouseEvent) {
@@ -67,6 +68,18 @@ export class AdminPopupUserComponent {
 
   closeModal() {
     this.close.emit();
+  }
+
+  onMouseDownInsideModal(event: MouseEvent): void {
+    this.isMouseDownInsideModal = true;
+    event.stopPropagation();
+  }
+
+  onMouseUp(event: MouseEvent): void {
+    if (!this.isMouseDownInsideModal) {
+      this.closeModal();
+    }
+    this.isMouseDownInsideModal = false;
   }
 
   constructor(private userFormService: UserFormService) { }

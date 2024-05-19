@@ -26,6 +26,7 @@ export class UserCreatePlaylistPopupComponent {
   @Input() showModal: boolean = false;
   @Output() close = new EventEmitter<void>();
   playlistForm: FormGroup;
+  private isMouseDownInsideModal: boolean = false;
   constructor(private playlistTableService: PlaylistTableService) {
     this.playlistForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -70,6 +71,18 @@ export class UserCreatePlaylistPopupComponent {
 
   closeModal() {
     this.close.emit();
+  }
+
+  onMouseDownInsideModal(event: MouseEvent): void {
+    this.isMouseDownInsideModal = true;
+    event.stopPropagation();
+  }
+
+  onMouseUp(event: MouseEvent): void {
+    if (!this.isMouseDownInsideModal) {
+      this.closeModal();
+    }
+    this.isMouseDownInsideModal = false;
   }
 
 }
