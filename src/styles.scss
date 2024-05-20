@@ -56,15 +56,11 @@
     }
 
     .ngx-pagination li a {
-        /* Новый цвет фона при наведении */
         color: white;
-        /* Новый цвет текста при наведении */
     }
 
     .ngx-pagination li a:hover {
-        /* Новый цвет фона при наведении */
         background: #44686a
-            /* Новый цвет текста при наведении */
     }
 
 
@@ -73,8 +69,15 @@
     }
 
     .input-with-btn-form {
-        @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded-l-lg border border-gray-600 focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
+        @apply bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-1 focus:ring-sky-400 rounded-l-lg border border-gray-600
+         focus:border-sky-300 outline-none text-gray-100 py-1 px-3 leading-8 duration-500
     }    
+
+    .btn-play-player {
+        @apply relative rounded-full transform transition-transform duration-300 border-2
+        border-gray-400 flex items-center justify-center hover:text-gray-400 hover:scale-110
+        active:text-gray-300 active:border-gray-500
+    }
 
     .divider {
         height: 2px;
@@ -90,11 +93,11 @@
     font-weight: 700;
 
     .active {
-        background-color: #44686a; /* Цвет активной ссылки */
+        background-color: #44686a;
     }
     
     .tabs:not(.active) {
-        background-color: #6b9d9ec6; /* Цвет неактивных ссылок */
+        background-color: #6b9d9ec6;
     }
 }
 }
