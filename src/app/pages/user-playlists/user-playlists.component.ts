@@ -7,13 +7,14 @@ import { MainAlbumsComponent } from "../../components/main/main-albums/main-albu
 import { MainAuthorsComponent } from "../../components/main/main-authors/main-authors.component";
 import { TablePlaylistComponent } from "../../components/user-playlist-album/table-playlist/table-playlist.component";
 import { PlaylistInfoComponent } from "../../components/user-playlist-album/playlist-info/playlist-info.component";
+import { AudioPlayerComponent } from "../../components/audio-player/audio-player.component";
 
 @Component({
     selector: 'app-user-playlists',
     standalone: true,
     templateUrl: './user-playlists.component.html',
     styleUrl: './user-playlists.component.scss',
-    imports: [UserSidebarComponent, FooterComponent, HeaderComponent, MainPlaylistsComponent, MainAlbumsComponent, MainAuthorsComponent, TablePlaylistComponent, PlaylistInfoComponent]
+    imports: [UserSidebarComponent, FooterComponent, HeaderComponent, MainPlaylistsComponent, MainAlbumsComponent, MainAuthorsComponent, TablePlaylistComponent, PlaylistInfoComponent, AudioPlayerComponent]
 })
 export class UserPlaylistsComponent {
 

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Track } from '../../types/track';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TrackTableService } from '../../services/track-table.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBackward, faForward, faCirclePause, faCirclePlay, faVolumeUp, faVolumeMute, faVolumeLow } from '@fortawesome/free-solid-svg-icons';
+import { AudioService } from '../../services/audio.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-audio-player',
@@ -14,15 +15,15 @@ import { faBackward, faForward, faCirclePause, faCirclePlay, faVolumeUp, faVolum
   styleUrl: './audio-player.component.scss',
 })
 export class AudioPlayerComponent implements OnInit {
-  currentTrack: Track | null = null;
-  currentIndex = 0;
-  isPlaying = false;
-  isMuted = false;
+  currentTrack$: Observable<Track | null>;
+  currentTime$: Observable<number>;
+  duration$: Observable<number>;
+  isPlaying$: Observable<boolean>;
+  isMuted$: Observable<boolean>;
+  volume$: Observable<number>;
+
   volume = 0.9;
   previousVolume = this.volume;
-  currentTime = 0;
-  duration = 0;
-  private maxVolume = 0.25;
 
   faBackward = faBackward;
   faForward = faForward;
@@ -31,95 +32,52 @@ export class AudioPlayerComponent implements OnInit {
   faVolumeUp = faVolumeUp;
   faVolumeMute = faVolumeMute;
   faVolumeLow = faVolumeLow;
-
-  private audio = new Audio();
-  constructor(private trackTableService: TrackTableService) {}
-  tracks: Track[] = [];
-
-  loadTracks(): void {
-    this.trackTableService.getTrack().subscribe(tracks => {
-      this.tracks = tracks;
-      console.log(tracks)
-    });
+  
+  constructor(public audioService: AudioService) {
+    this.currentTrack$ = this.audioService.currentTrack$;
+    this.currentTime$ = this.audioService.currentTime$;
+    this.duration$ = this.audioService.duration$;
+    this.isPlaying$ = this.audioService.isPlaying$;
+    this.isMuted$ = this.audioService.isMuted$;
+    this.volume$ = this.audioService.volume$;
   }
 
   ngOnInit(): void {
-    this.audio.volume = this.volume * this.maxVolume;
-    this.loadTracks();
-    this.audio.addEventListener('ended', () => {
-      this.nextTrack();
-    });
-  }
-
-  loadTrack(index: number): void {
-    if (index >= 0 && index < this.tracks.length) {
-      this.currentTrack = this.tracks[index];
-      this.currentIndex = index;
-      this.audio.src = `/server/track_path/${this.currentTrack.path}`;
-      this.audio.load();
-      this.audio.addEventListener('timeupdate', this.updateCurrentTime.bind(this));
-      this.audio.addEventListener('loadedmetadata', this.updateDuration.bind(this));
-
-      if (this.isPlaying) {
-        this.audio.play();
-      }
-    }
+    this.volume$.subscribe(volume => this.volume = volume);
   }
 
   togglePlay(): void {
-    if (this.isPlaying) {
-      this.audio.pause();
-    } else {
-      this.audio.play();
-    }
-    this.isPlaying = !this.isPlaying;
+    this.audioService.togglePlay();
   }
 
   toggleMute(): void {
-    this.isMuted = !this.isMuted;
-    if (this.isMuted) {
+    if (this.volume > 0) {
       this.previousVolume = this.volume;
-      this.volume = 0;
+      this.audioService.setVolume(0);
     } else {
-      this.volume = this.previousVolume;
+      this.audioService.setVolume(this.previousVolume);
     }
-    this.audio.volume = this.volume * this.maxVolume;
   }
 
   setVolume(event: any): void {
-    const newVolume = event.target.value * this.maxVolume;
-    this.audio.volume = newVolume;
-    this.volume = event.target.value;
-    if (this.volume > 0) {
-      this.isMuted = false;
-    } else {
-      this.isMuted = true;
+    const newVolume = event.target.value;
+    this.audioService.setVolume(newVolume);
+    this.volume = newVolume;
+    if (newVolume > 0) {
+      this.previousVolume = newVolume;
     }
-  }
-
-  updateCurrentTime(): void {
-    this.currentTime = this.audio.currentTime;
-  }
-
-  updateDuration(): void {
-    this.duration = this.audio.duration;
   }
 
   seekTrack(event: any): void {
-    this.audio.currentTime = event.target.value;
-    this.currentTime = this.audio.currentTime;
+    this.audioService.seekTrack(event.target.value);
   }
 
   previousTrack(): void {
-    const newIndex = this.currentIndex - 1;
-    if (newIndex >= 0) {
-      this.loadTrack(newIndex);
-    }
+    this.audioService.previousTrack();
   }
 
   nextTrack(): void {
-    const newIndex = (this.currentIndex + 1) % this.tracks.length;
-    this.loadTrack(newIndex);
+    this.audioService.nextTrack();
   }
 
   formatTime(seconds: number): string {
@@ -128,7 +86,7 @@ export class AudioPlayerComponent implements OnInit {
     return `${this.padZero(minutes)}:${this.padZero(remainingSeconds)}`;
   }
 
-  padZero(value: number): string {
+  private padZero(value: number): string {
     return value < 10 ? `0${value}` : value.toString();
   }
 }

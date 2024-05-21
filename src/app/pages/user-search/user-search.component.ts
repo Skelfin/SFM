@@ -9,13 +9,14 @@ import { SearcherComponent } from "../../components/main/searcher/searcher.compo
 import { SearchService } from '../../services/SearchService';
 import { Subscription } from 'rxjs';
 import { FoundTracksComponent } from "../../components/main/found-tracks/found-tracks.component";
+import { AudioPlayerComponent } from "../../components/audio-player/audio-player.component";
 
 @Component({
     selector: 'app-user-search',
     standalone: true,
     templateUrl: './user-search.component.html',
     styleUrl: './user-search.component.scss',
-    imports: [UserSidebarComponent, HeaderComponent, FooterComponent, MainAuthorsComponent, MainAlbumsComponent, MainPlaylistsComponent, SearcherComponent, FoundTracksComponent]
+    imports: [UserSidebarComponent, HeaderComponent, FooterComponent, MainAuthorsComponent, MainAlbumsComponent, MainPlaylistsComponent, SearcherComponent, FoundTracksComponent, AudioPlayerComponent]
 })
 export class UserSearchComponent implements OnInit {
     private searchTextSubscription!: Subscription;
