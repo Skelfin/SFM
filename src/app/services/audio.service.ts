@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Track } from '../types/track';
-import { TrackTableService } from './track-table.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +14,7 @@ export class AudioService {
   private isMutedSubject = new BehaviorSubject<boolean>(false);
   private volumeSubject = new BehaviorSubject<number>(0.9);
   private previousVolume = 0.9;
-  private maxVolume = 0.25;
+  private maxVolume = 0.4;
   private tracks: Track[] = [];
   private currentIndex = 0;
 
@@ -27,32 +26,37 @@ export class AudioService {
   volume$ = this.volumeSubject.asObservable();
   
 
-  constructor(private trackTableService: TrackTableService) {
+  constructor() {
     this.audio.volume = this.volumeSubject.value * this.maxVolume;
-    this.loadTracks();
     this.audio.addEventListener('timeupdate', this.updateCurrentTime.bind(this));
     this.audio.addEventListener('loadedmetadata', this.updateDuration.bind(this));
     this.audio.addEventListener('ended', () => {
       this.nextTrack();
+      this.audio.play();
     });
   }
 
-  private loadTracks(): void {
-    this.trackTableService.getTrack().subscribe((tracks) => {
-      this.tracks = tracks;
-    });
+  loadMusic(tracks: Track[], trackId: number): void {
+    this.tracks = tracks;
+    const trackIndex = this.tracks.findIndex(track => track.id === trackId);
+    if (trackIndex !== -1) {
+      this.loadTrack(trackIndex, true);
+    }
   }
 
-  loadTrack(index: number): void {
+  loadTrack(index: number, autoPlay: boolean = false): void {
     if (index >= 0 && index < this.tracks.length) {
       const track = this.tracks[index];
       this.currentTrackSubject.next(track);
       this.currentIndex = index;
       this.audio.src = `/server/track_path/${track.path}`;
       this.audio.load();
-      if (this.isPlayingSubject.value) {
-        this.audio.play();
-      }
+      this.audio.addEventListener('canplaythrough', () => {
+        if (autoPlay) {
+          this.audio.play();
+          this.isPlayingSubject.next(true);
+        }
+      }, { once: true });
     }
   }
 

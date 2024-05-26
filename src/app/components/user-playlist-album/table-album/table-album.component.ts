@@ -5,6 +5,7 @@ import { Album } from '../../../types/album';
 import { Track } from '../../../types/track';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumTableService } from '../../../services/album-table.service';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-table-album',
@@ -23,7 +24,7 @@ export class TableAlbumComponent {
     this.loadAlbum();
   }
 
-  constructor(private route: ActivatedRoute, private albumTableService: AlbumTableService) {}
+  constructor(private route: ActivatedRoute, private albumTableService: AlbumTableService, private audioService: AudioService) {}
 
   loadAlbum(): void {
     this.route.paramMap.subscribe(params => {
@@ -32,7 +33,10 @@ export class TableAlbumComponent {
         const albumId = this.decodeId(encodedId);
         this.albumTableService.getAlbumById(albumId).subscribe(album => {
           this.album = album;
-          this.album.tracks.forEach(track => this.fetchTrackDuration(track));
+          this.album.tracks.forEach(track => {
+            track.authors = this.album?.authors;
+            this.fetchTrackDuration(track);
+          });
         });
       }
     });
@@ -63,5 +67,11 @@ export class TableAlbumComponent {
     const decodedString = atob(encodedId);
     const salt = 'Sec1t';
     return parseInt(decodedString.slice(salt.length, decodedString.length - salt.length));
+  }
+
+  playTrack(trackId: number): void {
+    if (this.album) {
+      this.audioService.loadMusic(this.album.tracks, trackId);
+    }
   }
 }

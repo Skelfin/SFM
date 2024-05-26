@@ -11,7 +11,7 @@
         </thead>
         @for (track of tracks; track track.id ; let i = $index) {
         <tbody>
-            <tr class="border-b border-gray-700">
+            <tr class="border-b border-gray-700" (click)="playTrack(track.id)">
                 <td class="py-4 text-center">
                     <span>
                         {{ i + 1 }}
@@ -31,7 +31,7 @@
                 </td>
                 <td class="truncate text-left">
                     <div>
-                        <span class="cursor-pointer hover:underline">
+                        <span [routerLink]="['/album', encodeId(track.album.id)]" class="cursor-pointer hover:underline">
                             {{ track.album.name }}
                         </span>
                     </div>

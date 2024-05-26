@@ -68,6 +68,10 @@ export class AudioPlayerComponent implements OnInit {
     }
   }
 
+  getAuthors(track: Track | null): string {
+    return track?.authors?.map(author => author.nickname).join(', ') || '';
+  }
+
   seekTrack(event: any): void {
     this.audioService.seekTrack(event.target.value);
   }

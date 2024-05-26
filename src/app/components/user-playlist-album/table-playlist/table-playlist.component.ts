@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faClock, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Track } from '../../../types/track';
 import { TrackTableService } from '../../../services/track-table.service';
 import { Album } from '../../../types/album';
 import { AlbumTableService } from '../../../services/album-table.service';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-table-playlist',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, RouterLink],
   templateUrl: './table-playlist.component.html',
   styleUrl: './table-playlist.component.scss'
 })
 export class TablePlaylistComponent implements OnInit {
   faClock = faClock
   faCircle = faCircle
-  constructor(private trackTableService: TrackTableService, private route: ActivatedRoute, private albumTableService: AlbumTableService) {}
+  constructor(private trackTableService: TrackTableService, private route: ActivatedRoute, private albumTableService: AlbumTableService, private audioService: AudioService) {}
   tracks: Track[] = [];
   albums: Album[] = [];
 
@@ -44,7 +45,10 @@ export class TablePlaylistComponent implements OnInit {
         const playlistId = this.decodeId(encodedId);
         this.trackTableService.getTracksByPlaylistId(playlistId).subscribe(tracks => {
           this.tracks = tracks;
-          this.tracks.forEach(track => this.fetchTrackDuration(track));
+          this.tracks.forEach(track => {
+            track.authors = track.album ? track.album.authors : [];
+            this.fetchTrackDuration(track);
+          });
         });
       }
     });
@@ -65,6 +69,11 @@ export class TablePlaylistComponent implements OnInit {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
   
+  encodeId(id: number): string {
+    const salt = 'Sec1t';
+    const saltedId = `${salt}${id}${salt}`;
+    return btoa(saltedId);
+  }
   
   decodeId(encodedId: string): number {
     const decodedString = atob(encodedId);
@@ -72,4 +81,7 @@ export class TablePlaylistComponent implements OnInit {
     return parseInt(decodedString.slice(salt.length, decodedString.length - salt.length));
   }
 
+  playTrack(trackId: number): void {
+    this.audioService.loadMusic(this.tracks, trackId);
+  }
 }

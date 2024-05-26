@@ -33,7 +33,9 @@ export class AuthorService {
     }
 
     authorToUpdate.nickname = authorData.nickname || authorToUpdate.nickname;
-    authorToUpdate.description = authorData.description || authorToUpdate.description;
+    if (authorData.description !== undefined) {
+      authorData.description = authorData.description;
+    }
 
     if (authorData.albumIds) {
       const newAlbums = authorData.albumIds.map(id => ({ id: Number(id) }) as Album);

@@ -6,7 +6,7 @@
          class="w-16 h-16 mr-2 border-2 border-[#162A3E] object-cover select-none rounded-md pointer-events-none">
     <div>
       <h3 class="text-lg font-semibold">{{ (currentTrack$ | async)?.name }}</h3>
-      <p class="text-gray-400 truncate">{{ (currentTrack$ | async)?.album?.name }}</p>
+      <p class="text-gray-400 truncate">{{ getAuthors(currentTrack$ | async) }}</p>
     </div>
   </div>
 
