@@ -7,6 +7,7 @@ import { PlaylistTableService } from '../../../services/playlist-table.service';
 import { ActivatedRoute } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CommonModule } from '@angular/common';
+import { PlaylistUpdateService } from '../../../services/playlist.update.service';
 
 @Component({
   selector: 'app-playlist-info',
@@ -25,7 +26,8 @@ export class PlaylistInfoComponent implements OnInit {
 
   constructor(
     private playlistTableService: PlaylistTableService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private playlistUpdateService: PlaylistUpdateService
   ) {}
 
   openModal() {
@@ -41,6 +43,11 @@ export class PlaylistInfoComponent implements OnInit {
     this.loadPlaylist();
     this.playlistTableService.playlistCreated$.subscribe(() => {
       this.loadPlaylist();
+    });
+    this.playlistUpdateService.trackDeleted$.subscribe((trackId: number) => {
+      if (this.playlist) {
+        this.playlist.tracks = this.playlist.tracks.filter(track => track.id !== trackId);
+      }
     });
   }
 

@@ -6,13 +6,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBackward, faForward, faCirclePause, faCirclePlay, faVolumeUp, faVolumeMute, faVolumeLow } from '@fortawesome/free-solid-svg-icons';
 import { AudioService } from '../../services/audio.service';
 import { Observable } from 'rxjs';
+import { AddingButtonAudioPlayerComponent } from "./adding-button-audio-player/adding-button-audio-player.component";
 
 @Component({
-  selector: 'app-audio-player',
-  standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule ],
-  templateUrl: './audio-player.component.html',
-  styleUrl: './audio-player.component.scss',
+    selector: 'app-audio-player',
+    standalone: true,
+    templateUrl: './audio-player.component.html',
+    styleUrl: './audio-player.component.scss',
+    imports: [CommonModule, FormsModule, FontAwesomeModule, AddingButtonAudioPlayerComponent]
 })
 export class AudioPlayerComponent implements OnInit {
   currentTrack$: Observable<Track | null>;

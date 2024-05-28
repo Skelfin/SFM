@@ -38,7 +38,7 @@
                 </td>
                 <td class="text-center">
                     <span>
-                        <fa-icon [icon]="faCircle" class=""></fa-icon>
+                        <app-adding-button (click)="$event.stopPropagation()" [trackId]="track.id"></app-adding-button>
                     </span>
                 </td>
                 <td class="text-center">

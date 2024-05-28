@@ -13,6 +13,7 @@ import { PluralPipe } from '../../pipes/plural.pipe';
 import { UserCreatePlaylistPopupComponent } from '../user-create-playlist-popup/user-create-playlist-popup.component';
 import { PlaylistTableService } from '../../services/playlist-table.service';
 import { CommonModule } from '@angular/common';
+import { PlaylistUpdateService } from '../../services/playlist.update.service';
 
 @Component({
   selector: 'app-user-sidebar',
@@ -39,12 +40,16 @@ export class UserSidebarComponent implements OnInit {
 
   constructor(
     private UserProfilePlaylistService: UserProfilePlaylistService,
-    private playlistTableService: PlaylistTableService
+    private playlistTableService: PlaylistTableService,
+    private playlistUpdateService: PlaylistUpdateService,
   ) {}
 
   ngOnInit(): void {
     this.loadUserPlaylists();
     this.playlistTableService.playlistCreated$.subscribe(() => {
+      this.loadUserPlaylists();
+    });
+    this.playlistUpdateService.playlistUpdated$.subscribe(() => {
       this.loadUserPlaylists();
     });
   }

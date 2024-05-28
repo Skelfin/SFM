@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Playlist } from '../types/playlist';
 import { API_URL } from '../constants/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Track } from '../types/track';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,19 @@ export class PlaylistTableService {
   private getToken(): string {
     return localStorage.getItem('token') || '';
   }
+
+  addTrackToPlaylist(playlistId: number, trackId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${playlistId}/tracks`, { trackId });
+  }
+
+  removeTrackFromPlaylist(playlistId: number, trackId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${playlistId}/tracks/${trackId}`);
+  }
+
+  getTracksByPlaylistId(playlistId: number): Observable<Track[]> {
+    return this.http.get<Track[]>(`${this.apiUrl}/${playlistId}/tracks`);
+  }
+
   deletePlaylist(playlistId: number): Observable<any> {
     const url = `${this.apiUrl}/${playlistId}`;
     return this.http.delete(url);

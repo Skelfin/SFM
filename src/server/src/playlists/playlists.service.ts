@@ -13,6 +13,8 @@ export class PlaylistsService {
   constructor(
     @InjectRepository(Playlist)
     private playlistRepository: Repository<Playlist>,
+    @InjectRepository(Track)
+    private trackRepository: Repository<Track>
   ) {}
   async create(
     userId: number,
@@ -49,6 +51,42 @@ export class PlaylistsService {
 
     return filteredPlaylists;
   }
+
+  async addTrackToPlaylist(playlistId: number, trackId: number): Promise<void> {
+    const playlist = await this.playlistRepository.findOne({
+      where: { id: playlistId },
+      relations: ['tracks'],
+    });
+
+    if (!playlist) {
+      throw new NotFoundException('Плейлист не найден');
+    }
+
+    const track = await this.trackRepository.findOne({ where: { id: trackId } });
+    if (!track) {
+      throw new NotFoundException('Трек не найден');
+    }
+
+    if (!playlist.tracks.some(existingTrack => existingTrack.id === track.id)) {
+      playlist.tracks.push(track);
+      await this.playlistRepository.save(playlist);
+    }
+  }
+
+  async removeTrackFromPlaylist(playlistId: number, trackId: number): Promise<void> {
+    const playlist = await this.playlistRepository.findOne({
+      where: { id: playlistId },
+      relations: ['tracks'],
+    });
+
+    if (!playlist) {
+      throw new NotFoundException('Плейлист не найден');
+    }
+    const numericTrackId = Number(trackId);
+    playlist.tracks = playlist.tracks.filter(track => track.id !== numericTrackId);
+    await this.playlistRepository.save(playlist);
+  }
+
 
   async getPlaylistById(id: number): Promise<Playlist> {
     return this.playlistRepository.findOne({

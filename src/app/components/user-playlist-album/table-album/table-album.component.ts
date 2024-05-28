@@ -6,13 +6,14 @@ import { Track } from '../../../types/track';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumTableService } from '../../../services/album-table.service';
 import { AudioService } from '../../../services/audio.service';
+import { AddingButtonComponent } from "../../adding-button/adding-button.component";
 
 @Component({
-  selector: 'app-table-album',
-  standalone: true,
-  imports: [FontAwesomeModule],
-  templateUrl: './table-album.component.html',
-  styleUrl: './table-album.component.scss'
+    selector: 'app-table-album',
+    standalone: true,
+    templateUrl: './table-album.component.html',
+    styleUrl: './table-album.component.scss',
+    imports: [FontAwesomeModule, AddingButtonComponent]
 })
 export class TableAlbumComponent {
   faClock = faClock

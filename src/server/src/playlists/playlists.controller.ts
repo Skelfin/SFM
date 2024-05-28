@@ -10,6 +10,8 @@ import {
   Param,
   UseGuards,
   UseInterceptors,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { PlaylistsService } from './playlists.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
@@ -50,6 +52,23 @@ export class PlaylistsController {
 
     return this.playlistsService.create(req.user.id, createPlaylistDto);
   }
+
+  @Post(':playlistId/tracks')
+  async addTrackToPlaylist(
+    @Param('playlistId') playlistId: number,
+    @Body('trackId') trackId: number
+  ): Promise<void> {
+    await this.playlistsService.addTrackToPlaylist(playlistId, trackId);
+  }
+
+  @Delete(':playlistId/tracks/:trackId')
+  async removeTrackFromPlaylist(
+    @Param('playlistId') playlistId: number,
+    @Param('trackId') trackId: number
+  ): Promise<void> {
+    await this.playlistsService.removeTrackFromPlaylist(playlistId, trackId);
+  }
+
 
   @Get()
   async getPlaylists(): Promise<Playlist[]> {

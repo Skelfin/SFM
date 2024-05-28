@@ -2,18 +2,24 @@
 <div class="grid grid-cols-2 gap-4 ml-3">
     @for (track of filteredTracks; track track.id; let i = $index) {
     @if (i < 8) { <a
-        class="relative flex items-center border-2 border-[#162A3E] bg-[#6b9d9ec6] pl_block rounded-lg shadow-lg overflow-visible p-1">
+        class="relative flex items-center border-2 border-[#162A3E] bg-[#6b9d9ec6] pl_block rounded-lg shadow-lg overflow-visible p-1"
+        (click)="playTrack(track.id)">
         <img class="w-14 h-14 object-cover rounded-lg select-none pointer-events-none"
-        [src]="'server/track_avatar/' + track.avatar" alt="{{ track.name }}" >
-        <div class="text-white text-sm font-medium truncate px-4 py-2 w-0 flex-1">
-            {{ track.name }}
-            <div class="text-gray-200 text-sm truncate opacity-95">
-                <span [routerLink]="['/album', encodeId(track.album.id)]" class="hover:underline">
-                    {{ track.album.name }}
-                </span>
+            [src]="'server/track_avatar/' + track.avatar" alt="{{ track.name }}">
+        <div class="text-white text-sm font-medium truncate px-2 py-2 w-0 flex-1 flex items-center justify-between">
+            <div class="truncate">
+                {{ track.name }}
+                <div class="text-gray-200 text-sm truncate opacity-95">
+                    <span [routerLink]="['/album', encodeId(track.album.id)]" class="hover:underline">
+                        {{ getAuthors(track) }}
+                    </span>
+                </div>
             </div>
+            <span class="flex-shrink-0 ml-2">
+                <app-adding-button (click)="$event.stopPropagation()" [trackId]="track.id"></app-adding-button>
+            </span>
         </div>
-        <div class="text-white text-sm pr-4 pt-1">
+        <div class="text-white text-sm pr-4 pt-1 truncate">
             {{ track.duration }}
         </div>
         </a>

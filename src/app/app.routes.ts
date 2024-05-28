@@ -16,11 +16,11 @@ import { AlbumComponent } from './pages/album/album.component';
 import { AuthorsComponent } from './pages/authors/authors.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: HomeComponent,
-        title: 'Home',
-    },
+    // {
+    //     path: 'Home',
+    //     component: HomeComponent,
+    //     title: 'Home',
+    // },
     {
         path: 'login',
         component: LoginComponent,
@@ -32,7 +32,7 @@ export const routes: Routes = [
         title: 'Signup',
     },
     {
-        path: 'main',
+        path: '',
         component: UserMainComponent,
         title: 'Главная',
     },
