@@ -14,7 +14,7 @@ export class AudioService {
   private isMutedSubject = new BehaviorSubject<boolean>(false);
   private volumeSubject = new BehaviorSubject<number>(0.9);
   private previousVolume = 0.9;
-  private maxVolume = 0.4;
+  private maxVolume = 0.2;
   private tracks: Track[] = [];
   private currentIndex = 0;
 
@@ -105,6 +105,13 @@ export class AudioService {
   nextTrack(): void {
     const newIndex = (this.currentIndex + 1) % this.tracks.length;
     this.loadTrack(newIndex);
+  }
+
+  clearTrack(): void {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.currentTrackSubject.next(null);
+    this.isPlayingSubject.next(false);
   }
 
   private updateCurrentTime(): void {

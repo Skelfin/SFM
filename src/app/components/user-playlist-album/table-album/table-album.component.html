@@ -4,7 +4,9 @@
             <tr>
                 <th class="w-8 pb-2 text-center">#</th>
                 <th class="w-4/5 pb-2 pl-2 text-left">Название</th>
-                <th class="w-5 pb-2 text-left"></th>
+                @if (authService.isAuthSig | async) {
+                    <th class="w-5 pb-2 text-left"></th>
+                }
                 <th class="w-8 pb-2 text-center"><fa-icon [icon]="faClock" class=""></fa-icon></th>
             </tr>
         </thead>
@@ -28,11 +30,13 @@
                         </span>
                     </div>
                 </td>
-                <td class="text-center">
-                    <span>
-                        <app-adding-button (click)="$event.stopPropagation()" [trackId]="track.id"></app-adding-button>
-                    </span>
-                </td>
+                @if (authService.isAuthSig | async) {
+                    <td class="text-center">
+                        <span>
+                            <app-adding-button (click)="$event.stopPropagation()" [trackId]="track.id"></app-adding-button>
+                        </span>
+                    </td>
+                }
                 <td class="text-center">
                     <span>
                         {{ track.duration }}

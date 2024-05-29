@@ -7,13 +7,15 @@ import { ActivatedRoute } from '@angular/router';
 import { AlbumTableService } from '../../../services/album-table.service';
 import { AudioService } from '../../../services/audio.service';
 import { AddingButtonComponent } from "../../adding-button/adding-button.component";
+import { AuthService } from '../../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-table-album',
     standalone: true,
     templateUrl: './table-album.component.html',
     styleUrl: './table-album.component.scss',
-    imports: [FontAwesomeModule, AddingButtonComponent]
+    imports: [FontAwesomeModule, AddingButtonComponent, CommonModule]
 })
 export class TableAlbumComponent {
   faClock = faClock
@@ -25,7 +27,7 @@ export class TableAlbumComponent {
     this.loadAlbum();
   }
 
-  constructor(private route: ActivatedRoute, private albumTableService: AlbumTableService, private audioService: AudioService) {}
+  constructor(private route: ActivatedRoute, private albumTableService: AlbumTableService, private audioService: AudioService, public authService: AuthService) {}
 
   loadAlbum(): void {
     this.route.paramMap.subscribe(params => {

@@ -9,13 +9,16 @@ import { AlbumTableService } from '../../../services/album-table.service';
 import { AudioService } from '../../../services/audio.service';
 import { AddingButtonComponent } from '../../adding-button/adding-button.component';
 import { PlaylistUpdateService } from '../../../services/playlist.update.service';
+import { PlaylistUpdateAudioPlayerService } from '../../../services/playlist.update.audio-playler.service';
+import { AuthService } from '../../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table-playlist',
   standalone: true,
   templateUrl: './table-playlist.component.html',
   styleUrl: './table-playlist.component.scss',
-  imports: [FontAwesomeModule, RouterLink, AddingButtonComponent],
+  imports: [FontAwesomeModule, RouterLink, AddingButtonComponent, CommonModule],
 })
 export class TablePlaylistComponent implements OnInit {
   faClock = faClock;
@@ -26,6 +29,8 @@ export class TablePlaylistComponent implements OnInit {
     private albumTableService: AlbumTableService,
     private audioService: AudioService,
     private playlistUpdateService: PlaylistUpdateService,
+    private playlistUpdateAudioPlayerService: PlaylistUpdateAudioPlayerService,
+    public authService: AuthService
   ) {}
   tracks: Track[] = [];
   albums: Album[] = [];
@@ -35,6 +40,12 @@ export class TablePlaylistComponent implements OnInit {
     this.loadTracksForPlaylist();
     this.playlistUpdateService.trackDeleted$.subscribe(trackId => {
       this.tracks = this.tracks.filter(track => track.id !== trackId);
+    });
+    this.playlistUpdateAudioPlayerService.trackDeleted$.subscribe(trackId => {
+      this.loadTracksForPlaylist();
+    });
+    this.playlistUpdateAudioPlayerService.trackAdded$.subscribe(trackId => {
+      this.loadTracksForPlaylist();
     });
   }
 

@@ -14,6 +14,7 @@ import { UserSearchComponent } from './pages/user-search/user-search.component';
 import { UserPlaylistsComponent } from './pages/user-playlists/user-playlists.component';
 import { AlbumComponent } from './pages/album/album.component';
 import { AuthorsComponent } from './pages/authors/authors.component';
+import { RouteGuardService } from './services/audio-stop-guard.service';
 
 export const routes: Routes = [
     // {
@@ -25,11 +26,13 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
         title: 'Login',
+        canActivate: [RouteGuardService] 
     },
     {
         path: 'signup',
         component: SignupComponent,
         title: 'Signup',
+                canActivate: [RouteGuardService] 
     },
     {
         path: '',
@@ -60,6 +63,7 @@ export const routes: Routes = [
         path: 'admin/users',
         component: AdminUsersComponent,
         title: 'Пользователи',
+        canActivate: [RouteGuardService] 
     },
     {
         path: 'admin/tracks',

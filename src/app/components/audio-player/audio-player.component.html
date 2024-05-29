@@ -1,18 +1,26 @@
-<div class="px-4 py-2 bg-[#04111D] flex items-center justify-between">
+<div class="px-4 py-2 bg-[#04111D] flex items-center justify-between relative">
   <!-- Track Info -->
-  <div class="flex items-center flex-1 truncate min-w-32 max-w-xs">
-    <img [src]="(currentTrack$ | async)?.avatar ? 'server/track_avatar/' + (currentTrack$ | async)?.avatar : 'server/track_avatar/plug.png'" 
-         alt="Track Avatar" 
-         class="w-16 h-16 mr-2 border-2 border-[#162A3E] object-cover select-none rounded-md pointer-events-none">
-    <div>
-      <h3 class="text-lg font-semibold">{{ (currentTrack$ | async)?.name }}</h3>
-      <p class="text-gray-400 truncate">{{ getAuthors(currentTrack$ | async) }}</p>
+  <div class="flex items-center flex-1 min-w-32 max-w-xs truncate relative">
+    <img
+      [src]="(currentTrack$ | async)?.avatar ? 'server/track_avatar/' + (currentTrack$ | async)?.avatar : 'server/track_avatar/plug.png'"
+      alt="Track Avatar"
+      class="w-16 h-16 mr-2 border-2 border-[#162A3E] object-cover select-none rounded-md pointer-events-none">
+    <div class="overflow-hidden flex items-center flex-1">
+      <div class="overflow-hidden">
+        <h3 class="text-lg truncate font-semibold overflow-hidden whitespace-nowrap">{{ (currentTrack$ | async)?.name }}
+        </h3>
+        <p class="text-gray-400 truncate overflow-hidden whitespace-nowrap">{{ getAuthors(currentTrack$ | async) }}</p>
+      </div>
+      @if ((authService.isAuthSig | async)) {
+        @if ((currentTrack$ | async)) {
+          <div class="relative ml-4" #popupButtonContainer>
+            <app-adding-button-audio-player class="items-center justify-end"
+              [trackId]="(currentTrack$ | async)?.id ?? 0"></app-adding-button-audio-player>
+          </div>
+        }
+      }
     </div>
   </div>
-
-  @if ((currentTrack$ | async)) {
-    <app-adding-button-audio-player (click)="$event.stopPropagation()" [trackId]="(currentTrack$ | async)?.id ?? 0"></app-adding-button-audio-player>
-  }
 
   <!-- Player Controls -->
   <div class="flex flex-col items-center justify-center mx-4 w-1/2">
@@ -28,11 +36,12 @@
         <fa-icon [icon]="faForward" class="fa-lg"></fa-icon>
       </button>
     </div>
-         
+
     <!-- Progress Bar -->
     <div class="flex items-center justify-center w-full">
       <span class="text-sm text-gray-400 w-12 text-center">{{ formatTime((currentTime$ | async) ?? 0) }}</span>
-      <input type="range" min="0" [max]="(duration$ | async) ?? 0" [value]="(currentTime$ | async) ?? 0" (input)="seekTrack($event)" class="mx-4 flex-1 audio-progress-bar">
+      <input type="range" min="0" [max]="(duration$ | async) ?? 0" [value]="(currentTime$ | async) ?? 0"
+        (input)="seekTrack($event)" class="mx-4 flex-1 audio-progress-bar">
       <span class="text-sm text-gray-400 w-12 text-center">{{ formatTime((duration$ | async) ?? 0) }}</span>
     </div>
   </div>
@@ -40,10 +49,15 @@
   <!-- Volume Controls -->
   <div class="flex items-center flex-1 justify-end max-w-xs ml-2 truncate">
     <button (click)="toggleMute()" class="p-2 text-white hover:text-gray-400">
-      <fa-icon *ngIf="volume == 0" [icon]="faVolumeMute"></fa-icon>
-      <fa-icon *ngIf="volume > 0 && volume <= 0.4" [icon]="faVolumeLow"></fa-icon>
-      <fa-icon *ngIf="volume > 0.4" [icon]="faVolumeUp"></fa-icon>
+      @if (volume == 0) {
+        <fa-icon [icon]="faVolumeMute"></fa-icon>
+      }@else if (volume > 0 && volume <= 0.4) {
+        <fa-icon [icon]="faVolumeLow"></fa-icon>
+      }@else {
+        <fa-icon [icon]="faVolumeUp"></fa-icon>
+      }
     </button>
-    <input type="range" min="0" max="1" step="0.01" [(ngModel)]="volume" (input)="setVolume($event)" class="w-24 ml-2 truncate styled-range">
+    <input type="range" min="0" max="1" step="0.01" [(ngModel)]="volume" (input)="setVolume($event)"
+      class="w-24 ml-2 truncate styled-range">
   </div>
 </div>

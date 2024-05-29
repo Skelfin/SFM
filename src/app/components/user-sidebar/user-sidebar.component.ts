@@ -14,6 +14,8 @@ import { UserCreatePlaylistPopupComponent } from '../user-create-playlist-popup/
 import { PlaylistTableService } from '../../services/playlist-table.service';
 import { CommonModule } from '@angular/common';
 import { PlaylistUpdateService } from '../../services/playlist.update.service';
+import { AuthService } from '../../services/auth.service';
+import { PlaylistUpdateAudioPlayerService } from '../../services/playlist.update.audio-playler.service';
 
 @Component({
   selector: 'app-user-sidebar',
@@ -26,7 +28,7 @@ import { PlaylistUpdateService } from '../../services/playlist.update.service';
     FontAwesomeModule,
     PluralPipe,
     UserCreatePlaylistPopupComponent,
-    CommonModule
+    CommonModule,
   ],
 })
 export class UserSidebarComponent implements OnInit {
@@ -42,6 +44,8 @@ export class UserSidebarComponent implements OnInit {
     private UserProfilePlaylistService: UserProfilePlaylistService,
     private playlistTableService: PlaylistTableService,
     private playlistUpdateService: PlaylistUpdateService,
+    private playlistUpdateAudioPlayerService : PlaylistUpdateAudioPlayerService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +54,9 @@ export class UserSidebarComponent implements OnInit {
       this.loadUserPlaylists();
     });
     this.playlistUpdateService.playlistUpdated$.subscribe(() => {
+      this.loadUserPlaylists();
+    });
+    this.playlistUpdateAudioPlayerService.playlistUpdated$.subscribe(() => {
       this.loadUserPlaylists();
     });
   }

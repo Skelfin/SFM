@@ -25,8 +25,6 @@ export class LoginComponent {
     onSubmit() {
         if (this.userData.valid) {
             this.authService.login(this.userData.value)
-        } else {
-            console.log("Form is not valid.");
         }
     }
 }

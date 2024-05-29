@@ -7,13 +7,15 @@ import { faBackward, faForward, faCirclePause, faCirclePlay, faVolumeUp, faVolum
 import { AudioService } from '../../services/audio.service';
 import { Observable } from 'rxjs';
 import { AddingButtonAudioPlayerComponent } from "./adding-button-audio-player/adding-button-audio-player.component";
+import { AddingButtonComponent } from "../adding-button/adding-button.component";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-audio-player',
     standalone: true,
     templateUrl: './audio-player.component.html',
     styleUrl: './audio-player.component.scss',
-    imports: [CommonModule, FormsModule, FontAwesomeModule, AddingButtonAudioPlayerComponent]
+    imports: [CommonModule, FormsModule, FontAwesomeModule, AddingButtonAudioPlayerComponent, AddingButtonComponent]
 })
 export class AudioPlayerComponent implements OnInit {
   currentTrack$: Observable<Track | null>;
@@ -34,7 +36,7 @@ export class AudioPlayerComponent implements OnInit {
   faVolumeMute = faVolumeMute;
   faVolumeLow = faVolumeLow;
   
-  constructor(public audioService: AudioService) {
+  constructor(public audioService: AudioService, public authService: AuthService) {
     this.currentTrack$ = this.audioService.currentTrack$;
     this.currentTime$ = this.audioService.currentTime$;
     this.duration$ = this.audioService.duration$;

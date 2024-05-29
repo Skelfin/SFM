@@ -1,11 +1,9 @@
 @if (showModal) {
-    <app-user-create-playlist-popup
-    (close)="closeModal()" class="fixed z-50"
-  ></app-user-create-playlist-popup>
+<app-user-create-playlist-popup (close)="closeModal()" class="fixed z-50"></app-user-create-playlist-popup>
 }
 <div class="bg-[#04111d] w-80 px-3 py-3 hidden text-base border-r-2 border-[#162A3E] sm:block rounded-br-lg h-screen">
     <nav class="bg-[#6b9d9ec6] border-2 border-[#162A3E] rounded-md font-semibold mb-2">
-        <a routerLink="/main" routerLinkActive="bg-[#44686a]" class="tabs rounded-t border-b border-gray-700">
+        <a routerLink="" routerLinkActive="bg-[#44686a]" class="tabs rounded-t border-b border-gray-700">
             <fa-icon [icon]="faHouse" class="fa-lg"></fa-icon> Главная
         </a>
         <a routerLink="/search" routerLinkActive="bg-[#44686a]" class="tabs rounded-b">
@@ -13,6 +11,7 @@
         </a>
     </nav>
 
+    @if (authService.isAuthSig | async) {
     <div class="text-xl font-semibold px-3 pt-2 mb-2 flex justify-between items-center">
         <div>
             Мои плейлисты
@@ -23,21 +22,35 @@
     </div>
     <nav class="flex flex-col overflow-y-auto auto h-[calc(100%-250px)]">
         @for (playlist of playlists; track playlist.id; let i = $index ) {
-        <a [routerLink]="['/playlist', encodeId(playlist.id)]" routerLinkActive="bg-[#44686a]" class=" inactive-link flex items-center bg-inactive p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }}">
-            <img [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}" class="rounded-md mr-2 w-12 h-12 object-cover pointer-events-none"/>
+        <a [routerLink]="['/playlist', encodeId(playlist.id)]" routerLinkActive="bg-[#44686a]"
+            class=" inactive-link flex items-center bg-inactive p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }}">
+            <img [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}"
+                class="rounded-md mr-2 w-12 h-12 object-cover pointer-events-none" />
             <div class="flex flex-1 min-w-0">
                 <div class="flex flex-col flex-1 min-w-0">
                     <div class="text-base truncate">
                         {{ playlist.name }}
                     </div>
                     <div class="text-gray-300 text-sm truncate">
-                        {{ playlist.tracks.length + ' ' + (playlist.tracks.length | plural: ['трек', 'трека', 'треков']) }}
+                        {{ playlist.tracks.length + ' ' + (playlist.tracks.length | plural: ['трек', 'трека', 'треков'])
+                        }}
                     </div>
                 </div>
             </div>
         </a>
-        @if(i < playlists.length - 1) { <div class="border-b border-gray-700 w-full"></div>
+        @if(i < playlists.length - 1) { <div class="border-b border-gray-700 w-full">
+</div>
 }
 }
 </nav>
+} @else {
+    <div class="flex flex-col items-center justify-center h-56">
+        <div class="text-center text-xl font-semibold px-3 mb-4">
+            Зарегистрируйся в SFM и создай свой плейлист!
+        </div>
+        <div class="btn py-1 px-3">
+            <button routerLink="signup" type="button"> Зарегистрироваться </button>
+        </div>
+    </div>
+    }
 </div>

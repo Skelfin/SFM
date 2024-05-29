@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -16,9 +17,9 @@ import { jwtDecode } from 'jwt-decode';
 import { UserProfilePlaylistService } from '../../../services/profile-playlist-user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlaylistTableService } from '../../../services/playlist-table.service';
-import { PlaylistUpdateService } from '../../../services/playlist.update.service';
 import { Playlist } from '../../../types/playlist';
 import { PopupManagerAudioPlayerService } from '../../../services/popup-manager-audio-player-manager.service';
+import { PlaylistUpdateAudioPlayerService } from '../../../services/playlist.update.audio-playler.service';
 
 @Component({
   selector: 'app-adding-button-audio-player',
@@ -29,12 +30,15 @@ import { PopupManagerAudioPlayerService } from '../../../services/popup-manager-
 })
 export class AddingButtonAudioPlayerComponent implements OnInit, OnDestroy {
   @Input() trackId!: number;
+  @ViewChild('popupButton', { static: false }) popupButton!: ElementRef;
   faHeart = faHeart;
   faCheck = faCheck;
   isPopupVisible = false;
   selectedPlaylists: number[] = [];
   initialSelectedPlaylists: number[] = [];
   private popupSubscription!: Subscription;
+  private resizeSubscription!: () => void;
+  popupPosition = { top: 0, left: 0 };
 
   constructor(
     private popupManager: PopupManagerAudioPlayerService,
@@ -42,7 +46,7 @@ export class AddingButtonAudioPlayerComponent implements OnInit, OnDestroy {
     private UserProfilePlaylistService: UserProfilePlaylistService,
     private playlistTableService: PlaylistTableService,
     private snackBar: MatSnackBar,
-    private playlistUpdateService: PlaylistUpdateService,
+    private playlistUpdateService: PlaylistUpdateAudioPlayerService,
   ) {}
   
   ngOnInit() {
@@ -51,15 +55,18 @@ export class AddingButtonAudioPlayerComponent implements OnInit, OnDestroy {
       this.isPopupVisible = (id === this.trackId);
       if (this.isPopupVisible) {
         this.checkExistingPlaylists();
+        this.setPopupPosition();
       } else {
         this.selectedPlaylists = [];
         this.initialSelectedPlaylists = [];
       }
     });
+    this.resizeSubscription = this.addResizeListener();
   }
 
   ngOnDestroy() {
     this.popupSubscription.unsubscribe();
+    this.removeResizeListener();
   }
 
   togglePopup(event: MouseEvent) {
@@ -147,6 +154,9 @@ export class AddingButtonAudioPlayerComponent implements OnInit, OnDestroy {
         playlistsToRemove.forEach(id => {
           this.playlistUpdateService.notifyTrackDeleted(this.trackId);
         });
+        playlistsToAdd.forEach(id => {
+          this.playlistUpdateService.notifyTrackAdded(this.trackId);
+        });
         this.playlistUpdateService.notifyPlaylistUpdated();
         this.popupManager.closePopup();
       },
@@ -157,5 +167,31 @@ export class AddingButtonAudioPlayerComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  private setPopupPosition() {
+    if (this.popupButton) {
+      const buttonRect = this.popupButton.nativeElement.getBoundingClientRect();
+      this.popupPosition.top = buttonRect.top - 15 - 10 + window.scrollY;
+      this.popupPosition.left = buttonRect.right + 250 + window.scrollX;
+    }
+  }
+
+  // Method to add resize event listener
+  private addResizeListener() {
+    const resizeListener = () => {
+      if (this.isPopupVisible) {
+        this.setPopupPosition();
+      }
+    };
+    window.addEventListener('resize', resizeListener);
+    return () => window.removeEventListener('resize', resizeListener);
+  }
+
+  // Method to remove resize event listener
+  private removeResizeListener() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription();
+    }
   }
 }
