@@ -25,14 +25,14 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        title: 'Login',
+        title: 'Авторизация',
         canActivate: [RouteGuardService] 
     },
     {
         path: 'signup',
         component: SignupComponent,
-        title: 'Signup',
-                canActivate: [RouteGuardService] 
+        title: 'Регистрация',
+        canActivate: [RouteGuardService] 
     },
     {
         path: '',

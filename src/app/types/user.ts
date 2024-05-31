@@ -2,6 +2,7 @@ export interface User {
   id: number;
   nickname: string;
   password: string;
+  email: string;
   access_rights: number;
   avatar: string;
   createdAt: Date;
@@ -11,6 +12,12 @@ export interface User {
 export interface IAuthUser {
   nickname: string;
   password: string;
+}
+
+export interface ISignUpUser {
+  nickname: string;
+  password: string;
+  email: string;
 }
 
 export interface IUser {
@@ -23,6 +30,7 @@ export interface IUser {
 export interface UserForm {
   nickname: string;
   password: string;
+  email: string;
   access_rights: number;
   avatar: string;
   createdAt: Date;

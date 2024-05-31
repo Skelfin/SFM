@@ -19,12 +19,14 @@ export class SignupComponent {
     constructor(private readonly authService: AuthService) {
         this.userData = new FormGroup({
             nickname: new FormControl('', [Validators.required]),
+            email: new FormControl('', [Validators.required, Validators.email]),
             password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
         });
     }
 
     onSubmit() {
         if (this.userData.valid) {
+            console.log("Form Data: ", this.userData.value);
             this.authService.signUp(this.userData.value)
         } else {
             console.log("Form is not valid.");

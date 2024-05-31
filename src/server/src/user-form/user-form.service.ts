@@ -14,13 +14,34 @@ export class UserFormService {
   ) {}
 
   async createUser(userData: User): Promise<User> {
-    const { nickname } = userData;
+    const { nickname, email } = userData;
+
     const existUser = await this.userRepository.findOne({
       where: {
         nickname: nickname,
       },
-    })
-    if (existUser) throw new BadRequestException('Такой пользователь уже есть')
+    });
+    if (existUser) throw new BadRequestException('Такой пользователь уже есть');
+
+    const existEmail = await this.userRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (existEmail)
+      throw new BadRequestException(
+        'Пользователь с таким email уже существует',
+      );
+
+    if (/\s/.test(nickname)) {
+      throw new BadRequestException('В Никнейме не должно быть пробелов');
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      throw new BadRequestException('Некорректный email');
+    }
+
     if (userData.password.length < 6 || userData.password.length > 20) {
       throw new Error('Пароль должен быть от 6 до 20 символов');
     }
@@ -39,17 +60,39 @@ export class UserFormService {
       throw new Error('Пользователь не найден');
     }
 
-    const { nickname } = userData;
-    const existUser = await this.userRepository.findOne({
-      where: {
-        nickname: nickname,
-      },
-    })
-    if (existUser) throw new BadRequestException('Такой пользователь уже есть')
+    if (userData.nickname && userData.nickname !== userToUpdate.nickname) {
+      if (/\s/.test(userData.nickname)) {
+        throw new BadRequestException('В Никнейме не должно быть пробелов');
+      }
+      const existUser = await this.userRepository.findOne({
+        where: {
+          nickname: userData.nickname,
+        },
+      });
+      if (existUser)
+        throw new BadRequestException('Такой пользователь уже есть');
+    }
 
-    const oldAvatarPath = userToUpdate.avatar && userToUpdate.avatar !== 'avatar_default.png' 
-    ? path.join('./user_avatar', userToUpdate.avatar) 
-    : null;
+    if (userData.email && userData.email !== userToUpdate.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(userData.email)) {
+        throw new BadRequestException('Некорректный email');
+      }
+      const existEmail = await this.userRepository.findOne({
+        where: {
+          email: userData.email,
+        },
+      });
+      if (existEmail)
+        throw new BadRequestException(
+          'Пользователь с таким email уже существует',
+        );
+    }
+
+    const oldAvatarPath =
+      userToUpdate.avatar && userToUpdate.avatar !== 'avatar_default.png'
+        ? path.join('./user_avatar', userToUpdate.avatar)
+        : null;
 
     if (userData.password) {
       if (userData.password.length < 6 || userData.password.length > 20) {
@@ -57,7 +100,7 @@ export class UserFormService {
       }
       userData.password = await argon2.hash(userData.password);
     }
-  
+
     if (userData.avatar) {
       try {
         await this.userRepository.update(id, userData); // Обновляем данные пользователя
@@ -71,8 +114,9 @@ export class UserFormService {
         throw new Error('Ошибка при обновлении данных пользователя');
       }
     } else {
-      return this.userRepository.update(id, userData).then(() => this.userRepository.findOne({ where: { id } }));
+      return this.userRepository
+        .update(id, userData)
+        .then(() => this.userRepository.findOne({ where: { id } }));
     }
   }
-  
 }

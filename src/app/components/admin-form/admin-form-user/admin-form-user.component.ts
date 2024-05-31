@@ -16,6 +16,7 @@ export class AdminFormUserComponent {
     this.userForm = new FormGroup({
       nickname: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       access_rights: new FormControl(null ,Validators.required),
       avatar: new FormControl(''),
   });
@@ -50,6 +51,7 @@ export class AdminFormUserComponent {
       }
   
       this.userFormService.createUser(formData)
+      console.log(this.userForm)
     } else {
       console.error('Form is invalid');
     }

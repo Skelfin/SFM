@@ -10,6 +10,9 @@ export class User {
     nickname: string
 
     @Column()
+    email: string
+
+    @Column()
     password: string
 
     @Column()

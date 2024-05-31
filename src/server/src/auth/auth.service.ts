@@ -10,6 +10,9 @@ export class AuthService {
   constructor(private readonly userService: UserService, private readonly jwtService: JwtService) { }
   async validateUser(nickname: string, password: string) {
     const user = await this.userService.findOne(nickname);
+    if (!user) {
+      throw new UnauthorizedException('Неверное имя или пароль');
+    }
     const passwordIsMatch = await argon2.verify(user.password, password);
     if (user && passwordIsMatch) {
       return user;

@@ -1,12 +1,15 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <h1 class="bold mb-4">Создание пользователя</h1>
-    <!-- Обновлен для вертикального расположения -->
     <div class="flex flex-col">
-        <input formControlName="nickname" required type="text" placeholder="Nickname" id="nickname"
-            class="input w-72">
+        <input formControlName="nickname" required type="text" placeholder="Nickname" id="nickname" class="input w-72" pattern="^[^\s]+$">
         @if (userForm.controls['nickname'].invalid && (userForm.controls['nickname'].dirty ||
         userForm.controls['nickname'].touched)) {
-        <div class="text-red-500 text-xs mt-1">Введите никнейм</div>
+        <div class="text-red-500 text-xs mt-1">Введите никнейм (без пробелов)</div>
+        }
+        <input formControlName="email" required type="email" placeholder="Email" id="email" class="input mt-5 w-72">
+        @if (userForm.controls['email'].invalid && (userForm.controls['email'].dirty ||
+        userForm.controls['email'].touched)) {
+        <div class="text-red-500 text-xs mt-1">Введите корректный email</div>
         }
         <input formControlName="password" required type="password" placeholder="Пароль" id="password"
             class="input mt-5 w-72">
@@ -18,7 +21,7 @@
         @else if (userForm.controls['password'].hasError('maxlength')) {
         <div class="text-red-500 text-xs mt-1">Пароль должен быть до 20 символов</div>
         }@else {
-            <div class="text-red-500 text-xs mt-1">Введите пароль</div>
+        <div class="text-red-500 text-xs mt-1">Введите пароль</div>
         }
         }
     </div>

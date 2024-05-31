@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length, IsEmail } from 'class-validator';
 
 export class CreateUserDto {
     
@@ -9,4 +9,8 @@ export class CreateUserDto {
     @IsString({ message: 'Пароль должен быть строкой' })
     @Length(6, 20, { message: 'Пароль должен содержать от 6 до 20 символов' })
     password: string;
+
+    @IsNotEmpty({ message: 'Email не должен быть пустым' })
+    @IsEmail({}, { message: 'Email должен быть валидным адресом электронной почты' })
+    email: string;
 }

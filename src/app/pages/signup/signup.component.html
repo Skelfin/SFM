@@ -6,11 +6,23 @@
       class="flex flex-col max-w-sm w-full px-4 py-5 rounded border border-slate-600 bg-[#04111D]">
       <h1 class="text-center text-lg font-bold mb-5">Зарегистрировать аккаунт</h1>
       <div class="flex flex-col">
-        <input formControlName="nickname" required="" type="text" placeholder="Nickname" id="nickname" class="input">
+
+        <input formControlName="nickname" required="" type="text" placeholder="Nickname" id="nickname" class="input" pattern="^[^\s]+$">
         @if (userData.controls['nickname'].invalid && (userData.controls['nickname'].dirty ||
         userData.controls['nickname'].touched)) {
         <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
         }
+
+        <input formControlName="email" required type="email" placeholder="Email" id="email" class="input mt-6">
+        @if (userData.controls['email'].invalid && (userData.controls['email'].dirty || userData.controls['email'].touched)) {
+        @if (userData.controls['email'].hasError('required')) {
+        <div class="text-red-500 text-xs mt-2">Введите email</div>
+        }
+        @if (userData.controls['email'].hasError('email')) {
+        <div class="text-red-500 text-xs mt-2">Некорректный email</div>
+        }
+        }
+
         <input formControlName="password" required="" type="password" placeholder="Пароль" id="password"
           class="input mt-6">
         @if (userData.controls['password'].invalid && (userData.controls['password'].dirty ||
@@ -24,6 +36,7 @@
         <div class="text-red-500 text-xs mt-2">Введите пароль</div>
         }
         }
+
       </div>
       <div class="flex justify-center mt-6 mb-5">
         <button [disabled]="!userData.valid" class="btn py-2 px-6">Зарегистрироваться</button>
@@ -38,14 +51,3 @@
   </div>
   <app-footer></app-footer>
 </div>
-
-
-
-<!-- <h1 class="text-center text-lg font-bold mb-5">Зарегистрировать аккаунт</h1> -->
-
-<!-- <p>
-  Уже есть аккаунт? <a routerLink="/login" class="font-bold cursor-pointer text-[#7eb9ba]
-  hover:text-[#6a9fa2] active:text-[#568689]">Войдите в него.</a>
-</p> -->
-
-<!-- <button [disabled]="!userData.valid" class="btn py-2 px-6">Зарегистрироваться</button> -->

@@ -10,7 +10,7 @@
             <th class="border border-slate-500">№</th>
             <th class="border border-slate-500">ID</th>
             <th class="border border-slate-500">Никнейм</th>
-            <th class="border border-slate-500">Пароль</th>
+            <th class="border border-slate-500">Почта</th>
             <th class="border border-slate-500">Доступ</th>
             <th class="border border-slate-500">Аватар</th>
             <th class="w-40 border border-slate-500">Дата создания</th>
@@ -24,7 +24,7 @@
             <td class="border border-slate-500">{{ i + 1 }}</td>
             <td class="border border-slate-500">{{ user.id }}</td>
             <td class="border border-slate-500">{{ user.nickname }}</td>
-            <td class="border border-slate-500">{{ user.password | truncate }}</td>
+            <td class="border border-slate-500">{{ user.email| truncate }}</td>
             <td class="border border-slate-500">{{ user.access_rights }}</td>
             <td class="border border-slate-500">{{ user.avatar | truncate }}</td>
             <td class="border border-slate-500">{{ user.createdAt | date: 'dd.MM.yyyy' }}</td>

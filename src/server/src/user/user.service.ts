@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import * as argon2 from "argon2";
+import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -16,21 +16,34 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly playlistsService: PlaylistsService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto, file: Express.Multer.File) {
     const existUser = await this.userRepository.findOne({
       where: {
-        nickname: createUserDto.nickname
+        nickname: createUserDto.nickname,
       },
-    })
-    if (existUser) throw new BadRequestException('Такой пользователь уже есть')
-    if (createUserDto.password.length < 6 || createUserDto.password.length > 20) {
+    });
+    if (existUser) throw new BadRequestException('Такой пользователь уже есть');
+
+    const existUserByEmail = await this.userRepository.findOne({
+      where: {
+        email: createUserDto.email,
+      },
+    });
+
+    if (existUserByEmail) throw new BadRequestException('Пользователь с таким email уже существует',);
+
+    if (
+      createUserDto.password.length < 6 ||
+      createUserDto.password.length > 20
+    ) {
       throw new BadRequestException('Пароль должен быть от 6 до 20 символов');
     }
 
     const user = await this.userRepository.save({
       nickname: createUserDto.nickname,
+      email: createUserDto.email,
       password: await argon2.hash(createUserDto.password),
       access_rights: 0,
       avatar: file ? `${file.filename}` : 'avatar_default.png',
@@ -52,7 +65,7 @@ export class UserService {
       where: {
         nickname,
       },
-    })
+    });
   }
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
@@ -69,18 +82,18 @@ export class UserService {
 
     return user;
   }
-  
+
   async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepository.findOne({
       where: {
         id: userId,
       },
     });
-  
+
     if (!user) {
       throw new BadRequestException('Пользователь не найден');
     }
-  
+
     // Проверяем, что у пользователя есть аватар и это не дефолтный аватар
     if (user.avatar && user.avatar !== 'avatar_default.png') {
       try {
@@ -92,9 +105,8 @@ export class UserService {
         console.error(`Ошибка при удалении аватара: ${error}`);
       }
     }
-  
+
     // Удаляем пользователя после обработки его аватара
     const result = await this.userRepository.delete(userId);
   }
-
 }

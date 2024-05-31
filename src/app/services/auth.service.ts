@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { API_URL } from '../constants/constants';
-import { IAuthUser, IUser } from '../types/user';
+import { IAuthUser, ISignUpUser, IUser } from '../types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class AuthService {
     return this.currentUser$;
   }
 
-  signUp(userData: IAuthUser) {
+  signUp(userData: ISignUpUser) {
     return this.http
       .post(`${API_URL}/user`, userData)
       .pipe(
@@ -45,9 +45,8 @@ export class AuthService {
           this.login(userData);
         }),
         catchError(err => {
-            const errorMessage = this.getErrorMessage(err);
-            this.handleError(err, errorMessage);
-            throw new Error(errorMessage);
+          this.handleError(err);
+          throw new Error(err.message);
         })
     )
       .subscribe(() => {
@@ -65,10 +64,9 @@ export class AuthService {
           localStorage.setItem('token', res.token);
           this.isAuthenticated.next(true);
         }),
-        catchError((err) => {
-          const errorMessage = this.getErrorMessage(err);
-          this.handleError(err, errorMessage);
-          throw new Error(errorMessage);
+        catchError(err => {
+          this.handleError(err);
+          throw new Error(err.message);
         })
       )
       .subscribe(() => {
@@ -77,13 +75,6 @@ export class AuthService {
         });
         this.router.navigate(['/main']);
       });
-  }
-
-  private getErrorMessage(error: HttpErrorResponse): string {
-    if (error.status === 401 || error.status === 400) {
-      return 'Неверный логин или пароль';
-    }
-    return 'Произошла ошибка, попробуйте снова';
   }
 
   logout() {
@@ -95,9 +86,9 @@ export class AuthService {
     });
   }
 
-  private handleError(error: HttpErrorResponse, message: string): void {
-    this.snackBar.open(message, 'OK', {
-        duration: 3000,
+  private handleError(err: HttpErrorResponse): void {
+    this.snackBar.open(err.error.message, 'OK', {
+      duration: 3000,
     });
-}
+  }
 }
