@@ -14,3 +14,12 @@ export class CreateUserDto {
     @IsEmail({}, { message: 'Email должен быть валидным адресом электронной почты' })
     email: string;
 }
+
+export class ResetPasswordDto {
+    @IsString()
+    readonly token: string;
+  
+    @IsString()
+    @Length(6, 20)
+    readonly newPassword: string;
+  }

@@ -24,6 +24,12 @@ export class User {
     @OneToMany(() => Playlist, playlist => playlist.user)
     playlists: Playlist[];
 
+    @Column({ nullable: true })
+    resetToken: string;
+  
+    @Column({ type: 'timestamp', nullable: true })
+    resetTokenExpires: Date;
+
     @CreateDateColumn({ type: 'date' })
     createdAt: Date
 

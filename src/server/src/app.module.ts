@@ -10,6 +10,7 @@ import { TracksModule } from './tracks/tracks.module';
 import { AuthorModule } from './author/author.module';
 import { AlbumsModule } from './albums/albums.module';
 import { UserFormModule } from './user-form/user-form.module';
+import { MailModule } from './mailer.module';
 
 @Module({
   imports: [UserModule, TracksModule, AlbumsModule, AuthorModule, PlaylistsModule, AuthModule, ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRootAsync({ 
@@ -24,7 +25,7 @@ import { UserFormModule } from './user-form/user-form.module';
       entities: [__dirname + '/**/*.entity{.js, .ts}'],
      }),
      inject: [ConfigService],
-   }), UserFormModule,
+   }), UserFormModule, MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

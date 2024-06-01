@@ -32,7 +32,9 @@ export class UserPopupComponent {
   passwordTouched = false;
   passwordModel: string = '';
   nicknameModel: string = '';
+  emailModel: string = '';
   isPasswordTouched = false;
+  accessRightsModel: number | undefined;
   private isMouseDownInsideModal: boolean = false;
 
   avatarFile: File | null = null;
@@ -59,9 +61,11 @@ export class UserPopupComponent {
     if (changes['user']) {
       const user: User = changes['user'].currentValue;
       this.nicknameModel = user && user.nickname ? user.nickname : '';
-      this.passwordModel = user && user.password ? user.password : '';
+      this.emailModel = user && user.email ? user.email : '';
+      this.accessRightsModel = user?.access_rights ?? 0;
     }
   }
+
 
   closeModal() {
     this.close.emit();
@@ -89,6 +93,7 @@ saveUser() {
 
   const formData = new FormData();
   formData.append('nickname', this.nicknameModel);
+  formData.append('email', this.emailModel);
 
   if (this.isPasswordTouched && this.passwordModel.trim() !== '') {
     formData.append('password', this.passwordModel);

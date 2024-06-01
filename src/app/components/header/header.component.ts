@@ -42,7 +42,9 @@ export class HeaderComponent {
   }
 
   get isAuthPage(): boolean {
-    return this.router.url === '/login' || this.router.url === '/signup';
+    const authPages = ['/login', '/signup', '/recovery'];
+    const url = this.router.url;
+    return authPages.some(page => url.includes(page)) || url.includes('/reset/password');
   }
 
   logout() {

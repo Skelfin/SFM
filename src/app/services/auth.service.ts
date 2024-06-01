@@ -73,7 +73,7 @@ export class AuthService {
         this.snackBar.open('Вход', 'OK', {
           duration: 3000,
         });
-        this.router.navigate(['/main']);
+        this.router.navigate([' ']);
       });
   }
 
@@ -86,9 +86,44 @@ export class AuthService {
     });
   }
 
+  sendPasswordReset(email: string) {
+    return this.http.post(`${API_URL}/user/send-password-reset`, { email })
+      .pipe(
+        tap(() => {
+          this.snackBar.open('Письмо для сброса пароля отправлено', 'OK', {
+            duration: 3000,
+          });
+        }),
+        catchError(err => {
+          this.handleError(err);
+          throw new Error(err.message);
+        })
+      )
+      .subscribe();
+  }
+
+  resetPassword(token: string, newPassword: string) {
+    return this.http.post(`${API_URL}/user/reset-password`, { token, newPassword })
+      .pipe(
+        tap(() => {
+          this.snackBar.open('Пароль успешно сброшен', 'OK', {
+            duration: 3000,
+          });
+        }),
+        catchError(err => {
+          this.handleError(err);
+          throw new Error(err.message);
+        })
+      )
+      .subscribe(() => {
+        this.router.navigate([' ']);
+      });
+  }
+
   private handleError(err: HttpErrorResponse): void {
     this.snackBar.open(err.error.message, 'OK', {
       duration: 3000,
     });
   }
+  
 }

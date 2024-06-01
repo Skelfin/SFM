@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import { authGuard } from './guards/auth.guard';
+import { authGuard, guestGuard } from './guards/auth.guard';
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminTracksComponent } from './pages/admin-tracks/admin-tracks.component';
 import { AdminPlaylistsComponent } from './pages/admin-playlists/admin-playlists.component';
@@ -15,24 +15,33 @@ import { UserPlaylistsComponent } from './pages/user-playlists/user-playlists.co
 import { AlbumComponent } from './pages/album/album.component';
 import { AuthorsComponent } from './pages/authors/authors.component';
 import { RouteGuardService } from './services/audio-stop-guard.service';
+import { PassResetRequestComponent } from './pages/pass-reset-request/pass-reset-request.component';
+import { PassResetComponent } from './pages/pass-reset/pass-reset.component';
 
 export const routes: Routes = [
-    // {
-    //     path: 'Home',
-    //     component: HomeComponent,
-    //     title: 'Home',
-    // },
     {
         path: 'login',
         component: LoginComponent,
         title: 'Авторизация',
-        canActivate: [RouteGuardService] 
+        canActivate: [RouteGuardService, guestGuard()] 
     },
     {
         path: 'signup',
         component: SignupComponent,
         title: 'Регистрация',
-        canActivate: [RouteGuardService] 
+        canActivate: [RouteGuardService, guestGuard()] 
+    },
+    {
+        path: 'recovery',
+        component: PassResetRequestComponent,
+        title: 'Восстановление пароля',
+        canActivate: [RouteGuardService, guestGuard()] 
+    },
+    {
+        path: 'reset/password/:token',
+        component: PassResetComponent,
+        title: 'Сброс пароля',
+        canActivate: [RouteGuardService, guestGuard()]
     },
     {
         path: '',

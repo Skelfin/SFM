@@ -3,7 +3,7 @@
 }
 <div class="bg-[#04111d] w-80 px-3 py-3 hidden text-base border-r-2 border-[#162A3E] sm:block rounded-br-lg h-screen">
     <nav class="bg-[#6b9d9ec6] border-2 border-[#162A3E] rounded-md font-semibold mb-2">
-        <a routerLink="" routerLinkActive="bg-[#44686a]" class="tabs rounded-t border-b border-gray-700">
+        <a routerLink="" routerLinkActive="bg-[#44686a]" [routerLinkActiveOptions]="{ exact: true }" class="tabs rounded-t border-b border-gray-700">
             <fa-icon [icon]="faHouse" class="fa-lg"></fa-icon> Главная
         </a>
         <a routerLink="/search" routerLinkActive="bg-[#44686a]" class="tabs rounded-b">
@@ -23,7 +23,8 @@
     <nav class="flex flex-col overflow-y-auto auto h-[calc(100%-250px)]">
         @for (playlist of playlists; track playlist.id; let i = $index ) {
         <a [routerLink]="['/playlist', encodeId(playlist.id)]" routerLinkActive="bg-[#44686a]"
-            class=" inactive-link flex items-center bg-inactive p-2 tabs {{ i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }}">
+            class=" inactive-link flex items-center bg-inactive p-2 tabs
+            {{ playlists.length === 1 ? 'rounded-t-lg rounded-b-lg' : i === 0 ? 'rounded-t-lg' : i === playlists.length - 1 ? 'rounded-b-lg' : '' }}">
             <img [src]="'server/playlist_avatar/' + playlist.avatar" alt="{{ playlist.name }}"
                 class="rounded-md mr-2 w-12 h-12 object-cover pointer-events-none" />
             <div class="flex flex-1 min-w-0">

@@ -6,35 +6,36 @@
                 <h1 class="bold mb-4 text-center">Изменить пользователя</h1>
                 <div class="flex flex-col mb-5">
                     <input [(ngModel)]="nicknameModel" name="nickname" #nickname="ngModel"
-                        [ngModelOptions]="{standalone: true}" required type="text" placeholder="Nickname"
-                        id="nickname" class="input" pattern="^[^\s]+$">
+                        [ngModelOptions]="{standalone: true}" required type="text" placeholder="Nickname" id="nickname"
+                        class="input" pattern="^[^\s]+$">
                     @if (nickname.invalid && nickname.touched) {
-                        <div class="text-red-500 text-xs mt-2">Введите никнейм (без пробелов)</div>
+                    <div class="text-red-500 text-xs mt-2">Введите никнейм (без пробелов)</div>
                     }
                     <input [(ngModel)]="emailModel" name="email" #email="ngModel" [ngModelOptions]="{standalone: true}"
-                    required type="email" placeholder="Email" id="email" class="input mt-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
-                @if (email.invalid && (email.dirty || email.touched)) {
+                        required type="email" placeholder="Email" id="email" class="input mt-4"
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                    @if (email.invalid && (email.dirty || email.touched)) {
                     <div class="text-red-500 text-xs mt-2">Введите корректный email</div>
-                }
+                    }
                     <div class="flex mt-6">
                         <input [(ngModel)]="passwordModel" name="password" #password="ngModel"
-                            (blur)="passwordTouched=true" [ngModelOptions]="{standalone: true}" required
-                            minlength="6" maxlength="20" type="text" placeholder="Пароль" id="password"
+                            (blur)="passwordTouched=true" [ngModelOptions]="{standalone: true}" required minlength="6"
+                            maxlength="20" type="text" placeholder="Пароль" id="password"
                             class="input-with-btn-form flex-grow" (input)="onPasswordChange()">
                         <button class="btn-delete-form text-red-600 hover:text-red-500" (click)="clearPassword($event)">
                             <fa-icon [icon]="faDeleteLeft" class="fa-lg"></fa-icon>
                         </button>
                     </div>
                     @if (password.invalid && password.touched && isPasswordTouched) {
-                        @if (password.errors?.['minlength']) {
-                            <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
-                        }
-                        @else if (password.errors?.['maxlength']) {
-                            <div class="text-red-500 text-xs mt-2">Пароль должен быть до 20 символов</div>
-                        }
-                        @else if (!password.errors?.['minlength'] && !password.errors?.['maxlength']) {
-                            <div class="text-red-500 text-xs mt-1">Введите пароль</div>
-                        }
+                    @if (password.errors?.['minlength']) {
+                    <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
+                    }
+                    @else if (password.errors?.['maxlength']) {
+                    <div class="text-red-500 text-xs mt-2">Пароль должен быть до 20 символов</div>
+                    }
+                    @else if (!password.errors?.['minlength'] && !password.errors?.['maxlength']) {
+                    <div class="text-red-500 text-xs mt-1">Введите пароль</div>
+                    }
                     }
                 </div>
 
@@ -65,7 +66,8 @@
                     accept=".jpg, .jpeg, .png, .gif">
                 <div class="flex items-end justify-between">
                     <button class="btn py-2 px-6"
-                        [disabled]="nickname.invalid || email.invalid || (isPasswordTouched && password.invalid)"> Сохранить </button>
+                        [disabled]="nickname.invalid || email.invalid || (isPasswordTouched && password.invalid)">
+                        Сохранить </button>
                     <button (click)="closeModal()" class="btn px-6 py-2">
                         Закрыть
                     </button>

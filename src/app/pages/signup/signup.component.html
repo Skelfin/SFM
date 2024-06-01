@@ -12,12 +12,8 @@
         userData.controls['nickname'].touched)) {
         <div class="text-red-500 text-xs mt-2">Введите никнейм</div>
         }
-
         <input formControlName="email" required type="email" placeholder="Email" id="email" class="input mt-6">
         @if (userData.controls['email'].invalid && (userData.controls['email'].dirty || userData.controls['email'].touched)) {
-        @if (userData.controls['email'].hasError('required')) {
-        <div class="text-red-500 text-xs mt-2">Введите email</div>
-        }
         @if (userData.controls['email'].hasError('email')) {
         <div class="text-red-500 text-xs mt-2">Некорректный email</div>
         }
@@ -38,7 +34,7 @@
         }
 
       </div>
-      <div class="flex justify-center mt-6 mb-5">
+      <div class="flex justify-center mt-6 mb-2">
         <button [disabled]="!userData.valid" class="btn py-2 px-6">Зарегистрироваться</button>
       </div>
       <div class="flex justify-center">

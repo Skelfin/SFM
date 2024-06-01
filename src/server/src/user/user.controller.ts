@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Delete, Param, Body, UsePipes, ValidationPipe, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, ResetPasswordDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -41,5 +41,15 @@ export class UserController {
   @Delete(':id')
   async deleteUser(@Param('id') id: number): Promise<void> {
     return await this.userService.deleteUser(id);
+  }
+
+  @Post('send-password-reset')
+  async sendPasswordReset(@Body() body: { email: string }) {
+    return this.userService.sendPasswordReset(body.email);
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.userService.resetPassword(resetPasswordDto.token, resetPasswordDto.newPassword);
   }
 }

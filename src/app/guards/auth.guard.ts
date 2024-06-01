@@ -17,3 +17,18 @@ export function authGuard(): CanActivateFn {
         return false;
     }
 }
+
+export function guestGuard(): CanActivateFn {
+    return async () => {
+        const authService: AuthService = inject(AuthService);
+        const router: Router = inject(Router);
+
+        const isAuthenticated = await firstValueFrom(authService.isAuthSig);
+
+        if (!isAuthenticated) {
+            return true;
+        }
+        router.navigate(['/']);
+        return false;
+    }
+}

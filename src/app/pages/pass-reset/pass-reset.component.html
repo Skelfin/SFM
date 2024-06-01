@@ -1,1 +1,36 @@
-<p>pass-reset works!</p>
+<div class="font flex flex-col min-h-screen">
+    <app-header></app-header>
+    <div class="bg-cover bg-center bg-no-repeat border-y-2 border-[#162A3E] flex flex-1 justify-center items-center"
+        style="background-image: url('assets/Home.jpg');">
+        <form [formGroup]="resetForm" (ngSubmit)="onSubmit()"
+            class="flex flex-col max-w-sm w-full px-4 py-5 rounded border border-slate-600 bg-[#04111D]">
+            <h1 class="text-center text-lg font-bold mb-5">Продумайте новый пароль</h1>
+            <div class="flex flex-col">
+                <input formControlName="newPassword" required type="password" placeholder="Пароль" id="password"
+                    class="input">
+                @if (resetForm.controls['newPassword'].invalid && (resetForm.controls['newPassword'].dirty ||
+                resetForm.controls['newPassword'].touched)) {
+                @if (resetForm.controls['newPassword'].hasError('minlength')) {
+                <div class="text-red-500 text-xs mt-2">Пароль должен быть от 6 символов</div>
+                }
+                @if (resetForm.controls['newPassword'].hasError('maxlength')) {
+                <div class="text-red-500 text-xs mt-2">Пароль должен быть до 20 символов</div>
+                }
+                @if (resetForm.controls['newPassword'].hasError('required')) {
+                <div class="text-red-500 text-xs mt-2">Введите пароль</div>
+                }
+                }
+
+                <input formControlName="confirmPassword" required type="password" placeholder="Повторите пароль"
+                    id="confirmPassword" class="input mt-6">
+                @if (resetForm.hasError('passwordMismatch') && resetForm.controls['confirmPassword'].dirty) {
+                <div class="text-red-500 text-xs mt-2">Пароли не совпадают</div>
+                }
+            </div>
+            <div class="flex justify-center mt-6">
+                <button [disabled]="!resetForm.valid" class="btn py-2 px-6">Готово</button>
+            </div>
+        </form>
+    </div>
+    <app-footer></app-footer>
+</div>
