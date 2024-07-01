@@ -1,27 +1,55 @@
 # SFM
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+Проект сделан на Angular 17, используя Tailwind CSS, NestJS, TypeORM, PostgreSQL.
 
-## Development server
+## Что надо
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Для проекта надо установить:
 
-## Code scaffolding
+Node js - https://nodejs.org/en
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Angular 17 и выше - npm install -g @angular/cli
 
-## Build
+NestJS - npm i -g @nestjs/cli
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+PostgresSQL (Настройка ниже)
 
-## Running unit tests
+Проверить версии - ng v
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Из полезных, но необязательных программ:
+Для редактирования БД - DBeaver
+Для запросов - Insomnia
 
-## Running end-to-end tests
+## Установка
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+После установки проекта, надо прописать команду `npm install` в основную папку (\SFM) и в папку с сервером (\SFM\src\server).
 
-## Further help
+## Запуск
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Чтобы запустить проект без БД надо написать команду `ng serve` в основной папке (\SFM).
+Для запуска БД надо написать команду `npm run start` в папке серера (\SFM\src\server).
+Фронт запускается на `http://localhost:4200/`, а бек на `http://localhost:3001/`
+
+В папке server нужно создать файл ".еnv" С такими параметрами:
+
+JWT_SECRET=asgjasldukeybvqtikwhbtvuahbiugakhu (Ключ)
+
+DB_HOST='localhost'
+
+DB_PORT=5432
+
+DB_USERNAME='postgres'
+
+DB_PASSWORD='Пароль'
+
+DB_NAME='SFM'
+
+MAIL_HOST=smtp.gmail.com
+
+MAIL_PORT=587
+
+MAIL_USER=Почта
+
+MAIL_PASS=Пароль
+
+

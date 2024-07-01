@@ -20,7 +20,9 @@ export class AdminFormAlbumsComponent {
       [Validators.required,
         Validators.min(1800), 
         Validators.max(2024),
-        Validators.pattern('^[0-9]{4}$')])
+        Validators.pattern('^[0-9]{4}$')
+      ]),
+      authorIds: new FormControl('', [Validators.required])
     });
   }
 
@@ -49,6 +51,10 @@ export class AdminFormAlbumsComponent {
       }
   
       this.albumTableService.createAlbum(formData)
+      console.log('Form Data:', {
+        ...this.albumForm.value,
+        avatar: fileControl?.value ? fileControl.value.name : null
+      });
     } else {
       console.error('Form is invalid');
     }

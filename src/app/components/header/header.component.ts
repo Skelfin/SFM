@@ -73,5 +73,9 @@ export class HeaderComponent {
     this.loadCurrentUser();
   }
 
+  get isAccessLevelOne(): boolean {
+    const token = this.decodeToken();
+    return token && token.access_rights === 1;
+  }
 
 }

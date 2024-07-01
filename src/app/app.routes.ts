@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import { authGuard, guestGuard } from './guards/auth.guard';
+import { authGuard, guestGuard, adminGuard, restrictedAdminGuard, profileGuard } from './guards/auth.guard';
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminTracksComponent } from './pages/admin-tracks/admin-tracks.component';
 import { AdminPlaylistsComponent } from './pages/admin-playlists/admin-playlists.component';
@@ -47,62 +47,71 @@ export const routes: Routes = [
         path: '',
         component: UserMainComponent,
         title: 'Главная',
+        canActivate: [authGuard()]
     },
     {
         path: 'search',
         component: UserSearchComponent,
         title: 'Поиск',
+        canActivate: [authGuard()]
     },    
     {
         path: 'playlist/:id',
         component: UserPlaylistsComponent,
         title: 'Плейлист',
+        canActivate: [authGuard()]
     },
     {
         path: 'album/:id',
         component: AlbumComponent,
         title: 'Альбом',
+        canActivate: [authGuard()]
     },
     {
         path: 'author/:id',
         component: AuthorsComponent,
         title: 'Автор',
+        canActivate: [authGuard()]
     },
     {
         path: 'admin/users',
         component: AdminUsersComponent,
         title: 'Пользователи',
-        canActivate: [RouteGuardService] 
+        canActivate: [RouteGuardService, adminGuard()] 
     },
     {
         path: 'admin/tracks',
         component: AdminTracksComponent,
         title: 'Треки',
+        canActivate: [RouteGuardService, adminGuard()]
     },
     {
         path: 'admin/playlists',
         component: AdminPlaylistsComponent,
         title: 'Плейлисты',
+        canActivate: [RouteGuardService, adminGuard()]
     },
     {
         path: 'admin/albums',
         component: AdminAlbumsComponent,
         title: 'Альбомы',
+        canActivate: [RouteGuardService, adminGuard()]
     },
     {
         path: 'admin/authors',
         component: AdminAuthorsComponent,
         title: 'Авторы',
+        canActivate: [RouteGuardService, adminGuard()]
     },
     {
         path: 'profile',
         component: ProfileComponent,
         title: 'Profile',
-        canActivate: [authGuard()]
+        canActivate: [profileGuard()]
     },
     {
         path: '**',
         component: HomeComponent,
-        redirectTo:'',
+        redirectTo: '',
     },
 ];

@@ -24,7 +24,7 @@ export interface IUser {
   id: number;
   nickname: string;
   token: string;
-  access_rights?: number;
+  access_rights: number;
 }
 
 export interface UserForm {

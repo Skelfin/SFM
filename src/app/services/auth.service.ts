@@ -1,10 +1,12 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// auth.service.ts
 import { Injectable, signal } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { API_URL } from '../constants/constants';
 import { IAuthUser, ISignUpUser, IUser } from '../types/user';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -126,4 +128,31 @@ export class AuthService {
     });
   }
   
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  decodeToken(token: string): any {
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  hasAdminAccess(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    const decodedToken = this.decodeToken(token);
+    return decodedToken && decodedToken.access_rights && decodedToken.access_rights > 0;
+  }
+
+  hasRestrictedAdminAccess(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    const decodedToken = this.decodeToken(token);
+    return decodedToken && decodedToken.access_rights === 1;
+  }
 }

@@ -34,7 +34,7 @@ export class AuthorService {
 
     authorToUpdate.nickname = authorData.nickname || authorToUpdate.nickname;
     if (authorData.description !== undefined) {
-      authorData.description = authorData.description;
+      authorToUpdate.description = authorData.description;
     }
 
     if (authorData.albumIds) {
@@ -49,13 +49,17 @@ export class AuthorService {
       authorToUpdate.avatar &&
       authorToUpdate.avatar !== 'avatar_default.png'
     ) {
-      const oldAvatarPath = path.join('./author_avatar', authorToUpdate.avatar);
+      const oldAvatarPath = path.join('author_avatar', authorToUpdate.avatar);
       try {
         await fs.unlink(oldAvatarPath);
         console.log(`Старый аватар удален: ${oldAvatarPath}`);
       } catch (error) {
         console.warn(`Ошибка при удалении старого аватара: ${error}`);
       }
+    }
+
+    if (authorData.avatar) {
+      authorToUpdate.avatar = authorData.avatar;
     }
 
     await this.authorRepository.save(authorToUpdate);
