@@ -5,34 +5,36 @@
     </a>
     <nav class="flex justify-end">
       @if (!isAuthPage) {
-      <ul class="flex gap-5 items-center text-lg">
-        @if (!(authService.isAuthSig | async)) {
-        <li
-          class="font-bold py-1 px-3 select-none hover:text-gray-300 active:text-gray-400 cursor-pointer transition duration-500">
-          <button routerLink="/signup" type="button"> Зарегистрироваться </button>
-        </li>
-        <li class="btn py-1 px-3">
-          <button routerLink="/login" type="button"> Войти </button>
-        </li>
-        } @else {
-        <li class="relative z-50">
-          <img [src]="'server/user_avatar/' + currentUser?.avatar"
-            class="border-2 border-[#162A3E] cursor-pointer flex items-center justify-center size-11 rounded-full"
-            (click)="toggleDropdown()">
-          <ul class="absolute hidden text-white mt-1 w-40 right-0 border-2 border-[#162A3E] rounded-lg"
-            [class.hidden]="!dropdownOpen">
-            <li routerLink="/profile" (click)="closeDropdown()"
-              class="modal_header border-b border-[#162A3E] rounded-t-md">
-              <a>Профиль</a>
+        <ul class="flex gap-5 items-center text-lg">
+          @if (!(authService.isAuthSig | async)) {
+            <li class="font-bold py-1 px-3 select-none hover:text-gray-300 active:text-gray-400 cursor-pointer transition duration-500">
+              <button routerLink="/signup" type="button"> Зарегистрироваться </button>
             </li>
-            <li (click)="logout()"
-              class="modal_header rounded-b-md">
-              <a>Выход</a>
+            <li class="btn py-1 px-3">
+              <button routerLink="/login" type="button"> Войти </button>
             </li>
-          </ul>
-        </li>
-        }
-      </ul>
+          } @else {
+            <li class="relative">
+              <img [src]="'server/user_avatar/' + currentUser?.avatar"
+                   class="border-2 border-[#162A3E] cursor-pointer flex items-center justify-center size-11 rounded-full"
+                   (click)="toggleDropdown($event)">
+              @if (dropdownOpen) {
+                <ul class="absolute text-white mt-1 w-40 right-0 border-2 border-[#162A3E] rounded-lg bg-[#04111D]">
+                  @if (!isAccessLevelOne) {
+                    <li routerLink="/profile" (click)="closeDropdown()"
+                    class="modal_header border-b border-[#162A3E] rounded-t-md">
+                  <a>Профиль</a>
+                </li>
+                  }
+                  <li (click)="logout()"
+                      class="modal_header" [ngClass]="{'rounded-b-md': !isAccessLevelOne, 'rounded-md': isAccessLevelOne}">
+                    <a>Выход</a>
+                  </li>
+                </ul>
+              }
+            </li>
+          }
+        </ul>
       }
     </nav>
   </div>

@@ -44,8 +44,12 @@ export class AdminTableTracksComponent {
 
   loadTracks(): void {
     this.trackTableService.getTrack().subscribe(tracks => {
-      this.tracks = tracks;
+      this.tracks = this.sortTracksById(tracks);
     });
+  }
+
+  sortTracksById(tracks: Track[]): Track[] {
+    return tracks.sort((a, b) => a.id - b.id);
   }
 
   deleteTrack(trackId: number) {

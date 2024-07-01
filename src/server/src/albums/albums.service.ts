@@ -33,7 +33,9 @@ export class AlbumsService {
     }
 
     albumToUpdate.name = albumData.name || albumToUpdate.name;
-    albumToUpdate.description = albumData.description || albumToUpdate.description;
+    if (albumData.description !== undefined) {
+      albumToUpdate.description = albumData.description;
+    }
     albumToUpdate.year = albumData.year || albumToUpdate.year;
 
     if (albumData.authorIds) {

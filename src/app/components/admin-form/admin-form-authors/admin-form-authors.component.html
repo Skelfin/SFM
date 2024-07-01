@@ -1,5 +1,5 @@
 <form [formGroup]="authorForm" (ngSubmit)="onSubmit()">
-    <h1 class="bold mb-4">Создание автора</h1>
+    <h1 class="bold mb-4">Создание исполнителя</h1>
     <div class="flex flex-col">
         <input formControlName="nickname" required type="text" placeholder="Nickname" id="nickname" class="input w-72">
         @if (authorForm.controls['nickname'].invalid && (authorForm.controls['nickname'].dirty ||

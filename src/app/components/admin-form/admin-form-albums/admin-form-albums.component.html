@@ -11,9 +11,18 @@
             placeholder="Описание" id="description"></textarea>
     </div>
     <div class="flex flex-col">
-        <input formControlName="year" min="1800" max="2024" required type="number" placeholder="Год создания" id="year" class="input w-36 mt-5">
-        @if (albumForm.controls['year'].invalid && (albumForm.controls['year'].dirty || albumForm.controls['year'].touched)) {
+        <input formControlName="year" min="1800" max="2024" required type="number" placeholder="Год создания" id="year"
+            class="input w-36 mt-5">
+        @if (albumForm.controls['year'].invalid && (albumForm.controls['year'].dirty ||
+        albumForm.controls['year'].touched)) {
         <div class="text-red-500 text-xs mt-1">Введите год от 1900 до 2024</div>
+        }
+        <textarea formControlName="authorIds"
+            class="resize overflow-auto textarea mt-5 min-h-11 max-h-72 min-w-72 sm:max-w-sm md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl"
+            placeholder="ID автора/ов (через пробел)" id="authorIds" required></textarea>
+        @if (albumForm.controls['authorIds'].invalid && (albumForm.controls['authorIds'].dirty ||
+        albumForm.controls['authorIds'].touched)) {
+        <div class="text-red-500 text-xs mt-1">Введите ID автора/ов</div>
         }
     </div>
     <label class="block text-sm font-semibold mt-5 mb-3">

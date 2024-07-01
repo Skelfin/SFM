@@ -1,9 +1,9 @@
 <div class="p-5"
 style="background-image: linear-gradient(to bottom, #0a1928,#04111D);">
     <h1 class="text-3xl font-bold pl-3 text-white">Об исполнителе</h1>
-    <div class="h-auto pl-3 mt-4">
+    <div class="h-auto pl-3 pr-8 mt-4">
       <div class="text-3xl font-medium">{{ author?.nickname }}</div>
-      <div class="text-xl mt-2 text-justify"> {{ author?.description }} </div>
+      <div class="text-xl mt-2 text-justify" [innerHTML]="formattedDescription"></div>
     </div>
 </div>
 

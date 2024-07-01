@@ -23,7 +23,7 @@
         <tr>
             <td class="border border-slate-500">{{ i + 1 }}</td>
             <td class="border border-slate-500">{{ track.id }}</td>
-            <td class="border border-slate-500">{{ track.name }}</td>
+            <td class="border border-slate-500">{{ track.name | truncate }}</td>
             <td class="border border-slate-500">{{ track.path | truncate }}</td>
             <td class="border border-slate-500">{{ track.avatar | truncate  }}</td>
             <td class="border border-slate-500">{{ track.album ? track.album.id : 'N/A' }}</td>

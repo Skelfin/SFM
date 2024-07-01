@@ -128,7 +128,7 @@ export class UserService {
     
     await this.mailerService.sendMail({
       to: user.email,
-      subject: 'Password Reset',
+      subject: 'Сброс пароля',
       template: 'password-reset',
       context: {
         name: user.nickname,
@@ -151,5 +151,4 @@ export class UserService {
     user.resetTokenExpires = null;
     await this.userRepository.save(user);
   }
-
 }
