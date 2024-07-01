@@ -2,7 +2,7 @@
 
 Проект сделан на Angular 17, используя Tailwind CSS, NestJS, TypeORM, PostgreSQL.
 
-## Что надо
+## Что надо?
 
 Для проекта надо установить:
 
@@ -32,7 +32,7 @@ PostgresSQL (Настройка ниже)
 
 В папке server нужно создать файл ".еnv" С такими параметрами:
 
-JWT_SECRET=asgjasldukeybvqtikwhbtvuahbiugakhu (Ключ)
+JWT_SECRET=asgjasldukeybvqtikwhbtvuahbiugakhu (Пример ключа)
 
 DB_HOST='localhost'
 
@@ -52,4 +52,33 @@ MAIL_USER=Почта
 
 MAIL_PASS=Пароль
 
+## Cкриншоты проекта:
+![alt Главная страница пользователя](/ReadmeScreen/Страница_«main».png)
 
+![alt Вкладка поиск](/ReadmeScreen/Страница_«search».png)
+
+![alt Страница плейлистов](/ReadmeScreen/Страница_«playlists».png)
+
+![alt Страница альбомов](/ReadmeScreen/Страница_«albums».png)
+
+![alt Страница исполнителя](/ReadmeScreen/Страница_«actors».png)
+
+![alt Страница профиля пользователя](/ReadmeScreen/Страница_«profile».png)
+
+![alt Страница регистрации](/ReadmeScreen/Страница_«signup».png)
+
+![alt Страница авторизации](/ReadmeScreen/Страница_«login».png)
+
+![alt Страница восстановления пароля](/ReadmeScreen/Страница_«password_recovery».png)
+
+![alt Страница создания нового пароля](/ReadmeScreen/Страница_«new_password».png)
+
+![alt Страница «Исполнители» админка](/ReadmeScreen/Страница_«actors_admin».png)
+
+![alt Страница «Альбомы» админка](/ReadmeScreen/Страница_«albums_admin».png)
+
+![alt Страница «Плейлисты» админка](/ReadmeScreen/Страница_«playlists_admin».png)
+
+![alt Страница «Пользователи» админка](/ReadmeScreen/Страница_«user_admin».png)
+
+![alt Страница «Треки» админка](/ReadmeScreen/Страница_«tracks_admin».png)

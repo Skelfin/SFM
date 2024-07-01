@@ -20,7 +20,7 @@
         }
 
         <input formControlName="password" required="" type="password" placeholder="Пароль" id="password"
-          class="input mt-6">
+          class="input mt-6" maxlength="11">
         @if (userData.controls['password'].invalid && (userData.controls['password'].dirty ||
         userData.controls['password'].touched)) {
         @if (userData.controls['password'].hasError('minlength')) {

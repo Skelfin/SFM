@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import { authGuard, guestGuard, adminGuard, restrictedAdminGuard, profileGuard } from './guards/auth.guard';
+import { authGuard, guestGuard, adminGuard, profileGuard } from './guards/auth.guard';
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminTracksComponent } from './pages/admin-tracks/admin-tracks.component';
 import { AdminPlaylistsComponent } from './pages/admin-playlists/admin-playlists.component';
